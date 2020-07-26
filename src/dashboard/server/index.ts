@@ -2,6 +2,9 @@
 import express, { Request, Response } from 'express'
 import next from 'next'
 
+//import db connection
+import { connectDB } from './db'
+
 //routes
 import test from './routes/test'
 
@@ -17,6 +20,13 @@ const port = process.env.NEXT_PUBLIC_PORT ?? 3000
   try {
     await app.prepare()
     const server = express()
+
+    //Connect to db first
+    const dbResponse = await connectDB()
+    console.log(dbResponse.message)
+    if (!dbResponse.success) {
+      throw 'Database connection failed'
+    }
 
     //Register api routes first
     server.use('/api/test', test)
