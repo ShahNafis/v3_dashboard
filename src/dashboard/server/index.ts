@@ -11,7 +11,7 @@ const app = next({
   dir: './site',
 })
 const handle = app.getRequestHandler()
-const port = process.env.NEXT_PUBLIC_PORT || 3001
+const port = process.env.NEXT_PUBLIC_PORT ?? 3000
 
 ;(async () => {
   try {

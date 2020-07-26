@@ -11,11 +11,4 @@ export const Home = (): JSX.Element => (
   </div>
 )
 
-Home.getInitialProps = async () => {
-  console.log(process?.env?.NEXT_PUBLIC_NODE_ENV)
-  return {
-    a: 1,
-  }
-}
-
 export default Home
