@@ -1,7 +1,10 @@
 import colors from 'colors'
 colors
 
-function log({ message, type }) {
+function log({ message = '', type = '' }) {
+  if (!message) {
+    message = ''
+  }
   if (process.env.NEXT_PUBLIC_NODE_ENV !== 'production') {
     switch (type) {
       case 'info':
@@ -17,6 +20,8 @@ function log({ message, type }) {
         console.log(message)
         break
     }
+  } else {
+    console.log(message)
   }
 }
 

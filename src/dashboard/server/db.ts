@@ -1,8 +1,7 @@
 import { connect, Mongoose } from 'mongoose'
-import { ResponseType } from '../interfaces'
 import { log } from './utils/logger'
 
-export const connectDB = async (): Promise<ResponseType> => {
+export const connectDB = async () => {
   //Get the uri to connect from the enviroment variables. Assume by default to use the development db
   let dbURI: string = process?.env?.MONGO_URI_DEV
 
@@ -13,10 +12,11 @@ export const connectDB = async (): Promise<ResponseType> => {
 
   //for whatever reason if the uri is not defined, exit
   if (dbURI === '' || !dbURI) {
-    return {
-      success: false,
+    log({
       message: 'No URI passed',
-    } as ResponseType
+      type: 'error',
+    })
+    throw 'Database connection failed'
   }
   //Inform which DB using
   log({
@@ -33,8 +33,8 @@ export const connectDB = async (): Promise<ResponseType> => {
   })
 
   //Inform that the connection has been made
-  return {
-    success: true,
+  log({
     message: `MongoDB connected: ${conn?.connection?.host}`,
-  } as ResponseType
+    type: 'ok',
+  })
 }
