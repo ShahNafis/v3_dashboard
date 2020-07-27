@@ -13,6 +13,9 @@ const userSchema: Schema = new Schema(
     catalogs: {
       type: [Types.ObjectId],
     },
+    dateAdded: {
+      type: Date,
+    },
     imagesTagged: {
       type: Object,
       default: [],
