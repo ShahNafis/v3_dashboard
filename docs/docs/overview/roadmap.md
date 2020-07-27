@@ -9,14 +9,23 @@ sidebar_label: Roadmap
 
 - 🚧 Navbar
 - 🚧 Scaffold pages
-    - Landing page
-    - Home page
-    - Admin page
-    - Start tagging page
-    - Tag image page
-        - Show other archives of the same catalog on side as drawer
+    - 🚧 Landing page
+    - 🚧 Home page
+    - 🚧 Admin page
+    - 🚧 Start tagging page
+    - 🚧 Tag image page
+        - 🚧 Show other archives of the same catalog on side as drawer
     - Data export page
 - 🚧 CI/CD with GitHub Actions
+- 🚧 Create middleware
+    - 🚧 check if logged in
+    - 🚧 whitelisted IP
+    - 🚧 blacklisted IP
+    - 🚧 Has role
+    - 🚧 Populates with mongo user info
+    - 🚧 Adv query results
+- 🚧 Create fake data
+
 
 - ❌ PM2 for background process
 - ❌ LetsEncrypt and NGINX
