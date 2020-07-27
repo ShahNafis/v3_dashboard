@@ -2,8 +2,8 @@ const repoName = 'v3_dashboard'
 const orgName = 'ShahNafis'
 module.exports = {
 
-  title: 'My Site',
-  tagline: 'The tagline of my site',
+  title: 'Coastal-Image-Labeler Dashboard',
+  tagline: 'A labeling tool for Coastal Images',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
 
@@ -14,7 +14,7 @@ module.exports = {
 
   themeConfig: {
     navbar: {
-      title: 'My Site',
+      title: 'Coastal-Image-Labeler Dashboard',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',

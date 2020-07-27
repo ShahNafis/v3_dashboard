@@ -5,6 +5,8 @@ module.exports = {
       label: 'Coastal Image Labeler',
       items: [
         'overview/overview',
+        'overview/goals',
+        'overview/roadmap'
       ],
     },
     {
