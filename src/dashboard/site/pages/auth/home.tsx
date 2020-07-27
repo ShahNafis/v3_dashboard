@@ -6,9 +6,9 @@ export const Home = (): JSX.Element => (
       <title>Create Next App</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    Running on port {process.env.NEXT_PUBLIC_PORT} in{' '}
+    logged in Running on port {process.env.NEXT_PUBLIC_PORT} in{' '}
     {process.env.NEXT_PUBLIC_NODE_ENV} mode
-    <a href="/auth/home">login</a>
+    <a href="/logout">out</a>
   </div>
 )
 
