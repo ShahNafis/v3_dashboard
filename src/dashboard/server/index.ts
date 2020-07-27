@@ -12,6 +12,7 @@ import { errorHandler } from './middlewares/error'
 
 //routes
 import test from './routes/test'
+import user from './routes/user'
 
 //Security
 import { initAuthentication } from './auth'
@@ -22,7 +23,7 @@ const app = next({
   dir: './site',
 })
 const handle = app.getRequestHandler()
-const port = process.env.NEXT_PUBLIC_PORT ?? 3000
+const port = ((process.env.NEXT_PUBLIC_PORT as unknown) as number) ?? 3000
 
 ;(async () => {
   try {
@@ -38,6 +39,7 @@ const port = process.env.NEXT_PUBLIC_PORT ?? 3000
 
     //Register api routes first
     server.use('/api/test', test)
+    server.use(`/api/user`, user)
 
     // This handles errors that happen during API calls
     server.use(errorHandler)
@@ -63,7 +65,7 @@ const port = process.env.NEXT_PUBLIC_PORT ?? 3000
     //Handle unhandled promise rejections
     process.on('unhandledRejection', (err: any) => {
       log({
-        message: `Error: ${err?.message ?? 'undefined error'}`,
+        message: `--Error--: ${err?.message ?? 'undefined error'}`,
         type: 'error',
       })
 

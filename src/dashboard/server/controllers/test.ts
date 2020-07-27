@@ -1,10 +1,8 @@
 import { asyncHandler } from '../middlewares/async'
 //import { ErrorResponse } from '../utils/errorResponse'
-import {
-  Request,
-  Response,
-  //NextFunction
-} from 'express'
+import { Request, Response, NextFunction } from 'express'
+
+import fs from 'fs'
 
 const cards = [
   { _id: 123, message: 'I love pepperoni pizza!', author: 'unknown1' },
@@ -27,4 +25,16 @@ const testGet = asyncHandler(async (req: Request, res: Response) => {
   })
 })
 
-export { testGet }
+const testError = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    fs.readFile('/file-does-not-exist', function (err, data) {
+      if (err) {
+        next(err) // Pass errors to Express.
+      } else {
+        res.send(data)
+      }
+    })
+  }
+)
+
+export { testGet, testError }

@@ -2,18 +2,22 @@
     This file handles errors during API calls
 */
 
-import { Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import { ErrorResponse } from '../utils/errorResponse'
 import { log } from '../utils/logger'
-export const errorHandler = (err: any, req: Request, res: Response) => {
+export const errorHandler = (
+  err: any,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   //Copy error object
   let error = { ...err }
-
-  //set message
-  error.message = err?.message
-
+  console.log()
+  console.log(err)
+  console.log()
   // Log to console
-  log({ message: err?.stack, type: 'error' })
+  log({ message: err?.stack, type: 'err' })
 
   //Mongoose bad ObjectId (not formatted properly or not found)
   if (err?.name === 'CastError') {
@@ -37,7 +41,7 @@ export const errorHandler = (err: any, req: Request, res: Response) => {
 
   res.status(error.statusCode ?? 500).json({
     success: false,
-    message: error.message,
-    error: error.message ?? 'Server Error',
+    message: error.message ?? 'Server Error',
   })
+  next()
 }
