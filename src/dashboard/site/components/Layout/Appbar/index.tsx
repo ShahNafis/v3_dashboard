@@ -37,27 +37,38 @@ function Appbar(props: Props) {
         <Typography variant="h6" noWrap className={classes.title}>
           {props?.title || defaultTitle}
         </Typography>
+
         <div className={classes.title}>
           {navItems.center.map((item, index) => {
             return (
               <React.Fragment key={index + item.name}>
-                <Button
-                  className={classes.spacedButton}
-                  variant="outlined"
-                  color="inherit"
-                  href={item.route}
-                >
-                  {item.name}
-                </Button>
+                {item.element ? (
+                  item.element
+                ) : (
+                  <Button
+                    className={classes.spacedButton}
+                    variant="outlined"
+                    color="inherit"
+                    href={item.route}
+                  >
+                    {item.name}
+                  </Button>
+                )}
               </React.Fragment>
             )
           })}
         </div>
         {navItems.right.map((item, index) => {
           return (
-            <Button key={index + item.name} color="inherit" href={item.route}>
-              {item.name}
-            </Button>
+            <React.Fragment key={index + item.name}>
+              {item.element ? (
+                item.element
+              ) : (
+                <Button color="inherit" href={item.route}>
+                  {item.name}
+                </Button>
+              )}
+            </React.Fragment>
           )
         })}
       </Toolbar>

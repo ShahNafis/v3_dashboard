@@ -1,7 +1,10 @@
+import { Logout, Login } from '../Button/premadeButtons'
+
 interface NavigationItemType {
   name: string
   icon?: string
   route?: string
+  element?: JSX.Element
 }
 
 interface NavigationItemsType {
@@ -18,10 +21,12 @@ interface NavigationItemsType {
 const login = {
   name: 'Login',
   route: '/login',
+  element: <Login href="/login" />,
 }
 const logout = {
   name: 'Logout',
   route: '/logout',
+  element: <Logout href="/logout" />,
 }
 const home = {
   name: 'Home',

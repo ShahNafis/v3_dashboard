@@ -9,8 +9,7 @@ export const Home = (): JSX.Element => (
     </Head>
     <Layout showDrawer>
       Running on port {process.env.NEXT_PUBLIC_PORT} in{' '}
-      {process.env.NEXT_PUBLIC_NODE_ENV} mode
-      <a href="/auth/home">login</a>
+      {process.env.NEXT_PUBLIC_NODE_ENV} mode.
     </Layout>
   </div>
 )
