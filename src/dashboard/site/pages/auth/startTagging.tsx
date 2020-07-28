@@ -1,11 +1,12 @@
 import Head from 'next/head'
 import Layout from '../../components/Layout'
-export const Home = (props): JSX.Element => {
+
+const StartTagging = (props): JSX.Element => {
   const { user } = props
   return (
     <div className="container">
       <Head>
-        <title>Home</title>
+        <title>Start Tagging</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -15,10 +16,10 @@ export const Home = (props): JSX.Element => {
         appbarType="basic"
         title={`Welcome ${user.displayName}`}
       >
-        Hello {user.displayName}
+        Start Tagging Images {user.displayName}
       </Layout>
     </div>
   )
 }
 
-export default Home
+export default StartTagging
