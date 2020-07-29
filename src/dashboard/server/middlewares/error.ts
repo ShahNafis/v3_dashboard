@@ -17,7 +17,7 @@ export const errorHandler = (
   console.log(err)
   console.log()
   // Log to console
-  log({ message: err?.stack, type: 'err' })
+  log({ message: err?.stack, type: 'error' })
 
   //Mongoose bad ObjectId (not formatted properly or not found)
   if (err?.name === 'CastError') {

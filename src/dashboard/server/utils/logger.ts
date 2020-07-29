@@ -1,7 +1,12 @@
 import colors from 'colors'
 colors
 
-function log({ message = '', type = '' }) {
+interface LogType {
+  message?: string
+  type?: '' | 'info' | 'ok' | 'error'
+}
+
+function log({ message = '', type = '' }: LogType) {
   if (!message) {
     message = ''
   }
