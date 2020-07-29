@@ -15,7 +15,6 @@ export const Home = (props): JSX.Element => {
       </Head>
 
       <Layout
-        showDrawer
         user={props.user}
         appbarType="basic"
         title={`Welcome ${user?.displayName}`}
@@ -29,7 +28,10 @@ export const Home = (props): JSX.Element => {
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const user: any = getSession(context.req)
-  user.data = await getUserDB(context?.req?.headers?.cookie)
+  user.data = await getUserDB({
+    cookie: context?.req?.headers?.cookie,
+    res: context.res,
+  })
 
   return {
     props: {

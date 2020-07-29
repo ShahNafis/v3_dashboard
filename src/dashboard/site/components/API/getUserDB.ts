@@ -1,5 +1,12 @@
-async function getUserDB(cookie: string) {
-  const res = await fetch(`http://localhost:5000/api/user/getUser`, {
+import { ServerResponse } from 'http'
+import { ResponseType } from '../../../interfaces/index'
+interface Params {
+  cookie: string
+  res: ServerResponse
+}
+
+async function getUserDB({ cookie, res }: Params) {
+  const resGetUser = await fetch(`http://localhost:5000/api/user/getUser`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -8,9 +15,15 @@ async function getUserDB(cookie: string) {
       cookie: cookie ?? null,
     },
   })
+  const data: ResponseType = await resGetUser.json()
 
-  const data = await res.json()
-  return data.data.user
+  if (data.success) {
+    return data.data.user
+  } else {
+    //for some reason redirect doesnt exist.
+    ;(res as any).redirect('/')
+    return {}
+  }
 }
 
 export { getUserDB }
