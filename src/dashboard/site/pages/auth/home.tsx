@@ -2,8 +2,8 @@ import Head from 'next/head'
 import Layout from '../../components/Layout'
 import { GetServerSideProps } from 'next'
 import getSession from '../../components/Utils/Auth/getSession'
+import { getUserDB } from '../../components/API/getUserDB'
 import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
 
 export const Home = (props): JSX.Element => {
   const { user } = props
@@ -20,20 +20,17 @@ export const Home = (props): JSX.Element => {
         appbarType="basic"
         title={`Welcome ${user?.displayName}`}
       >
-        Hello {user?.displayName}
+        Hello {user?.displayName}|{user.data._id}
         <Avatar alt="hi" src={user.picture} />
-        <div>
-          <Button variant="contained">Default</Button>
-          <Button variant="outlined">Default</Button>
-          <Button variant="text">Default</Button>
-        </div>
       </Layout>
     </div>
   )
 }
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
-  const user = getSession(context.req)
+  const user: any = getSession(context.req)
+  user.data = await getUserDB(context?.req?.headers?.cookie)
+
   return {
     props: {
       user,

@@ -1,4 +1,5 @@
 import ColoredButton from './coloredButton'
+import theme from '../theme'
 
 function Logout(props) {
   return (
@@ -19,11 +20,11 @@ function Logout(props) {
 function Login(props) {
   return (
     <ColoredButton
-      textColor="yellow"
+      textColor={theme.palette.secondary.main}
       //backgroundColor='white'
-      borderColor="red"
-      hoverBackgroundColor="red"
-      hoverTextColor="white"
+      borderColor={theme.palette.secondary.main}
+      //hoverBackgroundColor="red"
+      //hoverTextColor="white"
       variant="outlined"
       {...props}
     >

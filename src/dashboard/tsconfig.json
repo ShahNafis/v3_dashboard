@@ -23,6 +23,7 @@
   ],
   "include": [
     "site/next-env.d.ts",
+    "server/index.d.ts",
     "**/*.ts",
     "**/*.tsx"
   ]

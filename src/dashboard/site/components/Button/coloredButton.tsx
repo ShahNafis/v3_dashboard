@@ -18,6 +18,7 @@ export default function ColoredButton(props) {
     disabledBorderColor,
 
     children,
+    ...otherProps
   } = props
   const StyledButton = withStyles(() => ({
     root: {
@@ -37,5 +38,5 @@ export default function ColoredButton(props) {
     },
   }))(Button)
 
-  return <StyledButton {...props}>{children}</StyledButton>
+  return <StyledButton {...otherProps}>{children}</StyledButton>
 }

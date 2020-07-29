@@ -1,3 +1,6 @@
+// eslint-disable-next-line
+import * as Types from '../interfaces'
+
 import express, { Request, Response } from 'express'
 import next from 'next'
 
