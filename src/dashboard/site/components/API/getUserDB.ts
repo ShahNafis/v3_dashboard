@@ -4,9 +4,10 @@ interface Params {
   cookie: string
   res: ServerResponse
 }
+import { routes } from '../Constants'
 
 async function getUserDB({ cookie, res }: Params) {
-  const resGetUser = await fetch(`http://localhost:5000/api/user/getUser`, {
+  const resGetUser = await fetch(routes.postReq.getUser, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
