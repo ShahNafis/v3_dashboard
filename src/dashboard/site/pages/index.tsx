@@ -38,14 +38,14 @@ export const Home = (): JSX.Element => (
         Running on port {process.env.NEXT_PUBLIC_PORT} in{' '}
         {process.env.NEXT_PUBLIC_NODE_ENV} mode.
         <Box my={4}>
-          <Typography paragraph>
-            <Paper elevation={3} variant="outlined" style={{ padding: 10 }}>
+          <Paper elevation={3} variant="outlined" style={{ padding: 10 }}>
+            <Typography paragraph>
               Welcome to Coastal Image Labeler, please login. You can read about
               the project <RepoLink />. If you have questions, please contact
               Evan Goldstein:
               <EmailLink />.
-            </Paper>
-          </Typography>
+            </Typography>
+          </Paper>
         </Box>
       </Container>
     </Layout>
