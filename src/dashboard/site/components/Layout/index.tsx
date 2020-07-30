@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { makeStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
 
 import Appbar from './Appbar'
 import MobileDrawer from './Drawer/mobile'
@@ -18,7 +19,6 @@ interface Props {
 }
 
 function Layout(props: Props) {
-  const classes = useStyles()
   const [mobileOpen, setMobileOpen] = React.useState(false)
 
   const handleDrawerToggle = () => {
@@ -32,6 +32,8 @@ function Layout(props: Props) {
     appbarType,
   } = props
 
+  const classes = genUseStyle({ showDrawer })()
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -39,6 +41,7 @@ function Layout(props: Props) {
         title={title}
         handleDrawerToggle={handleDrawerToggle}
         appbarType={appbarType}
+        showDrawer={showDrawer}
       />
       <nav className={classes.drawer} aria-label="mailbox folders">
         {showDrawer && (
@@ -57,30 +60,32 @@ function Layout(props: Props) {
 
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {props.children}
+        <Container>{props.children}</Container>
       </main>
     </div>
   )
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  drawer: {
-    [theme.breakpoints.up('sm')]: {
-      width: drawerWidth,
-      flexShrink: 0,
+function genUseStyle({ showDrawer }) {
+  return makeStyles((theme) => ({
+    root: {
+      display: 'flex',
     },
-  },
-  toolbar: theme.mixins.toolbar,
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-}))
+    drawer: {
+      [theme.breakpoints.up('sm')]: {
+        width: showDrawer ? drawerWidth : 0,
+        flexShrink: 0,
+      },
+    },
+    toolbar: theme.mixins.toolbar,
+    drawerPaper: {
+      width: showDrawer ? drawerWidth : 0,
+    },
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+    },
+  }))
+}
 
 export default Layout

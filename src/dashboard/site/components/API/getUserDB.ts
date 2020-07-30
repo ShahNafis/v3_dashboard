@@ -1,8 +1,8 @@
-import { ServerResponse } from 'http'
+// import { ServerResponse } from 'http'
 import { ResponseType } from '../../../interfaces/index'
 interface Params {
   cookie: string
-  res: ServerResponse
+  res: any
 }
 import { routes } from '../Constants'
 
@@ -20,12 +20,10 @@ async function getUserDB({ cookie, res }: Params) {
 
   if (data.success) {
     return data.data.user
-  } else {
-    //for some reason redirect doesnt exist.
-
-    ;(res as any).redirect('/')
-    return {}
   }
+
+  res.redirect('/')
+  return {}
 }
 
 export { getUserDB }

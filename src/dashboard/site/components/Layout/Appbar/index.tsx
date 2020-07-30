@@ -12,28 +12,32 @@ import { defaultTitle, navigationItems } from '../../Constants'
 interface Props {
   title?: string
   user?: object
+  showDrawer?: boolean
   appbarType: undefined | 'basic'
   handleDrawerToggle: () => void
 }
 
 function Appbar(props: Props) {
   const classes = useStyles()
-  const { appbarType } = props
+  const { appbarType, showDrawer } = props
   const navItems = appbarType
     ? navigationItems[appbarType]
     : navigationItems['default']
   return (
     <AppBar position="fixed" className={classes.appBar} color="primary">
       <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={props.handleDrawerToggle}
-          className={classes.menuButton}
-        >
-          <MenuIcon />
-        </IconButton>
+        {showDrawer && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={props.handleDrawerToggle}
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
+
         <Typography variant="h6" noWrap className={classes.title}>
           {props?.title || defaultTitle}
         </Typography>
