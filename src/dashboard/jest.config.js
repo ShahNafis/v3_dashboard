@@ -16,5 +16,5 @@ module.exports = {
   },
 
   //https://mongoosejs.com/docs/jest.html
-  testEnvironment: 'node'
+  testEnvironment: 'node',
 }
