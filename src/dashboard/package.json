@@ -14,7 +14,8 @@
     "lint": "eslint . --ext ts --ext tsx --ext js ",
     "lint:fix": "eslint . --ext ts --ext tsx --ext js --fix",
     "test": "jest",
-    "test-all": "npm run lint && npm run type-check && npm run test"
+    "test-all": "npm run lint && npm run type-check && npm run test",
+    "test3": "ts-node --project tsconfig.server.json tests/index.ts"
   },
   "husky": {
     "hooks": {
@@ -35,6 +36,7 @@
     "colors": "^1.4.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "jest-express": "^1.12.0",
     "lodash": "^4.17.19",
     "memorystore": "^1.6.2",
     "mongoose": "^5.9.24",
@@ -70,6 +72,7 @@
     "jest": "^25.2.3",
     "jest-watch-typeahead": "^0.5.0",
     "lint-staged": "^10.0.10",
+    "node-mocks-http": "^1.8.1",
     "prettier": "^2.0.2",
     "ts-jest": "^26.1.2",
     "ts-node": "^8.10.2",
