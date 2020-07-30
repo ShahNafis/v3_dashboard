@@ -15,8 +15,16 @@ const createuser = asyncHandler(async (req: Request, res: Response) => {
 
 const getUser = asyncHandler(async (req: Request, res: Response) => {
   const id: string = req.user.id
-  const user = await UserModel.findOne({ userId: id })
-
+  let user = undefined
+  try {
+    console.log(id)
+    user = await UserModel.findOne({ userId: id })
+  } catch {
+    res.status(500).json({
+      success: true,
+      message: `Error`,
+    })
+  }
   if (user) {
     res.status(200).json({
       success: true,

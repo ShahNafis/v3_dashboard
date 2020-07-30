@@ -3,11 +3,7 @@ import { testGet } from '../server/controllers/test'
 // eslint-disable-next-line
 import * as Types from '../interfaces'
 
-test('Test clickDown(0)', () => {
-  expect(1).toBe(1)
-})
-
-test('Test Middleware', async () => {
+async function testMid() {
   const req = httpMocks.createRequest({
     user: { id: 'blablabla' },
   })
@@ -15,7 +11,7 @@ test('Test Middleware', async () => {
 
   await testGet(req, res)
   const data = await res._getJSONData()
-  expect(data.data.cards.length).toBe(7)
-})
+  console.log(data.data.cards.length)
+}
 
-export {}
+testMid()
