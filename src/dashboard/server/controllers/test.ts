@@ -15,7 +15,7 @@ const cards = [
 ]
 
 const testGet = asyncHandler(async (req: Request, res: Response) => {
-  console.log('TEST GET')
+  //console.log('TEST GET')
   res.status(200).json({
     success: true,
     message: `Got ${cards.length} cards`,

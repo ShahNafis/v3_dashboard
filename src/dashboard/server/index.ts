@@ -1,11 +1,17 @@
 // eslint-disable-next-line
 import * as Types from '../interfaces'
 
+import dotenv from 'dotenv'
+// Load env vars
+dotenv.config({
+  path: './test.env',
+})
+
 import express, { Request, Response } from 'express'
 import next from 'next'
 
 //import db connection
-import { connectDB } from './db'
+import { connectDB, closeConnection } from './db'
 
 //logged with or without color depending on env
 import { log } from './utils/logger'
@@ -59,9 +65,10 @@ const port = ((process.env.NEXT_PUBLIC_PORT as unknown) as number) ?? 3000
     const serverObj = server.listen(port, (err?: any) => {
       if (err) throw err
       console.log(
-        `> Ready on ${process.env.NEXT_PUBLIC_PROTOCAL}://${
+        `> Ready on ${process.env.NEXT_PUBLIC_PROTOCOL}://${
           process.env.NEXT_PUBLIC_DOMAIN_NAME
-        } - env ${process.env.NEXT_PUBLIC_NODE_ENV ?? 'dev'} mode`
+        } - env ${process.env.NEXT_PUBLIC_NODE_ENV ?? 'dev'} mode
+        `
       )
     })
 
@@ -74,11 +81,13 @@ const port = ((process.env.NEXT_PUBLIC_PORT as unknown) as number) ?? 3000
 
       //Exit server on fail
       serverObj.close(() => {
+        closeConnection()
         process.exit(1)
       })
     })
   } catch (e) {
     console.error(e)
+    closeConnection()
     process.exit(1)
   }
 })()

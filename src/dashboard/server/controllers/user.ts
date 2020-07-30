@@ -17,7 +17,6 @@ const getUser = asyncHandler(async (req: Request, res: Response) => {
   const id: string = req.user.id
   let user = undefined
   try {
-    console.log(id)
     user = await UserModel.findOne({ userId: id })
   } catch {
     res.status(500).json({

@@ -22,6 +22,7 @@ async function getUserDB({ cookie, res }: Params) {
     return data.data.user
   } else {
     //for some reason redirect doesnt exist.
+
     ;(res as any).redirect('/')
     return {}
   }

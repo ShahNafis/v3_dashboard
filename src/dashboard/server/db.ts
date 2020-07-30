@@ -1,4 +1,4 @@
-import { connect, Mongoose } from 'mongoose'
+import { connect, Mongoose, connection } from 'mongoose'
 import { log } from './utils/logger'
 
 export const connectDB = async () => {
@@ -35,6 +35,14 @@ export const connectDB = async () => {
   //Inform that the connection has been made
   log({
     message: `MongoDB connected: ${conn?.connection?.host}`,
+    type: 'ok',
+  })
+}
+
+export const closeConnection = async () => {
+  connection.close()
+  log({
+    message: 'DB connection closed',
     type: 'ok',
   })
 }
