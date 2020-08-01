@@ -18,8 +18,11 @@ export default function ColoredButton(props) {
     disabledBorderColor,
 
     children,
+
+    style,
     ...otherProps
   } = props
+
   const StyledButton = withStyles(() => ({
     root: {
       color: textColor,
@@ -35,6 +38,7 @@ export default function ColoredButton(props) {
         backgroundColor: disabledBackgroundColor ?? 'grey',
         borderColor: disabledBorderColor ?? 'white',
       },
+      ...style,
     },
   }))(Button)
 

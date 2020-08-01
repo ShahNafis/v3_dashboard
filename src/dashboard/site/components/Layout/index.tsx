@@ -20,9 +20,13 @@ interface Props {
 
 function Layout(props: Props) {
   const [mobileOpen, setMobileOpen] = React.useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
+  }
+  const handleMenuToggle = () => {
+    setMobileMenuOpen(!mobileMenuOpen)
   }
 
   const {
@@ -40,6 +44,7 @@ function Layout(props: Props) {
       <Appbar
         title={title}
         handleDrawerToggle={handleDrawerToggle}
+        handleMenuToggle={handleMenuToggle}
         appbarType={appbarType}
         showDrawer={showDrawer}
       />

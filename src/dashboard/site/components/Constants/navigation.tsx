@@ -2,8 +2,8 @@ import { Logout, Login } from '../Button/premadeButtons'
 
 interface NavigationItemType {
   name: string
+  route: string
   icon?: string
-  route?: string
   element?: JSX.Element
 }
 

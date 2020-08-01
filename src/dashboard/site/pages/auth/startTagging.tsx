@@ -1,5 +1,8 @@
 import Head from 'next/head'
 import Layout from '../../components/Layout'
+import { GetServerSideProps } from 'next'
+import getSession from '../../components/Utils/Auth/getSession'
+import { getUserDB } from '../../components/API/getUserDB'
 
 const StartTagging = (props): JSX.Element => {
   const { user } = props
@@ -20,6 +23,20 @@ const StartTagging = (props): JSX.Element => {
       </Layout>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
+  const user: any = getSession(context.req)
+  user.data = await getUserDB({
+    cookie: context?.req?.headers?.cookie,
+    res: context.res,
+  })
+
+  return {
+    props: {
+      user,
+    },
+  }
 }
 
 export default StartTagging

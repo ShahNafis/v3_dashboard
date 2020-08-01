@@ -6,7 +6,12 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import MoreIcon from '@material-ui/icons/MoreVert'
+import Menu from '@material-ui/core/Menu'
 
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import Divider from '@material-ui/core/Divider'
 import { defaultTitle, navigationItems } from '../../Constants'
 
 interface Props {
@@ -15,6 +20,7 @@ interface Props {
   showDrawer?: boolean
   appbarType: undefined | 'basic'
   handleDrawerToggle: () => void
+  handleMenuToggle: () => void
 }
 
 function Appbar(props: Props) {
@@ -23,6 +29,16 @@ function Appbar(props: Props) {
   const navItems = appbarType
     ? navigationItems[appbarType]
     : navigationItems['default']
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   return (
     <AppBar position="fixed" className={classes.appBar} color="primary">
       <Toolbar>
@@ -32,7 +48,7 @@ function Appbar(props: Props) {
             aria-label="open drawer"
             edge="start"
             onClick={props.handleDrawerToggle}
-            className={classes.menuButton}
+            className={classes.showMobile}
           >
             <MenuIcon />
           </IconButton>
@@ -42,7 +58,7 @@ function Appbar(props: Props) {
           {props?.title || defaultTitle}
         </Typography>
 
-        <div className={classes.title}>
+        <div className={`${classes.title} ${classes.showDesktop}`}>
           {navItems.center.map((item, index) => {
             return (
               <React.Fragment key={index + item.name}>
@@ -62,19 +78,67 @@ function Appbar(props: Props) {
             )
           })}
         </div>
-        {navItems.right.map((item, index) => {
-          return (
-            <React.Fragment key={index + item.name}>
-              {item.element ? (
-                item.element
-              ) : (
-                <Button color="inherit" href={item.route}>
-                  {item.name}
-                </Button>
-              )}
-            </React.Fragment>
-          )
-        })}
+        <div className={`${classes.showDesktop}`}>
+          {navItems.right.map((item, index) => {
+            return (
+              <React.Fragment key={index + item.name}>
+                {item.element ? (
+                  item.element
+                ) : (
+                  <Button color="inherit" href={item.route}>
+                    {item.name}
+                  </Button>
+                )}
+              </React.Fragment>
+            )
+          })}
+        </div>
+
+        <div className={classes.showMobile}>
+          <IconButton onClick={handleClick} color="inherit">
+            <MoreIcon />
+          </IconButton>
+        </div>
+
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {navItems.center.map((item, index) => {
+            return (
+              <div key={index + item.name}>
+                <a
+                  href={item.route}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <ListItem button>
+                    <ListItemText primary={item.name} />
+                  </ListItem>
+                </a>
+              </div>
+            )
+          })}
+          {navItems.center.length > 0 && navItems.right.length > 0 && (
+            <Divider />
+          )}
+          {navItems.right.map((item, index) => {
+            return (
+              <div key={index + item.name}>
+                <a
+                  href={item.route}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <ListItem button>
+                    <ListItemText primary={item.name} />
+                  </ListItem>
+                </a>
+              </div>
+            )
+          })}
+        </Menu>
       </Toolbar>
     </AppBar>
   )
@@ -84,8 +148,14 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  showDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'flex',
+    },
+  },
+  showMobile: {
+    display: 'flex',
     [theme.breakpoints.up('sm')]: {
       display: 'none',
     },
