@@ -23,7 +23,7 @@ async function getUserDB({ cookie, res }: Params) {
   }
 
   res.redirect('/')
-  return {}
+  return undefined
 }
 
 export { getUserDB }

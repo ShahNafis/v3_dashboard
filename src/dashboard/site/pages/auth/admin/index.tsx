@@ -1,11 +1,18 @@
+import React from 'react'
+
 import Head from 'next/head'
 import { GetServerSideProps } from 'next'
 
 import getSession from '../../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../../components/API/getUserDB'
 import Layout from '../../../components/Layout'
+import { checkUserTags } from '../../../components/Utils/Auth/checkTags'
+import { generateUnAuthObj } from '../../../components/Utils/Auth/unAuthError'
+import ErrorCard from '../../../components/ErrorCards'
+
 export const Admin = (props): JSX.Element => {
-  const { user } = props
+  const { user, success, message } = props
+
   return (
     <div className="container">
       <Head>
@@ -17,9 +24,13 @@ export const Admin = (props): JSX.Element => {
         showDrawer
         user={props.user}
         appbarType="basic"
-        title={`Welcome ${user.displayName}`}
+        title={`Welcome ${user?.displayName}`}
       >
-        Admin: {user.displayName}
+        {!success ? (
+          <ErrorCard message={message} title="Error" />
+        ) : (
+          <React.Fragment>Admin: {user.displayName}</React.Fragment>
+        )}
       </Layout>
     </div>
   )
@@ -32,8 +43,20 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     res: context.res,
   })
 
+  const isAdmin = checkUserTags({ roles: user.data?.roles, role: 'admin' })
+
+  if (!isAdmin.success) {
+    return {
+      props: {
+        ...generateUnAuthObj({
+          message: `User ${user.data.userName} is not allowed to access this page`,
+        }),
+      },
+    }
+  }
   return {
     props: {
+      success: true,
       user,
     },
   }
