@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import Radio, { RadioProps } from '@material-ui/core/Radio'
 // import * as colors from '@material-ui/core/colors/';
 
@@ -15,7 +15,7 @@ interface Props extends RadioProps {
 export default function ColoredRadio(props: Props) {
   const { styles, children, ...otherProps } = props
 
-  const StyledRadioButton = withStyles(() => ({
+  const useStyles = makeStyles({
     root: {
       color: styles.circle ?? '',
       '&$checked': {
@@ -23,7 +23,19 @@ export default function ColoredRadio(props: Props) {
       },
     },
     checked: {},
-  }))(Radio)
+  })
 
-  return <StyledRadioButton {...otherProps}>{children}</StyledRadioButton>
+  const classes = useStyles()
+
+  return (
+    <Radio
+      {...otherProps}
+      classes={{
+        root: classes.root,
+        checked: classes.checked,
+      }}
+    >
+      {children}
+    </Radio>
+  )
 }

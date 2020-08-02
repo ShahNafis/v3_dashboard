@@ -20,7 +20,7 @@ export default function GenericHookForm(props) {
     register,
     handleSubmit,
     errors,
-    //watch,
+    watch,
     getValues,
     control,
     //setValue
@@ -70,6 +70,7 @@ export default function GenericHookForm(props) {
       <Typography color="secondary">
         {questionSetData.name}:{questionSetData.description}
       </Typography>
+      {JSON.stringify(watch())}
       <Divider />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>

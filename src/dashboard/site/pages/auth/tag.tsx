@@ -6,8 +6,10 @@ import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/getUserDB'
 import ErrorCard from '../../components/ErrorCards'
 
-import GenericHookForm from '../../components/Forms/genricHookForm'
-import { questions } from '../../components/data/testQuestions'
+// import GenericHookForm from '../../components/Forms/genricHookForm'
+// import { questions } from '../../components/data/testQuestions'
+// import radioData from '../../components/data/testRadios'
+import Test from '../../components/Demo/form'
 export default function TagImage(props) {
   const { user, success, message } = props
   return (
@@ -27,7 +29,7 @@ export default function TagImage(props) {
         ) : (
           <React.Fragment>
             Hello {user?.displayName}|{user.data._id}
-            <GenericHookForm
+            {/* <GenericHookForm
               questionSetData={{
                 questions: questions,
                 name: 'Test',
@@ -44,7 +46,8 @@ export default function TagImage(props) {
                   console.log('a')
                 },
               }}
-            />
+            /> */}
+            <Test />
           </React.Fragment>
         )}
       </Layout>
