@@ -4,15 +4,16 @@ import Layout from '../../components/Layout'
 import { GetServerSideProps } from 'next'
 import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/getUserDB'
-import Avatar from '@material-ui/core/Avatar'
 import ErrorCard from '../../components/ErrorCards'
 
-export const Home = (props): JSX.Element => {
+import GenericHookForm from '../../components/Forms/genricHookForm'
+import { questions } from '../../components/data/testQuestions'
+export default function TagImage(props) {
   const { user, success, message } = props
   return (
-    <div className="container">
+    <React.Fragment>
       <Head>
-        <title>Home</title>
+        <title>Tag Image</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -26,11 +27,28 @@ export const Home = (props): JSX.Element => {
         ) : (
           <React.Fragment>
             Hello {user?.displayName}|{user.data._id}
-            <Avatar alt="hi" src={user.picture} />
+            <GenericHookForm
+              questionSetData={{
+                questions: questions,
+                name: 'Test',
+                description: 'Test desc',
+              }}
+              formFunctions={{
+                tagAsWater: () => {
+                  console.log('a')
+                },
+                skipImage: () => {
+                  console.log('a')
+                },
+                submitTags: () => {
+                  console.log('a')
+                },
+              }}
+            />
           </React.Fragment>
         )}
       </Layout>
-    </div>
+    </React.Fragment>
   )
 }
 
@@ -56,5 +74,3 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     },
   }
 }
-
-export default Home
