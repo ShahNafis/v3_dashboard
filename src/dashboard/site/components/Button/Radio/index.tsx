@@ -13,7 +13,7 @@ interface Props extends RadioProps {
 }
 
 export default function ColoredRadio(props: Props) {
-  const { styles, children, ...otherProps } = props
+  const { styles, ...otherProps } = props
 
   const useStyles = makeStyles({
     root: {
@@ -34,8 +34,6 @@ export default function ColoredRadio(props: Props) {
         root: classes.root,
         checked: classes.checked,
       }}
-    >
-      {children}
-    </Radio>
+    />
   )
 }
