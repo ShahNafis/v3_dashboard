@@ -9,6 +9,7 @@ import ErrorCard from '../../components/ErrorCards'
 import GenericHookForm from '../../components/Forms/genricHookForm'
 import { questionSetData } from '../../components/data/testQuestions'
 import { ResponseType } from '../../../interfaces'
+import { determineAppbar } from '../../components/Utils/Auth/determineAppbar'
 
 export default function TagImage(props) {
   const { user, success, message } = props
@@ -29,7 +30,7 @@ export default function TagImage(props) {
 
       <Layout
         user={props.user}
-        appbarType="basic"
+        appbarType={determineAppbar(props.user)}
         title={`Welcome ${user?.displayName}`}
       >
         {!success ? (

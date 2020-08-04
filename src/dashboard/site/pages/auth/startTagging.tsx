@@ -3,6 +3,7 @@ import Layout from '../../components/Layout'
 import { GetServerSideProps } from 'next'
 import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/getUserDB'
+import { determineAppbar } from '../../components/Utils/Auth/determineAppbar'
 
 const StartTagging = (props): JSX.Element => {
   const { user } = props
@@ -17,7 +18,7 @@ const StartTagging = (props): JSX.Element => {
       <Layout
         showDrawer
         user={props.user}
-        appbarType="basic"
+        appbarType={determineAppbar(props.user)}
         title={`Welcome ${user.displayName}`}
       >
         Start Tagging Images {user.displayName}

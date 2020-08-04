@@ -15,7 +15,7 @@ interface Props {
   user?: object
   showDrawer?: boolean
   children: ReactNode
-  appbarType?: undefined | 'basic'
+  appbarType?: undefined | 'basic' | 'admin'
 }
 
 function Layout(props: Props) {

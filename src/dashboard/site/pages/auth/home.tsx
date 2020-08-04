@@ -6,7 +6,7 @@ import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/getUserDB'
 import Avatar from '@material-ui/core/Avatar'
 import ErrorCard from '../../components/ErrorCards'
-
+import { determineAppbar } from '../../components/Utils/Auth/determineAppbar'
 export const Home = (props): JSX.Element => {
   const { user, success, message } = props
   return (
@@ -18,7 +18,7 @@ export const Home = (props): JSX.Element => {
 
       <Layout
         user={props.user}
-        appbarType="basic"
+        appbarType={determineAppbar(props.user)}
         title={`Welcome ${user?.displayName}`}
       >
         {!success ? (

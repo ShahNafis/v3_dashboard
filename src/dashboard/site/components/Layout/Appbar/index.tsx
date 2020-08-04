@@ -18,7 +18,7 @@ interface Props {
   title?: string
   user?: object
   showDrawer?: boolean
-  appbarType: undefined | 'basic'
+  appbarType: undefined | 'basic' | 'admin'
   handleDrawerToggle: () => void
   handleMenuToggle: () => void
 }

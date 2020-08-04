@@ -16,6 +16,10 @@ interface NavigationItemsType {
     center: NavigationItemType[]
     right: NavigationItemType[]
   }
+  admin: {
+    center: NavigationItemType[]
+    right: NavigationItemType[]
+  }
 }
 
 const login = {
@@ -38,6 +42,11 @@ const startTagging = {
   icon: '',
   route: '/auth/startTagging',
 }
+const admin = {
+  name: 'Admin',
+  icon: '',
+  route: '/auth/admin',
+}
 
 const navigation: NavigationItemsType = {
   default: {
@@ -46,6 +55,10 @@ const navigation: NavigationItemsType = {
   },
   basic: {
     center: [home, startTagging],
+    right: [logout],
+  },
+  admin: {
+    center: [home, startTagging, admin],
     right: [logout],
   },
 }

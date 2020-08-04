@@ -9,6 +9,7 @@ import Layout from '../../../components/Layout'
 import { checkUserTags } from '../../../components/Utils/Auth/checkTags'
 import { generateUnAuthObj } from '../../../components/Utils/Auth/unAuthError'
 import ErrorCard from '../../../components/ErrorCards'
+import { determineAppbar } from '../../../components/Utils/Auth/determineAppbar'
 
 export const Admin = (props): JSX.Element => {
   const { user, success, message } = props
@@ -23,7 +24,7 @@ export const Admin = (props): JSX.Element => {
       <Layout
         showDrawer
         user={props.user}
-        appbarType="basic"
+        appbarType={determineAppbar(props.user)}
         title={`Welcome ${user?.displayName}`}
       >
         {!success ? (
