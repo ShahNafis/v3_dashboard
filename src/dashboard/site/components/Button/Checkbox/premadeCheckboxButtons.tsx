@@ -1,16 +1,13 @@
-import ColoredCheckboxButtons from './index'
+import ColoredCheckbox from './index'
 import * as colors from '@material-ui/core/colors/'
 
-function YesNoCheckbox(props) {
-  return (
-    <ColoredCheckboxButtons
-      styles={{
-        checked: colors.green[600],
-        border: colors.red[400],
-      }}
-      {...props}
-    />
-  )
-}
+const YesNoCheckbox = (props) => (
+  <ColoredCheckbox
+    styles={{ box: colors.red[400], checked: colors.green[600] }}
+    name={'group1'}
+    value={'value1'}
+    {...props}
+  />
+)
 
 export { YesNoCheckbox }
