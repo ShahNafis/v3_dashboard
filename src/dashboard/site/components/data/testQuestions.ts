@@ -105,6 +105,31 @@ const questions = [
     multiline: true,
     rows: 5,
   },
+  {
+    type: 'buttonSubmit',
+    required: false,
+    label: 'Quick Submit',
+    docLink:
+      'https://uncg-daisy.github.io/Coastal-Image-Labeler/docs/question_sets/BeachStateQuestionSet',
+    key: 'quickSubmitButtons',
+    tag: {
+      water: true,
+    },
+    buttons: [
+      {
+        label: 'Label image as Unusable and go to next image',
+        tag: {
+          unusable: true,
+        },
+        key: 'tagAsUnusable',
+      },
+    ],
+  },
 ]
 
-export { questions }
+const questionSetData = {
+  questions: questions,
+  name: 'Test name',
+  description: 'Test desc',
+}
+export { questionSetData }

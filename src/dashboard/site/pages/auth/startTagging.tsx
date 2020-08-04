@@ -4,10 +4,9 @@ import { GetServerSideProps } from 'next'
 import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/getUserDB'
 
-import GenericHookForm from '../../components/Forms/genricHookForm'
-import { questions } from '../../components/data/testQuestions'
 const StartTagging = (props): JSX.Element => {
   const { user } = props
+
   return (
     <div className="container">
       <Head>
@@ -22,15 +21,6 @@ const StartTagging = (props): JSX.Element => {
         title={`Welcome ${user.displayName}`}
       >
         Start Tagging Images {user.displayName}
-        {/* <CheckboxesGroup/> */}
-        <GenericHookForm
-          questionSetData={{ questions: questions }}
-          formFunctions={{
-            tagAsWater: () => {},
-            skipImage: () => {},
-            submitTags: () => {},
-          }}
-        />
       </Layout>
     </div>
   )

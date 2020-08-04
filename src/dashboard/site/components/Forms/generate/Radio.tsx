@@ -8,7 +8,7 @@ import {
   // Radio
 } from '@material-ui/core'
 import { YesNoRadio } from '../../Button/Radio/premadeRadioButtons'
-// import { generateLabel } from './Label'
+import { generateLabel } from './Label'
 import { errorText } from './ErrorText'
 
 function generateRadio(radioQuestions, values) {
@@ -18,14 +18,14 @@ function generateRadio(radioQuestions, values) {
     required,
     buttons,
     errorMessage,
-    // docLink,
+    docLink,
   } = radioQuestions
   const { globalDisable, control, errors } = values
   return (
     <React.Fragment key={key}>
       <FormControl fullWidth component="fieldset" margin="normal">
         <FormLabel component="legend">
-          {/* {generateLabel({ label, docLink })} */}
+          {generateLabel({ label, link: docLink })}
         </FormLabel>
         <Controller
           as={
@@ -51,4 +51,15 @@ function generateRadio(radioQuestions, values) {
   )
 }
 
-export { generateRadio }
+function generateRadioDefaults(input) {
+  const defaults = {}
+
+  input.map((question) => {
+    if (question.type === 'radioGroup') {
+      defaults[question.key] = ''
+    }
+  })
+  return defaults
+}
+
+export { generateRadio, generateRadioDefaults }

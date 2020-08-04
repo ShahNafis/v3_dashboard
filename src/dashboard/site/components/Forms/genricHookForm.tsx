@@ -1,26 +1,53 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Typography, Divider } from '@material-ui/core'
+import { Typography, Divider, FormControl } from '@material-ui/core'
 
-import { generateRadio } from './generate/Radio'
-import { generateCheckbox } from './generate/Checkbox'
-import { generateTextField } from './generate/Textfield'
-import { generateQuickSubmitButton } from './generate/QuickSubmit'
+import { generateRadioDefaults } from './generate/Radio'
+// import { generateCheckbox } from './generate/Checkbox'
+// import { generateTextField } from './generate/Textfield'
+// import { generateQuickSubmitButton } from './generate/QuickSubmit'
 
-export default function GenericHookForm(props) {
+import { ResponseType } from '../../../interfaces'
+import determineQuestionType from './determineQuestionType'
+import { SubmitButton, SkipButton } from '../Button/premadeButtons'
+
+interface Props {
+  questionSetData: {
+    questions: any
+    name: string
+    description: string
+  }
+  formFunctions: {
+    skipImage: () => void
+    submitTags: (tags: any) => ResponseType
+  }
+}
+
+export default function GenericHookForm(props: Props) {
   const [globalDisable, setGlobalDisable] = useState(false)
 
-  const { questionSetData, formFunctions } = props
+  const {
+    questionSetData = {
+      questions: [],
+      name: '',
+      description: '',
+    },
+    formFunctions = {
+      tagAsWater: () => {},
+      skipImage: () => {},
+      submitTags: () => {},
+    },
+  } = props
 
-  const { tagAsWater, skipImage, submitTags } = formFunctions
-  console.log(tagAsWater, skipImage)
+  const { skipImage, submitTags } = formFunctions
+
   const { questions } = questionSetData
 
   const {
     register,
     handleSubmit,
     errors,
-    watch,
+    //watch,
     getValues,
     control,
     //setValue
@@ -35,60 +62,61 @@ export default function GenericHookForm(props) {
     submitTags(data)
   }
 
-  function determineQuestionType(questionList) {
-    return questionList.map((question) => {
-      switch (question.type) {
-        case 'radioGroup':
-          return generateRadio(question, { globalDisable, control, errors })
-
-        case 'checkboxGroup':
-          return generateCheckbox(question, {
-            globalDisable,
-            register,
-            getValues,
-            errors,
-          })
-
-        case 'textField':
-          return generateTextField(question, {
-            globalDisable,
-            register,
-            errors,
-          })
-
-        case 'buttonSubmit':
-          return generateQuickSubmitButton(question)
-
-        default:
-          break
-      }
-    })
-  }
-
   return (
     <React.Fragment>
       <Typography color="secondary">
         {questionSetData.name}:{questionSetData.description}
       </Typography>
-      {JSON.stringify(watch())}
+
+      {/* {JSON.stringify(watch())} */}
       <Divider />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <React.Fragment>{determineQuestionType(questions)}</React.Fragment>
+          <React.Fragment>
+            {determineQuestionType(questions, {
+              globalDisable,
+              control,
+              errors,
+              register,
+              getValues,
+              onSubmit,
+            })}
+          </React.Fragment>
         </div>
         <Divider />
+        <FormControl fullWidth component="fieldset" margin="normal">
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+            }}
+          >
+            <div>
+              <SkipButton
+                variant="outlined"
+                onClick={() => {
+                  setGlobalDisable(true)
+                  skipImage()
+                }}
+                disabled={globalDisable}
+              >
+                Skip
+              </SkipButton>
+            </div>
+            <div>
+              <SubmitButton
+                type="submit"
+                variant="outlined"
+                color="default"
+                disabled={globalDisable}
+              >
+                Submit
+              </SubmitButton>
+            </div>
+          </div>
+        </FormControl>
       </form>
     </React.Fragment>
   )
-}
-
-function generateRadioDefaults(input) {
-  const defaults = {}
-
-  input.map((question) => {
-    if (question.type === 'radioGroup') {
-      defaults[question.key] = ''
-    }
-  })
-  return defaults
 }

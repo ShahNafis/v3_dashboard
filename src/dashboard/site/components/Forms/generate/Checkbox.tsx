@@ -21,7 +21,7 @@ function generateCheckbox(checkboxQuestions, values) {
     errorMessage,
     docLink,
   } = checkboxQuestions
-  const { globalDisable, register, getValues, errors } = values
+  const { register, getValues, errors } = values
   return (
     <FormControl fullWidth component="fieldset" margin="normal" key={key}>
       <FormLabel component="legend" focused={false}>
@@ -34,7 +34,7 @@ function generateCheckbox(checkboxQuestions, values) {
             label={`${checkboxButton.name}`}
             control={
               <YesNoCheckbox
-                disabled={globalDisable}
+                disabled={false}
                 color="primary"
                 name={key}
                 value={checkboxButton.value}
