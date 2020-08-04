@@ -9,7 +9,7 @@ import App, { AppProps } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import theme from '../components/theme'
+import { theme } from '../components/theme'
 
 export default class MyApp extends App<{}, {}, { user?: any }> {
   constructor(props) {

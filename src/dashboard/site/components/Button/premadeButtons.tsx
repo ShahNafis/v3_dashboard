@@ -1,5 +1,5 @@
 import ColoredButton from './coloredButton'
-import theme from '../theme'
+import { theme, customColors } from '../theme'
 
 function Logout(props) {
   return (
@@ -33,4 +33,45 @@ function Login(props) {
   )
 }
 
-export { Logout, Login }
+function CyanButton(props) {
+  return (
+    <ColoredButton
+      textColor={customColors.cyan}
+      //backgroundColor='white'
+      borderColor={customColors.cyan}
+      //hoverBackgroundColor="red"
+      //hoverTextColor="white"
+      variant="outlined"
+      {...props}
+    >
+      {props.children}
+    </ColoredButton>
+  )
+}
+
+function SkipButton(props) {
+  return (
+    <ColoredButton
+      textColor={customColors.red}
+      borderColor={customColors.red}
+      variant="outlined"
+      {...props}
+    >
+      {props.children}
+    </ColoredButton>
+  )
+}
+
+function SubmitButton(props) {
+  return (
+    <ColoredButton
+      textColor={customColors.green}
+      borderColor={customColors.green}
+      variant="outlined"
+      {...props}
+    >
+      {props.children}
+    </ColoredButton>
+  )
+}
+export { Logout, Login, CyanButton, SkipButton, SubmitButton }

@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 
 import Layout from '../components/Layout'
 import ColoredLink from '../components/ColoredLink'
-import theme from '../components/theme'
+import { theme } from '../components/theme'
 
 const RepoLink = () => (
   <ColoredLink

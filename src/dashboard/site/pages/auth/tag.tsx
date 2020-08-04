@@ -6,12 +6,20 @@ import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/getUserDB'
 import ErrorCard from '../../components/ErrorCards'
 
-// import GenericHookForm from '../../components/Forms/genricHookForm'
-// import { questions } from '../../components/data/testQuestions'
-// import radioData from '../../components/data/testRadios'
-import Test from '../../components/Demo/form'
+import GenericHookForm from '../../components/Forms/genricHookForm'
+import { questionSetData } from '../../components/data/testQuestions'
+import { ResponseType } from '../../../interfaces'
+
 export default function TagImage(props) {
   const { user, success, message } = props
+
+  function submitTags(tags): ResponseType {
+    console.log(tags)
+    return {
+      message: 'Done',
+      success: true,
+    }
+  }
   return (
     <React.Fragment>
       <Head>
@@ -29,25 +37,13 @@ export default function TagImage(props) {
         ) : (
           <React.Fragment>
             Hello {user?.displayName}|{user.data._id}
-            {/* <GenericHookForm
-              questionSetData={{
-                questions: questions,
-                name: 'Test',
-                description: 'Test desc',
-              }}
+            <GenericHookForm
+              questionSetData={questionSetData}
               formFunctions={{
-                tagAsWater: () => {
-                  console.log('a')
-                },
-                skipImage: () => {
-                  console.log('a')
-                },
-                submitTags: () => {
-                  console.log('a')
-                },
+                skipImage: () => {},
+                submitTags: submitTags,
               }}
-            /> */}
-            <Test />
+            />
           </React.Fragment>
         )}
       </Layout>
