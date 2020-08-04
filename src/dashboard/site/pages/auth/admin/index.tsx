@@ -30,7 +30,12 @@ export const Admin = (props): JSX.Element => {
         {!success ? (
           <ErrorCard message={message} title="Error" />
         ) : (
-          <React.Fragment>Admin: {user.displayName}</React.Fragment>
+          <React.Fragment>
+            Running on port {process.env.NEXT_PUBLIC_PORT} in{' '}
+            {process.env.NEXT_PUBLIC_NODE_ENV} mode.
+            <br />
+            Admin: {user.displayName}
+          </React.Fragment>
         )}
       </Layout>
     </div>

@@ -1,12 +1,16 @@
 import React from 'react'
 import Head from 'next/head'
+import { Typography, Paper } from '@material-ui/core'
+
 import Layout from '../../components/Layout'
 import { GetServerSideProps } from 'next'
 import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/getUserDB'
-import Avatar from '@material-ui/core/Avatar'
 import ErrorCard from '../../components/ErrorCards'
 import { determineAppbar } from '../../components/Utils/Auth/determineAppbar'
+
+import { EmailLink, RepoLink, DocLink } from '../../components/ColoredLink'
+
 export const Home = (props): JSX.Element => {
   const { user, success, message } = props
   return (
@@ -25,8 +29,17 @@ export const Home = (props): JSX.Element => {
           <ErrorCard message={message} title="Error" />
         ) : (
           <React.Fragment>
-            Hello {user?.displayName}|{user.data._id}
-            <Avatar alt="hi" src={user.picture} />
+            <Typography variant="body1" component="h1" gutterBottom>
+              <Paper elevation={3} variant="outlined" style={{ padding: 10 }}>
+                Welcome {props.user.displayName}! If you have permission to
+                label images, you can start by clicking &quot;Pick Catalog to
+                Label&quot; on the left, or resume labeling a catalog you have
+                started using the table below. To request permission to label
+                images, please contact Evan Goldstein at {<EmailLink />}. Also,
+                please check out the project {<RepoLink />} and the project{' '}
+                {<DocLink />}.
+              </Paper>
+            </Typography>
           </React.Fragment>
         )}
       </Layout>
