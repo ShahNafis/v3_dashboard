@@ -33,7 +33,9 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "no-console":"off"
+    "no-console":"off",
+    "no-empty-function": "off",
+    "@typescript-eslint/no-empty-function": ["error", { "allow": ["arrowFunctions"] }]
     // "no-console": [
     //   2,
     //   {
