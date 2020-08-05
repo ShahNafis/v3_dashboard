@@ -6,6 +6,12 @@
 import { Schema, model, Model, Document, HookNextFunction, SchemaDefinition, Types} from 'mongoose'
 import {UserDocument}  from '../../interfaces/models'
 
+interface Type {
+    X: HookNextFunction, 
+    Y: SchemaDefinition,
+}
+console.log(Document,Types)
+
 const userSchema: Schema = new Schema({
 
 },{
