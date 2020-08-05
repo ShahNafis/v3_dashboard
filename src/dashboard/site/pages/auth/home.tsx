@@ -1,6 +1,5 @@
 import React from 'react'
 import Head from 'next/head'
-import { Typography, Paper } from '@material-ui/core'
 
 import Layout from '../../components/Layout'
 import { GetServerSideProps } from 'next'
@@ -8,11 +7,20 @@ import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/getUserDB'
 import ErrorCard from '../../components/ErrorCards'
 import { determineAppbar } from '../../components/Utils/Auth/determineAppbar'
+import {HomeText } from '../../components/StaticText/home'
+import {ResumeTagging } from '../../components/Tables/ResumeTagging'
+import {ResumeTaggingData} from '../../../interfaces'
 
-import { EmailLink, RepoLink, DocLink } from '../../components/ColoredLink'
+interface Props {
+  user: any,
+  resumeTableData: ResumeTaggingData[],
+  success: boolean
+  message?: string
+}
 
-export const Home = (props): JSX.Element => {
-  const { user, success, message } = props
+export const Home = (props: Props): JSX.Element => {
+  const { user, success, message, resumeTableData } = props
+ 
   return (
     <div className="container">
       <Head>
@@ -29,17 +37,8 @@ export const Home = (props): JSX.Element => {
           <ErrorCard message={message} title="Error" />
         ) : (
           <React.Fragment>
-            <Typography variant="body1" component="h1" gutterBottom>
-              <Paper elevation={3} variant="outlined" style={{ padding: 10 }}>
-                Welcome {props.user.displayName}! If you have permission to
-                label images, you can start by clicking &quot;Pick Catalog to
-                Label&quot; on the left, or resume labeling a catalog you have
-                started using the table below. To request permission to label
-                images, please contact Evan Goldstein at {<EmailLink />}. Also,
-                please check out the project {<RepoLink />} and the project{' '}
-                {<DocLink />}.
-              </Paper>
-            </Typography>
+            <HomeText displayName={user?.displayName}/>
+            <ResumeTagging data={resumeTableData}/>
           </React.Fragment>
         )}
       </Layout>
@@ -52,7 +51,7 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   user.data = await getUserDB({
     cookie: context?.req?.headers?.cookie,
     res: context.res,
-  })
+  }) ?? {}
 
   if (Object.keys(user.data).length === 0) {
     return {
@@ -66,6 +65,36 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     props: {
       success: true,
       user,
+      resumeTableData: [
+        {
+          catalogName:'Catalog 1',
+          archives: [
+            {
+              archiveName: 'Archive 1',
+              total: 10,
+              tagged:5,
+              link: '#a1'
+            },
+            {
+              archiveName: 'Archive 2',
+              total: 100,
+              tagged:3,
+              link: '#a2'
+            }
+          ]
+        },
+        {
+          catalogName:'Catalog 2',
+          archives: [
+            {
+              archiveName: 'Archive 3',
+              total: 10,
+              tagged:2,
+              link: '#a3'
+            },
+          ]
+        }   
+      ]
     },
   }
 }

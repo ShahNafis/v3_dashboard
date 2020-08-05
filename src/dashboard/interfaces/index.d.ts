@@ -4,6 +4,16 @@ declare namespace cilDashboard {
     message: string
     data?: any
   }
+
+  export interface ResumeTaggingData {
+    catalogName: string;
+    archives: {
+        archiveName: string;
+        total: number;
+        tagged: number;
+        link: string;
+    }[]
+  }
 }
 
 declare global {
