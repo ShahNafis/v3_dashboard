@@ -3,7 +3,26 @@ import { withStyles } from '@material-ui/core/styles'
 // import * as colors from '@material-ui/core/colors/';
 import Button from '@material-ui/core/Button'
 
-export default function ColoredButton(props) {
+interface Props {
+  textColor?: string
+  backgroundColor?: string
+  borderColor?: string
+
+  hoverTextColor?: string
+  hoverBackgroundColor?: string
+  hoverBorderColor?: string
+
+  disabledTextColor?: string
+  disabledBackgroundColor?: string
+  disabledBorderColor?: string
+
+  children?: React.ReactNode
+
+  style: Record<string, any>,
+  //otherProps: any
+}
+
+export default function ColoredButton(props: Props) {
   const {
     textColor,
     backgroundColor,

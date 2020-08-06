@@ -74,4 +74,21 @@ function SubmitButton(props) {
     </ColoredButton>
   )
 }
-export { Logout, Login, CyanButton, SkipButton, SubmitButton }
+
+function ViewImage(props) {
+  return (
+    <ColoredButton
+      textColor={theme.palette.primary.light}
+      borderColor={theme.palette.primary.main}
+
+      hoverTextColor={'white'}
+      hoverBackgroundColor={theme.palette.primary.main}
+      variant="outlined"
+
+      {...props}
+    >
+      {props.children}
+    </ColoredButton>
+  )
+}
+export { Logout, Login, CyanButton, SkipButton, SubmitButton, ViewImage }
