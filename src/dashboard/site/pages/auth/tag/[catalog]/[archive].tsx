@@ -1,14 +1,13 @@
 import React from 'react'
 import Head from 'next/head'
-import Layout from '../../components/Layout'
+
+import Layout from '../../../../components/Layout'
 import { GetServerSideProps } from 'next'
-import getSession from '../../components/Utils/Auth/getSession'
-import { getUserDB } from '../../components/API/getUserDB'
-import ErrorCard from '../../components/ErrorCards'
-
-import { determineAppbar } from '../../components/Utils/Auth/determineAppbar'
-
-import {ImageTag} from '../../components/Cards/ImageTag'
+import getSession from '../../../../components/Utils/Auth/getSession'
+import { getUserDB } from '../../../../components/API/getUserDB'
+import ErrorCard from '../../../../components/ErrorCards'
+import { determineAppbar } from '../../../../components/Utils/Auth/determineAppbar'
+import {ImageTag} from '../../../../components/Cards/ImageTag'
 
 export default function TagImage(props) {
   const { user, success, message, imageDocument } = props
@@ -29,7 +28,6 @@ export default function TagImage(props) {
           <ErrorCard message={message} title="Error" />
         ) : (
           <React.Fragment>
-            Hello {user?.displayName}|{user.data._id}
             <ImageTag user={user} imageDocument = {imageDocument} />
           </React.Fragment>
         )}
