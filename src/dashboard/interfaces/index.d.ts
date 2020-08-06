@@ -6,12 +6,28 @@ declare namespace cilDashboard {
   }
 
   export interface ResumeTaggingData {
-    catalogName: string;
+    catalogName: string
     archives: {
-        archiveName: string;
-        total: number;
-        tagged: number;
-        link: string;
+      archiveName: string
+      total: number
+      tagged: number
+      link: string
+    }[]
+  }
+
+  export interface CatalogSelectionData {
+    name: string
+    _id: string
+    catalogInfo: {
+      year: number
+      link: string
+      description: string
+    }
+    totalImages: number
+    archives: {
+      name: string
+      totalImages: number
+      _id: string
     }[]
   }
 }

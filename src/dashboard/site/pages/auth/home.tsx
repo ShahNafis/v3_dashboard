@@ -7,20 +7,20 @@ import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/getUserDB'
 import ErrorCard from '../../components/ErrorCards'
 import { determineAppbar } from '../../components/Utils/Auth/determineAppbar'
-import {HomeText } from '../../components/StaticText/home'
-import {ResumeTagging } from '../../components/Tables/ResumeTagging'
-import {ResumeTaggingData} from '../../../interfaces'
+import { HomeText } from '../../components/StaticText/home'
+import { ResumeTagging } from '../../components/Tables/ResumeTagging'
+import { ResumeTaggingData } from '../../../interfaces'
 
 interface Props {
-  user: any,
-  resumeTableData: ResumeTaggingData[],
+  user: any
+  resumeTableData: ResumeTaggingData[]
   success: boolean
   message?: string
 }
 
 export const Home = (props: Props): JSX.Element => {
   const { user, success, message, resumeTableData } = props
- 
+
   return (
     <div className="container">
       <Head>
@@ -37,8 +37,8 @@ export const Home = (props: Props): JSX.Element => {
           <ErrorCard message={message} title="Error" />
         ) : (
           <React.Fragment>
-            <HomeText displayName={user?.displayName}/>
-            <ResumeTagging data={resumeTableData}/>
+            <HomeText displayName={user?.displayName} />
+            <ResumeTagging data={resumeTableData} />
           </React.Fragment>
         )}
       </Layout>
@@ -48,10 +48,11 @@ export const Home = (props: Props): JSX.Element => {
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const user: any = getSession(context.req)
-  user.data = await getUserDB({
-    cookie: context?.req?.headers?.cookie,
-    res: context.res,
-  }) ?? {}
+  user.data =
+    (await getUserDB({
+      cookie: context?.req?.headers?.cookie,
+      res: context.res,
+    })) ?? {}
 
   if (Object.keys(user.data).length === 0) {
     return {
@@ -67,34 +68,34 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
       user,
       resumeTableData: [
         {
-          catalogName:'Catalog 1',
+          catalogName: 'Catalog 1',
           archives: [
             {
               archiveName: 'Archive 1',
               total: 10,
-              tagged:5,
-              link: '#a1'
+              tagged: 5,
+              link: '#a1',
             },
             {
               archiveName: 'Archive 2',
               total: 100,
-              tagged:3,
-              link: '#a2'
-            }
-          ]
+              tagged: 3,
+              link: '#a2',
+            },
+          ],
         },
         {
-          catalogName:'Catalog 2',
+          catalogName: 'Catalog 2',
           archives: [
             {
               archiveName: 'Archive 3',
               total: 10,
-              tagged:2,
-              link: '#a3'
+              tagged: 2,
+              link: '#a3',
             },
-          ]
-        }   
-      ]
+          ],
+        },
+      ],
     },
   }
 }
