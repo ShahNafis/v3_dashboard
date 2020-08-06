@@ -6,25 +6,17 @@ import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/getUserDB'
 import ErrorCard from '../../components/ErrorCards'
 
-import GenericHookForm from '../../components/Forms/genricHookForm'
-import { questionSetData } from '../../components/data/testQuestions'
-import { ResponseType } from '../../../interfaces'
 import { determineAppbar } from '../../components/Utils/Auth/determineAppbar'
 
-export default function TagImage(props) {
-  const { user, success, message } = props
+import {ImageTag} from '../../components/Cards/ImageTag'
 
-  function submitTags(tags): ResponseType {
-    console.log(tags)
-    return {
-      message: 'Done',
-      success: true,
-    }
-  }
+export default function TagImage(props) {
+  const { user, success, message, imageDocument } = props
+
   return (
     <React.Fragment>
       <Head>
-        <title>Tag Image</title>
+        <title>Tag Image: {imageDocument.fileName}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -38,13 +30,7 @@ export default function TagImage(props) {
         ) : (
           <React.Fragment>
             Hello {user?.displayName}|{user.data._id}
-            <GenericHookForm
-              questionSetData={questionSetData}
-              formFunctions={{
-                skipImage: () => {},
-                submitTags: submitTags,
-              }}
-            />
+            <ImageTag user={user} imageDocument = {imageDocument} />
           </React.Fragment>
         )}
       </Layout>
@@ -71,6 +57,12 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     props: {
       success: true,
       user,
+      imageDocument:{
+        _id: '_id-test',
+        fileName: 'fileName',
+        imageLink:'https://upload.wikimedia.org/wikipedia/commons/1/10/Zweihaender_im_historischen_Museum_Basel.JPG',
+        compressedImageLink:'https://en.wikipedia.org/wiki/Estoc#/media/File:Panzerstecher_PP_noBg.jpg'
+      }
     },
   }
 }
