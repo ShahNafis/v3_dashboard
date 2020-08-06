@@ -53,15 +53,13 @@ export function Dropdown(props: Props) {
           onChange={handleChange}
         >
           <MenuItem value="">None</MenuItem>
-          {
-              filteredData.map((value,index)=>{
-                  return (
-                    <MenuItem key={value.name+index} value={value.value}>
-                        {value.name}
-                    </MenuItem>
-                  )
-              })
-          }
+          {filteredData.map((value, index) => {
+            return (
+              <MenuItem key={value.name + index} value={value.value}>
+                {value.name}
+              </MenuItem>
+            )
+          })}
         </Select>
         <FormHelperText>Please select {label}</FormHelperText>
       </FormControl>

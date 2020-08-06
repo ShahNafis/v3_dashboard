@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import Container from '@material-ui/core/Container'
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert, AlertTitle } from '@material-ui/lab'
 //import Divider from '@material-ui/core/Divider';
 
 import { Dropdown } from '../Dropdown'
@@ -54,13 +54,13 @@ export function SelectArchive(props: Props) {
         )
       case 1:
         return (
-            <Dropdown
-              label="Select Archive"
-              data={data[selectedCatalog].archives}
-              selectedItem={selectedArchive}
-              setItem={setArchive}
-            />
-          )
+          <Dropdown
+            label="Select Archive"
+            data={data[selectedCatalog].archives}
+            selectedItem={selectedArchive}
+            setItem={setArchive}
+          />
+        )
       default:
         return 'Unknown stepIndex'
     }
@@ -68,61 +68,73 @@ export function SelectArchive(props: Props) {
 
   function determineStepDisabled(activeStep: number) {
     switch (activeStep) {
-    case 0:
-        return (
-            selectedCatalog === -1
-        )
-    case 1:
-        return (
-            selectedArchive === -1
-        )
-    default:
+      case 0:
+        return selectedCatalog === -1
+      case 1:
+        return selectedArchive === -1
+      default:
         return false
     }
   }
 
   function LabelText(props) {
-      return (
-        <React.Fragment>
-            <strong style={{color:theme.palette.secondary.main}}>
-                {props.label}
-            </strong>: {props.text}
-            <br/>
-        </React.Fragment>
-      )
+    return (
+      <React.Fragment>
+        <strong style={{ color: theme.palette.secondary.main }}>
+          {props.label}
+        </strong>
+        : {props.text}
+        <br />
+      </React.Fragment>
+    )
   }
   function showData() {
-    
     const showCatalog = selectedCatalog >= 0
     const showArchive = selectedArchive >= 0
     return (
-        <div>
-            <Alert severity="info" color="info" variant="outlined" >
-            <AlertTitle>Info</AlertTitle>
-            { showCatalog && 
-                <div>
-                    <LabelText label="Catalog Name" text={data[selectedCatalog].name}/>
-                    <LabelText label="Catalog Year" text={data[selectedCatalog].catalogInfo.year}/>
-                    <LabelText label="Catalog Desc" text={data[selectedCatalog].catalogInfo.description}/>
-                    <LabelText label="Catalog Link" text={data[selectedCatalog].catalogInfo.link}/>
-                    <LabelText label="Catalog # of Images" text={data[selectedCatalog].totalImages}/>
-                </div>
-            }
-            { showArchive && 
-                <div>
-                    <LabelText 
-                        label="Archive Name" 
-                        text={data[selectedCatalog]?.archives[selectedArchive]?.name}
-                    />
-                    <LabelText 
-                        label="Archive # of Images" 
-                        text={data[selectedCatalog]?.archives[selectedArchive].totalImages}
-                    />
-                </div>
-            }
-            
-            </Alert>
-        </div>
+      <div>
+        <Alert severity="info" color="info" variant="outlined">
+          <AlertTitle>Info</AlertTitle>
+          {showCatalog && (
+            <div>
+              <LabelText
+                label="Catalog Name"
+                text={data[selectedCatalog].name}
+              />
+              <LabelText
+                label="Catalog Year"
+                text={data[selectedCatalog].catalogInfo.year}
+              />
+              <LabelText
+                label="Catalog Desc"
+                text={data[selectedCatalog].catalogInfo.description}
+              />
+              <LabelText
+                label="Catalog Link"
+                text={data[selectedCatalog].catalogInfo.link}
+              />
+              <LabelText
+                label="Catalog # of Images"
+                text={data[selectedCatalog].totalImages}
+              />
+            </div>
+          )}
+          {showArchive && (
+            <div>
+              <LabelText
+                label="Archive Name"
+                text={data[selectedCatalog]?.archives[selectedArchive]?.name}
+              />
+              <LabelText
+                label="Archive # of Images"
+                text={
+                  data[selectedCatalog]?.archives[selectedArchive].totalImages
+                }
+              />
+            </div>
+          )}
+        </Alert>
+      </div>
     )
   }
   return (
@@ -147,13 +159,11 @@ export function SelectArchive(props: Props) {
               </div>
             ) : (
               <div>
-                <div className = {classes.center}>
+                <div className={classes.center}>
                   {getStepContent(activeStep)}
                 </div>
-                <div className = {classes.alert}>
-                  {showData()}
-                </div>
-                
+                <div className={classes.alert}>{showData()}</div>
+
                 <div>
                   <Button
                     disabled={activeStep === 0}
@@ -195,12 +205,12 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
     },
     center: {
-        display: 'flex',
-        justifyContent: 'center', 
+      display: 'flex',
+      justifyContent: 'center',
     },
     alert: {
-        marginBottom: theme.spacing(1),
-    }
+      marginBottom: theme.spacing(1),
+    },
   })
 )
 

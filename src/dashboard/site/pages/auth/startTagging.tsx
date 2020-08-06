@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next'
 import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/getUserDB'
 import { determineAppbar } from '../../components/Utils/Auth/determineAppbar'
-import { SelectArchive } from '../../components/Stepper/selectArchive'
+import { SelectArchive } from '../../components/Tables/SelectArchive'
 import { CatalogSelectionData } from '../../../interfaces'
 
 const StartTagging = (props): JSX.Element => {
@@ -21,7 +21,6 @@ const StartTagging = (props): JSX.Element => {
       </Head>
 
       <Layout
-        showDrawer
         user={props.user}
         appbarType={determineAppbar(props.user)}
         title={`Welcome ${user.displayName}`}
@@ -49,7 +48,15 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
           catalogInfo: {
             year: 1066,
             link: '#link1',
-            description: 'Battle of Hastings',
+            description: `
+            The Battle of Hastings[a] was fought on 14 October 1066 between the 
+            Norman-French army of William, the Duke of Normandy, and an 
+            English army under the Anglo-Saxon King Harold 
+            Godwinson, beginning the Norman conquest of 
+            England. It took place approximately 7 miles (11 kilometres) northwest 
+            of Hastings, close to the present-day town of Battle, 
+            East Sussex, and was a decisive Norman victory.
+            `,
           },
           totalImages: 110,
           archives: [
