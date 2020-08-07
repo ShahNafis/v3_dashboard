@@ -24,9 +24,10 @@ const archiveScehma: Schema = new Schema({
         unique: true,
         maxlength: [128,'Name can not be longer than 128 characters']
     },
-    roles:{
-        type:[Types.ObjectId],
-        default:[]
+    compressedPath:{
+        type: String,
+        unique: true,
+        maxlength: [128,'Name can not be longer than 128 characters']
     },
     catalog: {
         type: Types.ObjectId,

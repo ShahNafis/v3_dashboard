@@ -8,8 +8,8 @@ import MongoConnection from '../lib/MongoConnection'
 import UriManager from '../lib/UriManager';
 
 import {CatalogModel} from '../models/Catalog'
-// import {ArchiveModel} from '../models/Archive'
-// import {ImageModel} from '../models/Image'
+import {ArchiveModel} from '../models/Archive'
+import {ImageModel} from '../models/Image'
 // import colorize from '../utils/colorize'
 
 //import {isRequired} from '../utils/validation'
@@ -17,6 +17,7 @@ import fs from 'fs'
 
 import unhandledRejection from '../utils/unhandledRejection'
 import colorize from '../utils/colorize';
+
 unhandledRejection
 
 interface Options {
@@ -75,13 +76,53 @@ const catalog = {
             
 
             const archiveFolders = getDirectories(catalogPath)
-            console.log('Archives',archiveFolders)
 
             //For each archive of a catalog
             for(const archiveName of archiveFolders) {
                 const archivePath = `${catalogPath}/${archiveName}`
                 const images = getFiles(archivePath,imageFormat)
-                console.log(images)
+
+                let archiveEntry = await ArchiveModel.findOne({
+                    catalog:catalogEntry._id,
+                    name:archiveName,
+                    path:archivePath,
+                })
+
+                if(!archiveEntry) {
+                    archiveEntry = await ArchiveModel.create({
+                        catalog:catalogEntry._id,
+                        compressedPath:archivePath,
+                        name:archiveName,
+                        path:archivePath,
+                        taggable:true,
+                        dateAdded: Date.now()
+                    })
+                    colorize.success('Created new archive')
+                } else {
+                    colorize.info('Archive already exists')
+                }
+                for(const image of images) {
+                    const imagePath = `/${image}`
+                    let imageEntry = await ImageModel.findOne({
+                        archive:archiveEntry._id,
+                        path:imagePath,
+                        name:image
+                    })
+    
+                    if(!imageEntry) {
+                        imageEntry = await ImageModel.create({
+                            archive:archiveEntry._id,
+                            name:image,
+                            path:imagePath,
+                            numberOfMatches:2,
+                            taggable: true,
+                            dateAdded: Date.now(),  
+                        })
+                        colorize.success('Created new image')
+                    } else {
+                        colorize.info('Image already exists')
+                    }
+                }
             }
         }
      
