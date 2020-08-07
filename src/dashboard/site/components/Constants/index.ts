@@ -1,4 +1,4 @@
-import navigationItems from './navigation'
+import {navigationItems} from './navigation'
 const protocal = process?.env?.NEXT_PUBLIC_PROTOCOL
 const apiCall = (route) => {
   return `${protocal}://${process?.env?.NEXT_PUBLIC_DOMAIN_NAME}${route}`

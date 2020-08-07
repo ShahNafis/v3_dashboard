@@ -6,16 +6,18 @@ import Container from '@material-ui/core/Container'
 import Appbar from './Appbar'
 import MobileDrawer from './Drawer/mobile'
 import DesktopDrawer from './Drawer/desktop'
-import { uiConstants } from '../Constants'
+import { uiConstants,navigationItems } from '../Constants'
 
 const drawerWidth = uiConstants.drawerWidth
 
 interface Props {
   title?: string
   user?: object
-  showDrawer?: boolean
+  drawer?: {
+    content: any
+  }
   children: ReactNode
-  appbarType?: undefined | 'basic' | 'admin'
+  navItems?: any
 }
 
 function Layout(props: Props) {
@@ -31,25 +33,27 @@ function Layout(props: Props) {
 
   const {
     title,
-    //user,
-    showDrawer,
-    appbarType,
+    drawer,
+    navItems
   } = props
-
-  const classes = genUseStyle({ showDrawer })()
+  console.log(!!drawer)
+  const classes = genUseStyle({ showDrawer:!!drawer  })()
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <Appbar
         title={title}
-        handleDrawerToggle={handleDrawerToggle}
-        handleMenuToggle={handleMenuToggle}
-        appbarType={appbarType}
-        showDrawer={showDrawer}
+        drawer={{
+          showDrawer: !!drawer,
+          handleDrawerToggle:handleDrawerToggle,
+          handleMenuToggle:handleMenuToggle
+        }}
+        navItems = {navItems ?? navigationItems.default}
       />
+      
       <nav className={classes.drawer} aria-label="mailbox folders">
-        {showDrawer && (
+        {!!drawer && (
           <React.Fragment>
             {/* Phone mode */}
             <MobileDrawer

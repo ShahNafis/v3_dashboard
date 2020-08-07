@@ -22,33 +22,33 @@ interface NavigationItemsType {
   }
 }
 
-const login = {
+export const login = {
   name: 'Login',
   route: '/login',
   element: <Login href="/login" />,
 }
-const logout = {
+export const logout = {
   name: 'Logout',
   route: '/logout',
   element: <Logout href="/logout" />,
 }
-const home = {
+export const home = {
   name: 'Home',
   icon: '',
   route: '/auth/home',
 }
-const startTagging = {
+export const startTagging = {
   name: 'Start Tagging',
   icon: '',
   route: '/auth/startTagging',
 }
-const admin = {
+export const admin = {
   name: 'Admin',
   icon: '',
   route: '/auth/admin',
 }
 
-const navigation: NavigationItemsType = {
+const navigationItems: NavigationItemsType = {
   default: {
     center: [],
     right: [login],
@@ -63,4 +63,6 @@ const navigation: NavigationItemsType = {
   },
 }
 
-export default navigation
+export {
+  navigationItems
+}

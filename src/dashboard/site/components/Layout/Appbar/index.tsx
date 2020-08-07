@@ -1,35 +1,37 @@
 import React from 'react'
+
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import Menu from '@material-ui/core/Menu'
-
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
-import { defaultTitle, navigationItems } from '../../Constants'
 
+import { defaultTitle } from '../../Constants'
+
+import {useStyles} from './styles'
 interface Props {
   title?: string
   user?: object
-  showDrawer?: boolean
-  appbarType: undefined | 'basic' | 'admin'
-  handleDrawerToggle: () => void
-  handleMenuToggle: () => void
+  //appbarType: undefined | 'basic' | 'admin'
+  navItems: any
+  drawer?: {
+    showDrawer: boolean
+    handleDrawerToggle?: () => void
+    handleMenuToggle?: () => void
+  }
+
 }
 
 function Appbar(props: Props) {
   const classes = useStyles()
-  const { appbarType, showDrawer } = props
-  const navItems = appbarType
-    ? navigationItems[appbarType]
-    : navigationItems['default']
-
+  const { navItems, drawer } = props
+  const {handleDrawerToggle, showDrawer} = drawer
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -47,7 +49,7 @@ function Appbar(props: Props) {
             color="inherit"
             aria-label="open drawer"
             edge="start"
-            onClick={props.handleDrawerToggle}
+            onClick={handleDrawerToggle}
             className={classes.showMobile}
           >
             <MenuIcon />
@@ -144,28 +146,5 @@ function Appbar(props: Props) {
   )
 }
 
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
-  showDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'flex',
-    },
-  },
-  showMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
-  },
-  title: {
-    flexGrow: 1,
-  },
-  spacedButton: {
-    marginRight: `5px`,
-  },
-}))
 
 export default Appbar

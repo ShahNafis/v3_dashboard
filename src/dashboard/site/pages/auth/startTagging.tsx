@@ -3,7 +3,7 @@ import Layout from '../../components/Layout'
 import { GetServerSideProps } from 'next'
 import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/getUserDB'
-import { determineAppbar } from '../../components/Utils/Auth/determineAppbar'
+import { determineNavItems } from '../../components/Utils/Auth/determineNavItems'
 import { SelectArchive } from '../../components/Tables/SelectArchive'
 import { CatalogSelectionData } from '../../../interfaces'
 
@@ -22,7 +22,7 @@ const StartTagging = (props): JSX.Element => {
 
       <Layout
         user={props.user}
-        appbarType={determineAppbar(props.user)}
+        navItems={determineNavItems(user)}
         title={`Welcome ${user.displayName}`}
       >
         <SelectArchive data={selectionData} />

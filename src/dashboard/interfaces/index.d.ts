@@ -30,6 +30,37 @@ declare namespace cilDashboard {
       _id: string
     }[]
   }
+
+  export interface UserProp {
+    displayName: string,
+    id: string,
+    user_id: string,
+    provider: string,
+    picture: string,
+    nickname: string,
+    _json: {
+      sub: string,       
+      given_name: string,
+      family_name: string,
+      nickname: string,
+      name: string,
+      picture: string,
+      locale: string,
+      updated_at: string,
+      email: string,
+      email_verified: boolean
+    },
+    data?: {
+      catalogs: [any],
+      roles: [string],
+      _id: string,
+      userId: string,
+      userName: string,
+      dataAdded: Date,
+      imagesTagged: [any],
+      id: string
+    }
+  }
 }
 
 declare global {

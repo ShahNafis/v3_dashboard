@@ -6,7 +6,7 @@ import { GetServerSideProps } from 'next'
 import getSession from '../../../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../../../components/API/getUserDB'
 import ErrorCard from '../../../../components/ErrorCards'
-import { determineAppbar } from '../../../../components/Utils/Auth/determineAppbar'
+import { determineNavItems } from '../../../../components/Utils/Auth/determineNavItems'
 import {ImageTag} from '../../../../components/Cards/ImageTag'
 
 export default function TagImage(props) {
@@ -21,7 +21,7 @@ export default function TagImage(props) {
 
       <Layout
         user={props.user}
-        appbarType={determineAppbar(props.user)}
+        navItems={determineNavItems(user)}
         title={`Welcome ${user?.displayName}`}
       >
         {!success ? (

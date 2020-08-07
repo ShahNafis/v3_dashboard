@@ -6,13 +6,13 @@ import { GetServerSideProps } from 'next'
 import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/getUserDB'
 import ErrorCard from '../../components/ErrorCards'
-import { determineAppbar } from '../../components/Utils/Auth/determineAppbar'
+import { determineNavItems } from '../../components/Utils/Auth/determineNavItems'
 import { HomeText } from '../../components/StaticText/home'
 import { ResumeTagging } from '../../components/Tables/ResumeTagging'
-import { ResumeTaggingData } from '../../../interfaces'
+import { ResumeTaggingData, UserProp } from '../../../interfaces'
 
 interface Props {
-  user: any
+  user: UserProp
   resumeTableData: ResumeTaggingData[]
   success: boolean
   message?: string
@@ -30,8 +30,8 @@ export const Home = (props: Props): JSX.Element => {
 
       <Layout
         user={props.user}
-        appbarType={determineAppbar(props.user)}
         title={`Welcome ${user?.displayName}`}
+        navItems={determineNavItems(user)}
       >
         {!success ? (
           <ErrorCard message={message} title="Error" />
