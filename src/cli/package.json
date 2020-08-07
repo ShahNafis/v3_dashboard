@@ -1,13 +1,13 @@
 {
   "name": "cil-dashboard",
-  "version": "1.0.9",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "bin": "./_dist/bin/cil-dashboard.js",
   "scripts": {
     "build": "tsc",
-    "link": "rimraf _dist && tsc && npm link",
-    "start": "node ./_dist/bin/cil-dashboard.js mongoURI show",
+    "link": "rimraf dist && tsc && npm link",
+    "start": "node ./dist/bin/cil-dashboard.js catalog add --path C:/Users/Namenai/Documents/GitHub/v3_dashboard/src/cli_test_data/test.json",
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "lint": "eslint . --ext ts --ext tsx --ext js ",
     "lint:fix": "eslint . --ext ts --ext tsx --ext js --fix",

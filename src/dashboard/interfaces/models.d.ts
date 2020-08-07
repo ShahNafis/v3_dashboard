@@ -1,4 +1,5 @@
 import { Document } from 'mongoose'
+import { ObjectID } from 'mongodb';
 
 export interface UserDocument extends Document {
   username: string
@@ -15,7 +16,7 @@ export interface CatalogDocument extends Document {
   name: string
   path: string
   taggable: boolean
-  questionSet: Types.ObjectId
+  questionSet: ObjectID
   imageServeOrder?: {
     type: string
   }
@@ -26,8 +27,8 @@ export interface ArchiveDocument extends Document {
   dateAdded?: Date
   name: string
   path: string
-  role: [Types.ObjectId]
-  catalog: Types.ObjectId
+  role: [ObjectID]
+  catalog: ObjectID
   taggable: boolean
   totalImages: number
 }

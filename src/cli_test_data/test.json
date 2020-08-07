@@ -1,0 +1,18 @@
+{
+    "catalogs":[
+        {
+            "path":"C:/Users/Namenai/Documents/GitHub/v3_dashboard/src/cli_test_data/testCatalogs/tanks/american",
+            "compressedPath":"C:/Users/Namenai/Documents/GitHub/v3_dashboard/src/cli_test_data/testCatalogs/tanks/american",
+            "name":"American Tanks",
+            "taggable":true,
+            "year":1776,
+            "link":"https://en.wikipedia.org/wiki/United_States",
+            "description":"Tanks that focus on being jack of all trades.",
+            "createAllArchives":true,
+            "createAllImages":{
+                "imageFormat":["jpg","jpeg"]
+            },
+            "questionSet":"5ee3a8d801091b0dd1d62d3a"
+        }      
+    ]
+}

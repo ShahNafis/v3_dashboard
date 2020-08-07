@@ -4,7 +4,7 @@
 
 
 import { Schema, model, Model, Document, HookNextFunction, SchemaDefinition, Types} from 'mongoose'
-import {UserDocument}  from '../../interfaces/models'
+import {UserDocument}  from '../interfaces/models'
 
 interface Type {
     X: HookNextFunction, 
