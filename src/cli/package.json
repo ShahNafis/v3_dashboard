@@ -7,11 +7,12 @@
   "scripts": {
     "build": "tsc",
     "link": "rimraf dist && tsc && npm link",
-    "start": "node ./dist/bin/cil-dashboard.js catalog add --path C:/Users/Namenai/Documents/GitHub/v3_dashboard/src/cli_test_data/test.json",
+    "test:build":"npm run build && npm run test",
+    "test": "node ./dist/bin/cil-dashboard.js catalog add --path C:/Users/Namenai/Documents/GitHub/v3_dashboard/src/cli_test_data/test.json",
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "lint": "eslint . --ext ts --ext tsx --ext js ",
     "lint:fix": "eslint . --ext ts --ext tsx --ext js --fix",
-    "test": "jest"
+    "jest": "jest"
   },
   "keywords": [],
   "author": "",

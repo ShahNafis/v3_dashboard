@@ -7,13 +7,12 @@ const getDirectories = (source: string) =>
     .map(dirent => dirent.name)
     // .split(',')
 
-const getFiles = (source: string,fileType?: string ) => 
+const getFiles = (source: string,fileTypes?: [string] ) => 
     readdirSync(source, { withFileTypes: true })
     .filter(dirent => dirent.isFile())
     .filter(file => {
-
-        if(fileType) {
-            return path.extname(file.name).toLowerCase() === fileType.toLowerCase()
+        if(fileTypes) {
+            return fileTypes.includes(path.extname(file.name).toLowerCase())
         } else {
             return true
         }

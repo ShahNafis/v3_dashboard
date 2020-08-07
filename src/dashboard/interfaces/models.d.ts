@@ -6,21 +6,21 @@ export interface UserDocument extends Document {
 }
 
 export interface CatalogDocument extends Document {
-  archives: any
+  dateAdded?: Date
+  name: string
+  path: string
+  compressedPath: string
   catalogInfo?: {
     year: number
     link: string
     description: string
   }
-  dateAdded?: Date
-  name: string
-  path: string
   taggable: boolean
   questionSet: ObjectID
   imageServeOrder?: {
     type: string
   }
-  totalImages: number
+  totalImages?: number
 }
 
 export interface ArchiveDocument extends Document {

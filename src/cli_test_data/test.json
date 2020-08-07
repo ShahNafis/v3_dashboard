@@ -1,17 +1,18 @@
 {
     "catalogs":[
         {
-            "path":"C:/Users/Namenai/Documents/GitHub/v3_dashboard/src/cli_test_data/testCatalogs/tanks/american",
-            "compressedPath":"C:/Users/Namenai/Documents/GitHub/v3_dashboard/src/cli_test_data/testCatalogs/tanks/american",
-            "name":"American Tanks",
+            "path":"C:/Users/Namenai/Documents/GitHub/v3_dashboard/src/cli_test_data/testCatalogs/tanks",
+            "compressedPath":"C:/Users/Namenai/Documents/GitHub/v3_dashboard/src/cli_test_data/testCatalogs/tanks",
+            "name":"Tanks",
             "taggable":true,
-            "year":1776,
-            "link":"https://en.wikipedia.org/wiki/United_States",
-            "description":"Tanks that focus on being jack of all trades.",
+            "catalogInfo":{
+                "year": 1916,
+                "link":"https://en.wikipedia.org/wiki/Tank",
+                "description":"Tanks are tracked fighting vehicles with armor and large caliber guns."
+            }, 
             "createAllArchives":true,
-            "createAllImages":{
-                "imageFormat":["jpg","jpeg"]
-            },
+            "createAllImages":true,
+            "imageFormat":[".jpg",".jpeg"],
             "questionSet":"5ee3a8d801091b0dd1d62d3a"
         }      
     ]
