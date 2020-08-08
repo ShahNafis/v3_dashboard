@@ -56,16 +56,7 @@ declare namespace cilDashboard {
       email: string,
       email_verified: boolean
     },
-    data?: {
-      catalogs: [CatalogDocument],
-      roles: [string],
-      _id: string,
-      userId: string,
-      userName: string,
-      dataAdded: Date,
-      imagesTagged: [any],
-      id: string
-    }
+    data?: UserDocument
   }
 
   export interface AdvResultsRes extends Response {
