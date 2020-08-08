@@ -27,7 +27,7 @@ export const Home = (): JSX.Element => (
       </Box>
     </Layout>
   </div>
-)
+) 
 
 function test(x) {
   let y:number = x

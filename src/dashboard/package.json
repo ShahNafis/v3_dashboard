@@ -19,7 +19,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npx lint-staged",
+      "pre-commit": "npm run lint",
       "pre-push": "npm run type-check"
     }
   },
