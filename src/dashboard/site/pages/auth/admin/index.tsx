@@ -22,7 +22,7 @@ export const Admin = (props): JSX.Element => {
       </Head>
 
       <Layout
-        showDrawer
+        drawer={{}}
         user={props.user}
         navItems={determineNavItems(user)}
         title={`Welcome ${user?.displayName}`}

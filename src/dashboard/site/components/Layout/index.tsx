@@ -14,7 +14,7 @@ interface Props {
   title?: string
   user?: object
   drawer?: {
-    content: any
+    content?: any
   }
   children: ReactNode
   navItems?: any
