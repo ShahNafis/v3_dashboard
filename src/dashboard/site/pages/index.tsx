@@ -29,4 +29,8 @@ export const Home = (): JSX.Element => (
   </div>
 )
 
+function test(x) {
+  let y:number = x
+}
+
 export default Home
