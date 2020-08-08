@@ -1,4 +1,4 @@
-import { Document } from 'mongoose'
+import { Document, Model } from 'mongoose'
 import { ObjectID } from 'mongodb';
 
 export interface UserDocument extends Document {
@@ -28,6 +28,14 @@ export interface CatalogDocument extends Document {
     type: string
   }
   totalImages?: number
+
+  updateImageCount(): void
+}
+
+export interface CatalogModelType extends Model<CatalogDocument> {
+  // here we decalre statics
+  
+  updateImageCount?: (archiveId: ObjectID) => Promise<void>
 }
 
 export interface ArchiveDocument extends Document {

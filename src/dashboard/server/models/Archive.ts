@@ -37,6 +37,10 @@ const archiveScehma: Schema = new Schema({
     taggable: {
         type:Boolean,
         required: [true,'Please provide if archive is taggable or not.'],
+    },
+    totalImages:{
+        type: Number,
+        default: 0
     }
 
     

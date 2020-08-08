@@ -16,7 +16,7 @@ import {ImageModel} from '../models/Image'
 import fs from 'fs'
 
 import unhandledRejection from '../utils/unhandledRejection'
-import colorize from '../utils/colorize';
+//import colorize from '../utils/colorize';
 
 unhandledRejection
 
@@ -40,6 +40,8 @@ const catalog = {
         
         //For each catalog provided
         for(let  i =0;i<file.catalogs.length;i++) {
+            const timeStart = process.hrtime()
+
             const catalog = file.catalogs[i]
             const {
                 path: catalogPath,
@@ -69,9 +71,9 @@ const catalog = {
                     },
                     dateAdded: Date.now()
                 })
-                colorize.success('Created new catalog')
+                //colorize.success('Created new catalog')
             } else {
-                colorize.info('Catalog already exists')
+               //colorize.info('Catalog already exists')
             }
             
 
@@ -97,9 +99,9 @@ const catalog = {
                         taggable:true,
                         dateAdded: Date.now()
                     })
-                    colorize.success('Created new archive')
+                    //colorize.success('Created new archive')
                 } else {
-                    colorize.info('Archive already exists')
+                    //colorize.info('Archive already exists')
                 }
                 for(const image of images) {
                     const imagePath = `/${image}`
@@ -118,12 +120,16 @@ const catalog = {
                             taggable: true,
                             dateAdded: Date.now(),  
                         })
-                        colorize.success('Created new image')
+                        //colorize.success('Created new image')
                     } else {
-                        colorize.info('Image already exists')
+                        //colorize.info('Image already exists')
                     }
                 }
             }
+
+            const timeEnd = process.hrtime(timeStart)
+
+            console.info(`Catalog ${name} = ${timeEnd[1] / 1000000}ms`, )
         }
      
         await mongoConnection.close()

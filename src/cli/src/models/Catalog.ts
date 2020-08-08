@@ -3,9 +3,9 @@
 */
 
 
-import { Schema, model, Model,Types} from 'mongoose'
-import {CatalogDocument} from '../../interfaces/models'
-
+import { Schema, model, Types} from 'mongoose'
+import {CatalogModelType} from '../../interfaces/models'
+import {ArchiveModel} from './Archive'
 const catalogScheme: Schema = new Schema({
         dateAdded:{
             type: Date
@@ -55,7 +55,8 @@ const catalogScheme: Schema = new Schema({
             required:false
         },
         totalImages: {
-            type: Number
+            type: Number,
+            default: 0
         }
 
         
@@ -66,6 +67,25 @@ const catalogScheme: Schema = new Schema({
 
 )
 
+catalogScheme.statics.updateImageCount = async function(archiveId: Types.ObjectId) {
+    const archive = await ArchiveModel.findById(archiveId)
+    const catalogId = archive.catalog
+    const archives = await ArchiveModel.find({catalog:catalogId})
+    let sum = 0
+
+    for(const arc of archives) {
+        sum+= arc.totalImages
+    }
+    //console.log(`Catalog ${catalogId} = ${sum}`)
+    try {
+        await this.model('Catalog').findByIdAndUpdate(catalogId, {
+            totalImages: sum
+        });
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 // Reverse populate with virtuals
 catalogScheme.virtual('archives', {
     ref: 'Archive',
@@ -75,4 +95,4 @@ catalogScheme.virtual('archives', {
 });
 
 
-export const CatalogModel: Model<CatalogDocument> =  model('Catalog', catalogScheme);
+export const CatalogModel: CatalogModelType =  model('Catalog', catalogScheme);
