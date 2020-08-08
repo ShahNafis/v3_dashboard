@@ -48,6 +48,8 @@ export function Row(props: Props) {
               color="primary"  
               size="small"
               variant="contained"
+              target="_blank"
+              rel="noreferrer"
             >
               More Info
             </Button>
