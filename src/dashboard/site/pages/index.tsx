@@ -8,14 +8,13 @@ import Typography from '@material-ui/core/Typography'
 import Layout from '../components/Layout'
 import { RepoLink, EmailLink } from '../components/ColoredLink'
 
-
 export const Home = (): JSX.Element => (
   <div className="container">
     <Head>
       <title>Welcome to Coastal Image Labeler</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <Layout >
+    <Layout>
       <Box my={4}>
         <Typography variant="body1" component="h1" gutterBottom>
           <Paper elevation={3} variant="outlined" style={{ padding: 10 }}>
@@ -27,10 +26,6 @@ export const Home = (): JSX.Element => (
       </Box>
     </Layout>
   </div>
-) 
-
-function test(x) {
-  let y:number = x
-}
+)
 
 export default Home
