@@ -18,7 +18,7 @@ export async function getStartTaggingTableData({ cookie }: Params) {
     })
     
     const resData: ResponseType = await resGetData.json()
-    console.log(resData)
+
     if (resData.success) {
         return resData.data
     }

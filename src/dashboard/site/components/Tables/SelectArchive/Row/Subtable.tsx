@@ -35,7 +35,7 @@ export function SubTable(props: Props) {
                 <TableCell>{archiveRow.totalImages}</TableCell>
                 <TableCell>
                     <Button
-                        href={`#catalog=${row._id}?archive=${archiveRow._id}`}
+                        href={`/auth/tag/${row._id}/${archiveRow._id}`}
                         color="primary"  
                         size="small"
                         variant="contained"
