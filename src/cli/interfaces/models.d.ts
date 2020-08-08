@@ -3,6 +3,13 @@ import { ObjectID } from 'mongodb';
 
 export interface UserDocument extends Document {
   username: string
+  assignedImages: Record<string, any>
+  catalogs: [ObjectID]
+  dateAdded: Date
+  imagesTagged: Record<string, any>
+  roles: [string]
+  userId: string
+  
 }
 
 export interface CatalogDocument extends Document {
@@ -50,3 +57,5 @@ export interface ImageDocument extends Document {
   numberOfTags?: number
   numberOfMatches: number
 }
+
+export type AllDocuments = UserDocument | CatalogDocument | ArchiveDocument | ImageDocument

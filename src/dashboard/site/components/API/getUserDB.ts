@@ -16,6 +16,7 @@ async function getUserDB({ cookie, res }: Params) {
       cookie: cookie ?? null,
     },
   })
+
   const data: ResponseType = await resGetUser.json()
 
   if (data.success) {

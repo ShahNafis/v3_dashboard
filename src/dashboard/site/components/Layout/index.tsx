@@ -36,7 +36,7 @@ function Layout(props: Props) {
     drawer,
     navItems
   } = props
-  console.log(!!drawer)
+
   const classes = genUseStyle({ showDrawer:!!drawer  })()
 
   return (

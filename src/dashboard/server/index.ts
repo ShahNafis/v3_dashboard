@@ -22,6 +22,8 @@ import { errorHandler } from './middlewares/error'
 //routes
 import test from './routes/test'
 import user from './routes/user'
+import catalog from './routes/catalogs'
+import archive from './routes/archives'
 
 //Security
 import { initAuthentication } from './auth'
@@ -49,6 +51,8 @@ const port = ((process.env.NEXT_PUBLIC_PORT as unknown) as number) ?? 3000
     //Register api routes first
     server.use('/api/test', test)
     server.use(`/api/user`, user)
+    server.use(`/api/catalog`, catalog)
+    server.use(`/api/archive`, archive)
 
     // This handles errors that happen during API calls
     server.use(errorHandler)
