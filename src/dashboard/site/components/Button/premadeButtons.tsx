@@ -80,11 +80,9 @@ function ViewImage(props) {
     <ColoredButton
       textColor={theme.palette.primary.light}
       borderColor={theme.palette.primary.main}
-
       hoverTextColor={'white'}
       hoverBackgroundColor={theme.palette.primary.main}
       variant="outlined"
-
       {...props}
     >
       {props.children}

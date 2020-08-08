@@ -18,7 +18,7 @@ interface Props {
 
   children?: React.ReactNode
 
-  style: Record<string, any>,
+  style: Record<string, any>
   //otherProps: any
 }
 

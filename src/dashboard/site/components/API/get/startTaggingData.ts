@@ -1,4 +1,4 @@
-import {ResponseType} from '../../../../interfaces'
+import { ResponseType } from '../../../../interfaces'
 import { routes } from '../../Constants'
 
 interface Params {
@@ -7,21 +7,21 @@ interface Params {
 }
 
 export async function getStartTaggingTableData({ cookie }: Params) {
-    const resGetData = await fetch(routes.postReq.getResumeTableData, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          //These two are needed for server side calls
-          credentials: 'include',
-          cookie: cookie ?? null,
-        },
-    })
-    
-    const resData: ResponseType = await resGetData.json()
+  const resGetData = await fetch(routes.postReq.getResumeTableData, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      //These two are needed for server side calls
+      credentials: 'include',
+      cookie: cookie ?? null,
+    },
+  })
 
-    if (resData.success) {
-        return resData.data
-    }
+  const resData: ResponseType = await resGetData.json()
 
-    return [] 
+  if (resData.success) {
+    return resData.data
+  }
+
+  return []
 }

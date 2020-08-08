@@ -63,6 +63,4 @@ const navigationItems: NavigationItemsType = {
   },
 }
 
-export {
-  navigationItems
-}
+export { navigationItems }

@@ -7,7 +7,7 @@ import getSession from '../../../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../../../components/API/getUserDB'
 import ErrorCard from '../../../../components/ErrorCards'
 import { determineNavItems } from '../../../../components/Utils/Auth/determineNavItems'
-import {ImageTag} from '../../../../components/Cards/ImageTag'
+import { ImageTag } from '../../../../components/Cards/ImageTag'
 
 export default function TagImage(props) {
   const { user, success, message, imageDocument } = props
@@ -28,7 +28,7 @@ export default function TagImage(props) {
           <ErrorCard message={message} title="Error" />
         ) : (
           <React.Fragment>
-            <ImageTag user={user} imageDocument = {imageDocument} />
+            <ImageTag user={user} imageDocument={imageDocument} />
           </React.Fragment>
         )}
       </Layout>
@@ -55,12 +55,14 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     props: {
       success: true,
       user,
-      imageDocument:{
+      imageDocument: {
         _id: '_id-test',
         fileName: 'fileName',
-        imageLink:'https://upload.wikimedia.org/wikipedia/commons/1/10/Zweihaender_im_historischen_Museum_Basel.JPG',
-        compressedImageLink:'https://en.wikipedia.org/wiki/Estoc#/media/File:Panzerstecher_PP_noBg.jpg'
-      }
+        imageLink:
+          'https://upload.wikimedia.org/wikipedia/commons/1/10/Zweihaender_im_historischen_Museum_Basel.JPG',
+        compressedImageLink:
+          'https://en.wikipedia.org/wiki/Estoc#/media/File:Panzerstecher_PP_noBg.jpg',
+      },
     },
   }
 }

@@ -1,4 +1,4 @@
-import {navigationItems} from './navigation'
+import { navigationItems } from './navigation'
 const protocal = process?.env?.NEXT_PUBLIC_PROTOCOL
 const apiCall = (route) => {
   return `${protocal}://${process?.env?.NEXT_PUBLIC_DOMAIN_NAME}${route}`
@@ -7,7 +7,7 @@ const apiCall = (route) => {
 const routes = {
   postReq: {
     getUser: apiCall('/api/user/getUser'),
-    getResumeTableData: apiCall('/api/catalog/userCatalogs')
+    getResumeTableData: apiCall('/api/catalog/userCatalogs'),
   },
 }
 const uiConstants = {

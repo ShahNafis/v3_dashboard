@@ -14,7 +14,7 @@ import Divider from '@material-ui/core/Divider'
 
 import { defaultTitle } from '../../Constants'
 
-import {useStyles} from './styles'
+import { useStyles } from './styles'
 interface Props {
   title?: string
   user?: object
@@ -25,13 +25,12 @@ interface Props {
     handleDrawerToggle?: () => void
     handleMenuToggle?: () => void
   }
-
 }
 
 function Appbar(props: Props) {
   const classes = useStyles()
   const { navItems, drawer } = props
-  const {handleDrawerToggle, showDrawer} = drawer
+  const { handleDrawerToggle, showDrawer } = drawer
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -145,6 +144,5 @@ function Appbar(props: Props) {
     </AppBar>
   )
 }
-
 
 export default Appbar

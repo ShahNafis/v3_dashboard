@@ -1,5 +1,5 @@
 import { Document, Model } from 'mongoose'
-import { ObjectID } from 'mongodb';
+import { ObjectID } from 'mongodb'
 
 export interface UserDocument extends Document {
   username: string
@@ -9,7 +9,6 @@ export interface UserDocument extends Document {
   imagesTagged: Record<string, any>
   roles: [string]
   userId: string
-  
 }
 
 export interface CatalogDocument extends Document {
@@ -34,7 +33,7 @@ export interface CatalogDocument extends Document {
 
 export interface CatalogModelType extends Model<CatalogDocument> {
   // here we decalre statics
-  
+
   updateImageCount?: (archiveId: ObjectID) => Promise<void>
 }
 
@@ -49,21 +48,25 @@ export interface ArchiveDocument extends Document {
 }
 
 export interface ImageDocument extends Document {
-  archive: ObjectID,
-  dateAdded?: Date,
-  finalTag?: Record<string, any>,
+  archive: ObjectID
+  dateAdded?: Date
+  finalTag?: Record<string, any>
   // location?:{
   //     upperLeft:[number],
   //     upperRight:[number],
   //     lowerLeft:[number],
   //     lowerRight:[number]
   // },
-  name: string,
-  path: string,
-  taggable: boolean,
-  tags?: [Record<string, any>],
+  name: string
+  path: string
+  taggable: boolean
+  tags?: [Record<string, any>]
   numberOfTags?: number
   numberOfMatches: number
 }
 
-export type AllDocuments = UserDocument | CatalogDocument | ArchiveDocument | ImageDocument
+export type AllDocuments =
+  | UserDocument
+  | CatalogDocument
+  | ArchiveDocument
+  | ImageDocument

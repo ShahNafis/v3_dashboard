@@ -1,8 +1,7 @@
-
-import { Response } from "express"
+import { Response } from 'express'
 //For some reason even though UserDocument is used, eslint thinks its not.
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {AllDocuments, CatalogDocument, UserDocument} from './models'
+import { AllDocuments, CatalogDocument, UserDocument } from './models'
 
 declare namespace cilDashboard {
   export interface ResponseType {
@@ -38,24 +37,24 @@ declare namespace cilDashboard {
   }
 
   export interface UserProp {
-    displayName: string,
-    id: string,
-    user_id: string,
-    provider: string,
-    picture: string,
-    nickname: string,
+    displayName: string
+    id: string
+    user_id: string
+    provider: string
+    picture: string
+    nickname: string
     _json: {
-      sub: string,       
-      given_name: string,
-      family_name: string,
-      nickname: string,
-      name: string,
-      picture: string,
-      locale: string,
-      updated_at: string,
-      email: string,
+      sub: string
+      given_name: string
+      family_name: string
+      nickname: string
+      name: string
+      picture: string
+      locale: string
+      updated_at: string
+      email: string
       email_verified: boolean
-    },
+    }
     data?: UserDocument
   }
 
@@ -70,30 +69,29 @@ declare namespace cilDashboard {
       data: AllDocuments[]
     }
   }
-
 }
 
 declare global {
   namespace Express {
     interface User {
-      displayName: string,
-      id: string,
-      user_id: string,
-      provider: string,
-      picture: string,
-      nickname: string,
+      displayName: string
+      id: string
+      user_id: string
+      provider: string
+      picture: string
+      nickname: string
       _json: {
-        sub: string,       
-        given_name: string,
-        family_name: string,
-        nickname: string,
-        name: string,
-        picture: string,
-        locale: string,
-        updated_at: string,
-        email: string,
+        sub: string
+        given_name: string
+        family_name: string
+        nickname: string
+        name: string
+        picture: string
+        locale: string
+        updated_at: string
+        email: string
         email_verified: boolean
-      },
+      }
       /* eslint-disable @typescript-eslint/no-unused-vars */
       data?: UserDocument
     }

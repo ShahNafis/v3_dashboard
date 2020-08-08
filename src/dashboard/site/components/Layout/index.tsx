@@ -6,7 +6,7 @@ import Container from '@material-ui/core/Container'
 import Appbar from './Appbar'
 import MobileDrawer from './Drawer/mobile'
 import DesktopDrawer from './Drawer/desktop'
-import { uiConstants,navigationItems } from '../Constants'
+import { uiConstants, navigationItems } from '../Constants'
 
 const drawerWidth = uiConstants.drawerWidth
 
@@ -31,13 +31,9 @@ function Layout(props: Props) {
     setMobileMenuOpen(!mobileMenuOpen)
   }
 
-  const {
-    title,
-    drawer,
-    navItems
-  } = props
+  const { title, drawer, navItems } = props
 
-  const classes = genUseStyle({ showDrawer:!!drawer  })()
+  const classes = genUseStyle({ showDrawer: !!drawer })()
 
   return (
     <div className={classes.root}>
@@ -46,12 +42,12 @@ function Layout(props: Props) {
         title={title}
         drawer={{
           showDrawer: !!drawer,
-          handleDrawerToggle:handleDrawerToggle,
-          handleMenuToggle:handleMenuToggle
+          handleDrawerToggle: handleDrawerToggle,
+          handleMenuToggle: handleMenuToggle,
         }}
-        navItems = {navItems ?? navigationItems.default}
+        navItems={navItems ?? navigationItems.default}
       />
-      
+
       <nav className={classes.drawer} aria-label="mailbox folders">
         {!!drawer && (
           <React.Fragment>

@@ -8,8 +8,8 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 
 import { CatalogSelectionData } from '../../../../interfaces'
-import {useRowStyles} from './Styles'
-import {Row} from './Row'
+import { useRowStyles } from './Styles'
+import { Row } from './Row'
 
 interface Props {
   data: CatalogSelectionData[]
@@ -23,7 +23,7 @@ export function SelectArchive(props: Props) {
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
-          <TableRow className = {classes.header}>
+          <TableRow className={classes.header}>
             <TableCell />
             <TableCell className={classes.headerText}>Catalog</TableCell>
             <TableCell className={classes.headerText} align="right">
