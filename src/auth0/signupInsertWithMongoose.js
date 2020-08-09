@@ -8,40 +8,46 @@ async function (user, context, callback) {
     const Mongoose = require('mongoose@5.6.11');
 
     const userSchema = new Mongoose.Schema(
-    {
-        assignedImages:{
-            type:Object
+        {
+            assignedImages: {
+              type: Object,
+              default: {
+                  "":""
+              },
+            },
+            catalogs: {
+              type: [Mongoose.Types.ObjectId],
+              default: [],
+            },
+            dateAdded: {
+              type: Date,
+              default: Date.now(),
+            },
+            imagesTagged: {
+              type: Object,
+              default: {
+                  "":""
+              },
+            },
+            roles: {
+              type: [String],
+              default: [],
+            },
+            userId: {
+              required: [true, 'UserId not passed'],
+              unique: true,
+              type: String,
+            },
+            userName: {
+              required: [true, 'Username not passed'],
+              unique: true,
+              type: String,
+            },
         },
-        catalogs:{
-            type:[Mongoose.Types.ObjectId]
-        },
-        dateAdded:{
-            type:Date
-        },
-        imagesTagged: {
-            type: Object,
-            default: []
-        },
-        roles:{
-        type:[String],
-        default:[]
-        },
-        userId:{
-            required:[true,'UserId not passed'],
-            unique: true,
-            type:String
-        },
-        userName: {
-            required:[true,'Username not passed'],
-            unique: true,
-            type:String
-        },
-        
-    },
-    {
-        toJSON: { virtuals: true },
-        toObject: { virtuals: true },
-    }
+        {
+            toJSON: { virtuals: true },
+            toObject: { virtuals: true },
+        }
     );
 
     const UserModel = Mongoose.model('User', userSchema);

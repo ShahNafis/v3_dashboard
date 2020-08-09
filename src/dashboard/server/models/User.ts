@@ -15,7 +15,9 @@ const userSchema: Schema = new Schema(
   {
     assignedImages: {
       type: Object,
-      default: {},
+      default: {
+        '': '',
+      },
     },
     catalogs: {
       type: [Types.ObjectId],
@@ -27,7 +29,9 @@ const userSchema: Schema = new Schema(
     },
     imagesTagged: {
       type: Object,
-      default: {},
+      default: {
+        '': '',
+      },
     },
     roles: {
       type: [String],
