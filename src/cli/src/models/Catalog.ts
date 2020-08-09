@@ -64,7 +64,9 @@ const catalogScheme: Schema = new Schema(
   }
 )
 
-catalogScheme.statics.updateImageCount = async function (archiveId: Types.ObjectId) {
+catalogScheme.statics.updateImageCount = async function (
+  archiveId: Types.ObjectId
+) {
   const archive = await ArchiveModel.findById(archiveId)
   const catalogId = archive.catalog
   const archives = await ArchiveModel.find({ catalog: catalogId })
