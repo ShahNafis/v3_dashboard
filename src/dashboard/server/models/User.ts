@@ -19,9 +19,11 @@ const userSchema: Schema = new Schema(
     },
     catalogs: {
       type: [Types.ObjectId],
+      default: [],
     },
     dateAdded: {
       type: Date,
+      default: Date.now(),
     },
     imagesTagged: {
       type: Object,
