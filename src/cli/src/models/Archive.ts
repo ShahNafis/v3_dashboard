@@ -60,7 +60,6 @@ archiveScehma.virtual('getCatalog', {
 archiveScehma.statics.updateCatalogImageCount = async function (
   catalogId: Types.ObjectId
 ) {
-
   const obj = await this.aggregate([
     {
       $match: { catalog: new Types.ObjectId(catalogId) },
