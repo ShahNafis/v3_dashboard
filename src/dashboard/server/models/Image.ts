@@ -70,14 +70,13 @@ ImageSchema.statics.getTotalCount = async function (archiveId: Types.ObjectId) {
 ImageSchema.post<ImageDocument>('save', async function (this: ImageDocument) {
   await (this.constructor as any).getTotalCount(this.archive)
   const archive = await ArchiveModel.findById(this.archive)
-  ArchiveModel.updateCatalogImageCount(archive._id)
-  //await CatalogModel.updateImageCount(this.archive)
+  await ArchiveModel.updateCatalogImageCount(archive.catalog)
 })
 
 ImageSchema.pre<ImageDocument>('remove', async function (this: ImageDocument) {
   await (this.constructor as any).getTotalCount(this.archive)
   const archive = await ArchiveModel.findById(this.archive)
-  ArchiveModel.updateCatalogImageCount(archive._id)
+  await ArchiveModel.updateCatalogImageCount(archive.catalog)
 })
 
 //This makes it so that the name and archive pair are unique

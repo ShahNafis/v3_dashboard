@@ -67,14 +67,14 @@ archiveScehma.statics.updateCatalogImageCount = async function (
     {
       $group: {
         _id: '$catalog',
-        sum: { $sum: '$totalImages' },
+        totalImages: { $sum: '$totalImages' },
       },
     },
   ])
-
+  //console.log(obj,catalogId)
   try {
     await this.model('Catalog').findByIdAndUpdate(catalogId, {
-      totalImages: obj[0].sum,
+      totalImages: obj[0]?.totalImages,
     })
   } catch (err) {
     console.error(err)
