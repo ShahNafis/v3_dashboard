@@ -16,7 +16,7 @@ const userSchema: Schema = new Schema(
     assignedImages: {
       type: Object,
       default: {
-        "":""
+        '': '',
       },
     },
     catalogs: {
@@ -30,7 +30,7 @@ const userSchema: Schema = new Schema(
     imagesTagged: {
       type: Object,
       default: {
-        "":""
+        '': '',
       },
     },
     roles: {
