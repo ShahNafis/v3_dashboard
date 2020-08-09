@@ -23,7 +23,7 @@ const userSchema: Schema = new Schema(
     },
     dateAdded: {
       type: Date,
-      default: Date.now()
+      default: Date.now(),
     },
     imagesTagged: {
       type: Object,
