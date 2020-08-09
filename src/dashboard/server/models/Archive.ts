@@ -2,8 +2,8 @@
     Model for archives. Contains a link to the storm it falls under
 */
 
-import { Schema, model, Model, Types } from 'mongoose'
-import { ArchiveDocument } from '../../interfaces/models'
+import { Schema, model, Types } from 'mongoose'
+import { ArchiveModelType } from '../../interfaces/models'
 
 const archiveScehma: Schema = new Schema(
   {
@@ -57,7 +57,28 @@ archiveScehma.virtual('getCatalog', {
   justOne: false,
 })
 
-export const ArchiveModel: Model<ArchiveDocument> = model(
-  'Archive',
-  archiveScehma
-)
+archiveScehma.statics.updateCatalogImageCount = async function (
+  catalogId: Types.ObjectId
+) {
+  const obj = await this.aggregate([
+    {
+      $match: { catalog: new Types.ObjectId(catalogId) },
+    },
+    {
+      $group: {
+        _id: '$catalog',
+        sum: { $sum: '$totalImages' },
+      },
+    },
+  ])
+
+  try {
+    await this.model('Catalog').findByIdAndUpdate(catalogId, {
+      totalImages: obj[0].sum,
+    })
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const ArchiveModel: ArchiveModelType = model('Archive', archiveScehma)

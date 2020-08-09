@@ -1,7 +1,9 @@
 import { asyncHandler } from '../middlewares/async'
 //import { ErrorResponse } from '../utils/errorResponse'
 import { Request, Response, NextFunction } from 'express'
-
+// import {ImageModel} from '../models/Image'
+// import {CatalogModel} from '../models/Catalog'
+// import {ArchiveModel} from '../models/Archive'
 import fs from 'fs'
 
 const cards = [

@@ -5,7 +5,7 @@
 import { Schema, model, Model, Types } from 'mongoose'
 import { ImageDocument } from '../../interfaces/models'
 import { ArchiveModel } from './Archive'
-import { CatalogModel } from './Catalog'
+//import { CatalogModel } from './Catalog'
 
 const ImageSchema: Schema = new Schema(
   {
@@ -58,8 +58,6 @@ const ImageSchema: Schema = new Schema(
 
 ImageSchema.statics.getTotalCount = async function (archiveId: Types.ObjectId) {
   const totalImages = await this.model('Image').find({ archive: archiveId })
-  //console.log(`Calculating total images for archive ${archiveId} = ${totalImages.length}`)
-
   try {
     await ArchiveModel.findByIdAndUpdate(archiveId, {
       totalImages: totalImages.length,
@@ -71,12 +69,15 @@ ImageSchema.statics.getTotalCount = async function (archiveId: Types.ObjectId) {
 
 ImageSchema.post<ImageDocument>('save', async function (this: ImageDocument) {
   await (this.constructor as any).getTotalCount(this.archive)
-
-  await CatalogModel.updateImageCount(this.archive)
+  const archive = await ArchiveModel.findById(this.archive)
+  ArchiveModel.updateCatalogImageCount(archive._id)
+  //await CatalogModel.updateImageCount(this.archive)
 })
 
 ImageSchema.pre<ImageDocument>('remove', async function (this: ImageDocument) {
   await (this.constructor as any).getTotalCount(this.archive)
+  const archive = await ArchiveModel.findById(this.archive)
+  ArchiveModel.updateCatalogImageCount(archive._id)
 })
 
 //This makes it so that the name and archive pair are unique
