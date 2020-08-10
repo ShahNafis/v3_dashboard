@@ -76,8 +76,32 @@ export interface ImageDocument extends Document {
   numberOfMatches: number
 }
 
+export interface AssingedImageDocument extends Document {
+  imageId: ObjectID
+  userId: ObjectID
+  date: Date
+}
+
+export interface TagDocument extends Document {
+  imageId: ObjectID
+  userId: ObjectID
+  tags: any
+  date: Date
+  ignoreFields: string[]
+}
+
+export interface ImageServeSequenceDocument extends Document {
+  imageId: ObjectID
+  userId: ObjectID
+  tags: any
+  date: Date
+  ignoreFields: string[]
+}
+
 export type AllDocuments =
   | UserDocument
   | CatalogDocument
   | ArchiveDocument
   | ImageDocument
+  | AssingedImageDocument
+  | ImageServeSequenceDocument

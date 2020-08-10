@@ -3,7 +3,7 @@
 */
 
 import { Schema, model, Model, Types } from 'mongoose'
-import { ImageDocument } from '../../interfaces/models'
+import { TagDocument } from '../../interfaces/models'
 
 //import { CatalogModel } from './Catalog'
 
@@ -34,4 +34,6 @@ const TagSchema: Schema = new Schema(
   }
 )
 
-export const TagModel: Model<ImageDocument> = model('Tag', TagSchema)
+TagSchema.index({ imageId: 1, userId: 1 }, { unique: true })
+
+export const TagModel: Model<TagDocument> = model('Tag', TagSchema)

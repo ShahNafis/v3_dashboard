@@ -3,7 +3,7 @@
 */
 
 import { Schema, model, Model, Types } from 'mongoose'
-import { ImageDocument } from '../../interfaces/models'
+import { AssingedImageDocument } from '../../interfaces/models'
 
 //import { CatalogModel } from './Catalog'
 
@@ -30,7 +30,9 @@ const AssignedImageSchema: Schema = new Schema(
   }
 )
 
-export const AssignedImageModel: Model<ImageDocument> = model(
+AssignedImageSchema.index({ imageId: 1, userId: 1 }, { unique: true })
+
+export const AssignedImageModel: Model<AssingedImageDocument> = model(
   'AssignedImage',
   AssignedImageSchema
 )
