@@ -14,6 +14,18 @@
     "lint:fix": "eslint . --ext ts --ext tsx --ext js --fix",
     "jest": "jest"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx lint-staged",
+      "pre-push": "npm run type-check"
+    }
+  },
+  "lint-staged": {
+    "*.@(ts|tsx)": [
+      "npm run lint",
+      "npm run format"
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
