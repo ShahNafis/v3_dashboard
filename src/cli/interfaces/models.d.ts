@@ -77,18 +77,17 @@ export interface ImageDocument extends Document {
 }
 
 export interface AssingedImageDocument extends Document {
-  imageId: ObjectID,
-  userId: ObjectID,
+  imageId: ObjectID
+  userId: ObjectID
   date: Date
 }
-
 
 export interface TagDocument extends Document {
   imageId: ObjectID
   userId: ObjectID
   tags: any
   date: Date
-  ignoreFields: string[],
+  ignoreFields: string[]
 }
 
 export interface ImageServeSequenceDocument extends Document {
@@ -96,7 +95,7 @@ export interface ImageServeSequenceDocument extends Document {
   userId: ObjectID
   tags: any
   date: Date
-  ignoreFields: string[],
+  ignoreFields: string[]
 }
 
 export type AllDocuments =

@@ -12,10 +12,8 @@ const ImageServeSequence: Schema = new Schema(
     type: {
       type: String,
       required: [true, 'Assign Image Id'],
-      enum: [
-        'random' 
-        ]
-    }
+      enum: ['random'],
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -23,4 +21,7 @@ const ImageServeSequence: Schema = new Schema(
   }
 )
 
-export const ImageServeSequenceModel: Model<ImageServeSequenceDocument> = model('ImageServeSequence', ImageServeSequence)
+export const ImageServeSequenceModel: Model<ImageServeSequenceDocument> = model(
+  'ImageServeSequence',
+  ImageServeSequence
+)
