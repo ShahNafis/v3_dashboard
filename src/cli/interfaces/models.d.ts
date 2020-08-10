@@ -90,12 +90,8 @@ export interface TagDocument extends Document {
   ignoreFields: string[]
 }
 
-export interface ImageServeSequenceDocument extends Document {
-  imageId: ObjectID
-  userId: ObjectID
-  tags: any
-  date: Date
-  ignoreFields: string[]
+export interface ImageServeOrderDocument extends Document {
+  type: 'random'
 }
 
 export type AllDocuments =
@@ -104,4 +100,4 @@ export type AllDocuments =
   | ArchiveDocument
   | ImageDocument
   | AssingedImageDocument
-  | ImageServeSequenceDocument
+  | ImageServeOrderDocument

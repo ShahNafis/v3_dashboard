@@ -9,7 +9,6 @@ import { ensureAuthenticated } from '../middlewares/ensureAuth'
 import { CatalogModel } from '../models/Catalog'
 import { insertUser } from '../middlewares/insertUser'
 
-// "/api/v1/catalogs/"
 const router = express.Router()
 
 router

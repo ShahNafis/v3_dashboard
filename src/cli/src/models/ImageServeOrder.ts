@@ -3,11 +3,11 @@
 */
 
 import { Schema, model, Model } from 'mongoose'
-import { ImageServeSequenceDocument } from '../../interfaces/models'
+import { ImageServeOrderDocument } from '../../interfaces/models'
 
 //import { CatalogModel } from './Catalog'
 
-const ImageServeSequence: Schema = new Schema(
+const ImageServeOrder: Schema = new Schema(
   {
     type: {
       type: String,
@@ -21,7 +21,7 @@ const ImageServeSequence: Schema = new Schema(
   }
 )
 
-export const ImageServeSequenceModel: Model<ImageServeSequenceDocument> = model(
-  'ImageServeSequence',
-  ImageServeSequence
+export const ImageServeOrderModel: Model<ImageServeOrderDocument> = model(
+  'ImageServeOrder',
+  ImageServeOrder
 )

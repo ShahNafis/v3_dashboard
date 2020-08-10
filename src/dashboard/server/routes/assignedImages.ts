@@ -1,11 +1,11 @@
 import express from 'express'
-import { getAllArchives } from '../controllers/archives'
+import { getAllAssignedImages } from '../controllers/assignedImages'
 //Perform advanced results which means filtering, pagination, and query parameters
 import { advancedResults } from '../middlewares/advancedResults'
-import { ArchiveModel } from '../models/Archive'
+import { AssignedImageModel } from '../models/AssignedImages'
 
 const router = express.Router()
 
-router.route('/').get(advancedResults(ArchiveModel), getAllArchives)
+router.route('/').get(advancedResults(AssignedImageModel), getAllAssignedImages)
 
 export default router

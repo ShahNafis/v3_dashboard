@@ -24,6 +24,10 @@ import test from './routes/test'
 import user from './routes/user'
 import catalog from './routes/catalogs'
 import archive from './routes/archives'
+import assignedImages from './routes/assignedImages'
+import image from './routes/image'
+import imageServeOrder from './routes/imageServeOrder'
+import tags from './routes/tags'
 
 //Security
 import { initAuthentication } from './auth'
@@ -53,6 +57,10 @@ const port = ((process.env.NEXT_PUBLIC_PORT as unknown) as number) ?? 3000
     server.use(`/api/user`, user)
     server.use(`/api/catalog`, catalog)
     server.use(`/api/archive`, archive)
+    server.use(`/api/assignedImages`, assignedImages)
+    server.use(`/api/image`, image)
+    server.use(`/api/imageServeOrder`, imageServeOrder)
+    server.use(`/api/tags`, tags)
 
     // This handles errors that happen during API calls
     server.use(errorHandler)
