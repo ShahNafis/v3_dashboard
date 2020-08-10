@@ -56,6 +56,7 @@ const ImageSchema: Schema = new Schema(
   }
 )
 
+//statics are methods on the model it self
 ImageSchema.statics.getTotalCount = async function (archiveId: Types.ObjectId) {
   const totalImages = await this.model('Image').find({ archive: archiveId })
   try {
