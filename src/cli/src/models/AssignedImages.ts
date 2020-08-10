@@ -9,19 +9,19 @@ import { ImageDocument } from '../../interfaces/models'
 
 const AssignedImageSchema: Schema = new Schema(
   {
-    imageId:{
-        type: Types.ObjectId,
-        required: [true, 'Assign Image Id'],
-        ref: 'Image',
+    imageId: {
+      type: Types.ObjectId,
+      required: [true, 'Assign Image Id'],
+      ref: 'Image',
     },
-    userId:{
-        type: Types.ObjectId,
-        required: [true, 'Assign Image Id'], 
-        ref: 'User',
+    userId: {
+      type: Types.ObjectId,
+      required: [true, 'Assign Image Id'],
+      ref: 'User',
     },
-    date:{
+    date: {
       type: Date,
-      required: [true, 'Assign Image Id'], 
+      required: [true, 'Assign Image Id'],
     },
   },
   {
@@ -30,5 +30,7 @@ const AssignedImageSchema: Schema = new Schema(
   }
 )
 
-
-export const AssignedImageModel: Model<ImageDocument> = model('AssignedImage', AssignedImageSchema)
+export const AssignedImageModel: Model<ImageDocument> = model(
+  'AssignedImage',
+  AssignedImageSchema
+)

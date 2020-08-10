@@ -9,30 +9,29 @@ import { ImageDocument } from '../../interfaces/models'
 
 const TagSchema: Schema = new Schema(
   {
-    imageId:{
-        type: Types.ObjectId,
-        required: [true, 'Assign Image Id'],
-        ref: 'Image',
+    imageId: {
+      type: Types.ObjectId,
+      required: [true, 'Assign Image Id'],
+      ref: 'Image',
     },
-    userId:{
-        type: Types.ObjectId,
-        required: [true, 'Assign Image Id'], 
-        ref: 'User',
+    userId: {
+      type: Types.ObjectId,
+      required: [true, 'Assign Image Id'],
+      ref: 'User',
     },
-    tags:{
-        type: Object
+    tags: {
+      type: Object,
     },
-    date:{
+    date: {
       type: Date,
-      required: [true, 'Assign Image Id'], 
+      required: [true, 'Assign Image Id'],
     },
-    ignoreFields: [String]
+    ignoreFields: [String],
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }
 )
-
 
 export const TagModel: Model<ImageDocument> = model('Tag', TagSchema)
