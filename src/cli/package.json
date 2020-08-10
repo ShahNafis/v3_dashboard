@@ -12,6 +12,7 @@
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "lint": "eslint . --ext ts --ext tsx --ext js ",
     "lint:fix": "eslint . --ext ts --ext tsx --ext js --fix",
+    "type-check": "tsc --pretty --noEmit",
     "jest": "jest"
   },
   "husky": {
