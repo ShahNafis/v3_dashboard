@@ -15,7 +15,7 @@ export interface CatalogDocument extends Document {
   dateAdded?: Date
   name: string
   path: {
-    original: string,
+    original: string
     compressed?: string
   }
   catalogInfo?: {
@@ -43,7 +43,7 @@ export interface ArchiveDocument extends Document {
   dateAdded?: Date
   name: string
   path: {
-    original: string,
+    original: string
     compressed?: string
   }
   catalog: ObjectID
@@ -67,7 +67,7 @@ export interface ImageDocument extends Document {
   finalTag?: Record<string, any>
   name: string
   path: {
-    original: string,
+    original: string
     compressed?: string
   }
   taggable: boolean
