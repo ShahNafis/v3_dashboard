@@ -21,10 +21,10 @@ export async function createArchives(params: Params) {
     catalog: catalogEntry._id,
     name: archiveName,
     path: {
-      original:archivePath
+      original: archivePath,
+      compressed: archivePath,
     },
   })
-
   if (!archiveEntry) {
     try {
       //throw new Error("TESTING ARCHIVE error");
@@ -32,7 +32,7 @@ export async function createArchives(params: Params) {
         catalog: catalogEntry._id,
         name: archiveName,
         path: {
-          original:archivePath,
+          original: archivePath,
           compressed: archivePath,
         },
         taggable: true,

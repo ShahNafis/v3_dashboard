@@ -74,6 +74,7 @@ const catalog = {
 
       console.info(`Catalog ${name} = ${timeEnd[1] / 1000000}ms`)
     }
+
     await mongoConnection.close()
   },
 }

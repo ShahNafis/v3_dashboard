@@ -63,32 +63,14 @@ const ImageSchema: Schema = new Schema(
   }
 )
 
-//statics are methods on the model it self
-ImageSchema.statics.getTotalCount = async function (archiveId: Types.ObjectId) {
-  const totalImages = await this.model('Image').find({ archive: archiveId })
-  try {
-    await ArchiveModel.updateOne(
-      { _id: archiveId },
-      {
-        totalImages: totalImages.length,
-      }
-    )
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-//runs on ImageModel.create()
-//(this) is the doc
+//Document middleware
 ImageSchema.post<ImageDocument>('save', async function (this: ImageDocument) {
-  await ArchiveModel.updateArchiveImageCount(this.archive)
+  await ArchiveModel.updateImageCount(this.archive)
 })
 
-//runs on
-//imgdoc = ImageModel.find(xxx)
-// imgDoc.remove()
+//Document middleware
 ImageSchema.post<ImageDocument>('remove', async function (this: ImageDocument) {
-  await ArchiveModel.updateArchiveImageCount(this.archive)
+  await ArchiveModel.updateImageCount(this.archive)
 })
 
 //This makes it so that the name and archive pair are unique

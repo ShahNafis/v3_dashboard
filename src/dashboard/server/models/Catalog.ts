@@ -69,7 +69,7 @@ const catalogScheme: Schema = new Schema(
   }
 )
 
-catalogScheme.statics.updateCatalogImageCount = async function (
+catalogScheme.statics.updateImageCount = async function (
   catalogId: Types.ObjectId
 ) {
   //aggregate all archive models based on catalog id, and add totalImages

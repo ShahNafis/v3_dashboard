@@ -33,9 +33,9 @@ export async function createCatalog(catalogData: Params) {
   let catalogEntry = await CatalogModel.findOne({
     name: name,
     path: {
-      original:catalogPath,
-      compressed:compressedCatalogPath
-    }
+      original: catalogPath,
+      compressed: compressedCatalogPath,
+    },
   })
 
   if (!catalogEntry) {
@@ -43,8 +43,8 @@ export async function createCatalog(catalogData: Params) {
       catalogEntry = await CatalogModel.create({
         name: name,
         path: {
-          original:catalogPath,
-          compressed:compressedCatalogPath
+          original: catalogPath,
+          compressed: compressedCatalogPath,
         },
         questionSet: questionSet,
         taggable: taggable,

@@ -61,7 +61,7 @@ archiveScehma.virtual('getCatalog', {
 })
 
 //updates archives image count
-archiveScehma.statics.updateArchiveImageCount = async function (
+archiveScehma.statics.updateImageCount = async function (
   archiveId: Types.ObjectId
 ) {
   const images = await this.model('Image').find({ archive: archiveId })
@@ -71,13 +71,10 @@ archiveScehma.statics.updateArchiveImageCount = async function (
   )
 }
 
-//Runs on
-// const test = await ArchiveModel.findOne({name:'american'})
-// await test.updateOne({totalImages:test.totalImages+1})
-//Aka query middleware
+//Query Middleware
 archiveScehma.post('updateOne', async function (this: ArchiveDocument) {
   //@ts-ignore
   const archive = await ArchiveModel.findOne(this.getQuery())
-  await CatalogModel.updateCatalogImageCount(archive.catalog)
+  await CatalogModel.updateImageCount(archive.catalog)
 })
 export const ArchiveModel: ArchiveModelType = model('Archive', archiveScehma)

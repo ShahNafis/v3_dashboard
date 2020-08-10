@@ -30,13 +30,13 @@ export interface CatalogDocument extends Document {
   }
   totalImages?: number
 
-  updateCatalogImageCount(): Promise<void>
+  updateImageCount(): Promise<void>
 }
 
 export interface CatalogModelType extends Model<CatalogDocument> {
   // here we decalre statics
 
-  updateCatalogImageCount?: (catalogId: ObjectID) => Promise<void>
+  updateImageCount?: (catalogId: ObjectID) => Promise<void>
 }
 
 export interface ArchiveDocument extends Document {
@@ -50,15 +50,13 @@ export interface ArchiveDocument extends Document {
   taggable: boolean
   totalImages?: number
 
-  updateCatalogImageCount(): Promise<void>
-  updateArchiveImageCount(): Promise<void>
+  updateImageCount(): Promise<void>
 }
 
 export interface ArchiveModelType extends Model<ArchiveDocument> {
   // here we decalre statics
 
-  updateCatalogImageCount?: (catalogId: ObjectID) => Promise<void>
-  updateArchiveImageCount?: (archiveId: ObjectID) => Promise<void>
+  updateImageCount?: (archiveId: ObjectID) => Promise<void>
 }
 
 export interface ImageDocument extends Document {
