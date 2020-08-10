@@ -69,7 +69,7 @@ archiveScehma.statics.updateArchiveImageCount = async function (
   )
 }
 
-//Runs on 
+//Runs on
 // const test = await ArchiveModel.findOne({name:'american'})
 // await test.updateOne({totalImages:test.totalImages+1})
 //Aka query middleware
