@@ -78,7 +78,6 @@ ImageSchema.post<ImageDocument>('save', async function (this: ImageDocument) {
   await ArchiveModel.updateCatalogImageCount(archive.catalog)
 })
 
-
 ImageSchema.pre<ImageDocument>(
   'updateOne',
   //@ts-expect-error
