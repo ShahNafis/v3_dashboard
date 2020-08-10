@@ -4,6 +4,7 @@
 
 import { Schema, model, Types } from 'mongoose'
 import { ArchiveModelType, ArchiveDocument } from '../../interfaces/models'
+import { CatalogModel } from './Catalog'
 
 const archiveScehma: Schema = new Schema(
   {
@@ -57,36 +58,21 @@ archiveScehma.virtual('getCatalog', {
   justOne: false,
 })
 
-archiveScehma.statics.updateCatalogImageCount = async function (
-  catalogId: Types.ObjectId
+//updates archives image count
+archiveScehma.statics.updateArchiveImageCount = async function (
+  archiveId: Types.ObjectId
 ) {
-  const obj = await this.aggregate([
-    {
-      $match: { catalog: new Types.ObjectId(catalogId) },
-    },
-    {
-      $group: {
-        _id: '$catalog',
-        totalImages: { $sum: '$totalImages' },
-      },
-    },
-  ])
-  //console.log(obj,catalogId)
-  try {
-    await this.model('Catalog').findByIdAndUpdate(catalogId, {
-      totalImages: obj[0]?.totalImages,
-    })
-  } catch (err) {
-    console.error(err)
-  }
+  const images = await this.model('Image').find({ archive: archiveId })
+  await this.model('Archive').updateOne(
+    { _id: archiveId },
+    { totalImages: images.length }
+  )
 }
 
 //runs on ArchiveModel.updateOne
-archiveScehma.post<ArchiveDocument>('updateOne', async function (
-  this: ArchiveDocument
-) {
+archiveScehma.post('updateOne', async function (this: ArchiveDocument) {
   //@ts-ignore
-  const docToUpdate = await ArchiveModel.findOne(this.getQuery())
-  await ArchiveModel.updateCatalogImageCount(docToUpdate.catalog)
+  const archive = await ArchiveModel.findOne(this.getQuery())
+  await CatalogModel.updateCatalogImageCount(archive.catalog)
 })
 export const ArchiveModel: ArchiveModelType = model('Archive', archiveScehma)

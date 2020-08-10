@@ -28,13 +28,13 @@ export interface CatalogDocument extends Document {
   }
   totalImages?: number
 
-  updateImageCount(): Promise<void>
+  updateCatalogImageCount(): Promise<void>
 }
 
 export interface CatalogModelType extends Model<CatalogDocument> {
   // here we decalre statics
 
-  updateImageCount?: (archiveId: ObjectID) => Promise<void>
+  updateCatalogImageCount?: (catalogId: ObjectID) => Promise<void>
 }
 
 export interface ArchiveDocument extends Document {
@@ -47,12 +47,14 @@ export interface ArchiveDocument extends Document {
   totalImages?: number
 
   updateCatalogImageCount(): Promise<void>
+  updateArchiveImageCount(): Promise<void>
 }
 
 export interface ArchiveModelType extends Model<ArchiveDocument> {
   // here we decalre statics
 
   updateCatalogImageCount?: (catalogId: ObjectID) => Promise<void>
+  updateArchiveImageCount?: (archiveId: ObjectID) => Promise<void>
 }
 
 export interface ImageDocument extends Document {

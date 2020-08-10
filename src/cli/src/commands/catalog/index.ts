@@ -16,7 +16,7 @@ unhandledRejection
 
 import { createCatalog } from './createCatalog'
 import colorize from '../../utils/colorize'
-// import { ImageModel } from '../../models/Image'
+import { ImageModel } from '../../models/Image'
 
 interface Options {
   path: string
@@ -73,7 +73,7 @@ const catalog = {
 
       console.info(`Catalog ${name} = ${timeEnd[1] / 1000000}ms`)
     }
-
+   
     await mongoConnection.close()
   },
 }

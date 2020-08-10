@@ -74,14 +74,14 @@ ImageSchema.statics.getTotalCount = async function (archiveId: Types.ObjectId) {
 //runs on ImageModel.create()
 //(this) is the doc
 ImageSchema.post<ImageDocument>('save', async function (this: ImageDocument) {
-  await (this.constructor as any).getTotalCount(this.archive)
+  await ArchiveModel.updateArchiveImageCount(this.archive)
 })
 
 //runs on
 //imgdoc = ImageModel.find(xxx)
 // imgDoc.remove()
 ImageSchema.post<ImageDocument>('remove', async function (this: ImageDocument) {
-  await (this.constructor as any).getTotalCount(this.archive)
+  await ArchiveModel.updateArchiveImageCount(this.archive)
 })
 
 //This makes it so that the name and archive pair are unique

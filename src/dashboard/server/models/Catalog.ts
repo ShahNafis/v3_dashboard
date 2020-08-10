@@ -4,7 +4,7 @@
 
 import { Schema, model, Types } from 'mongoose'
 import { CatalogModelType } from '../../interfaces/models'
-import { ArchiveModel } from './Archive'
+
 const catalogScheme: Schema = new Schema(
   {
     dateAdded: {
@@ -64,21 +64,25 @@ const catalogScheme: Schema = new Schema(
   }
 )
 
-catalogScheme.statics.updateImageCount = async function (
-  archiveId: Types.ObjectId
+catalogScheme.statics.updateCatalogImageCount = async function (
+  catalogId: Types.ObjectId
 ) {
-  const archive = await ArchiveModel.findById(archiveId)
-  const catalogId = archive.catalog
-  const archives = await ArchiveModel.find({ catalog: catalogId })
-  let sum = 0
+  //aggregate all archive models based on catalog id, and add totalImages
+  const obj = await model('Archive').aggregate([
+    {
+      $match: { catalog: new Types.ObjectId(catalogId) },
+    },
+    {
+      $group: {
+        _id: '$catalog',
+        totalImages: { $sum: '$totalImages' },
+      },
+    },
+  ])
 
-  for (const arc of archives) {
-    sum += arc.totalImages
-  }
-  //console.log(`Catalog ${catalogId} = ${sum}`)
   try {
     await this.model('Catalog').findByIdAndUpdate(catalogId, {
-      totalImages: sum,
+      totalImages: obj[0]?.totalImages,
     })
   } catch (err) {
     console.error(err)
