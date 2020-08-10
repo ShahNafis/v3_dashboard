@@ -82,12 +82,11 @@ archiveScehma.statics.updateCatalogImageCount = async function (
 }
 
 //runs on ArchiveModel.updateOne
-archiveScehma.post<ArchiveDocument>(
-  'updateOne',
-  async function (this: ArchiveDocument) {
-    //@ts-ignore
-    const docToUpdate = await ArchiveModel.findOne(this.getQuery());
-    await ArchiveModel.updateCatalogImageCount(docToUpdate.catalog)
-  }
-)
+archiveScehma.post<ArchiveDocument>('updateOne', async function (
+  this: ArchiveDocument
+) {
+  //@ts-ignore
+  const docToUpdate = await ArchiveModel.findOne(this.getQuery())
+  await ArchiveModel.updateCatalogImageCount(docToUpdate.catalog)
+})
 export const ArchiveModel: ArchiveModelType = model('Archive', archiveScehma)

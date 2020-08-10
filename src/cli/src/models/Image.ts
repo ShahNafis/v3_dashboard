@@ -59,7 +59,6 @@ const ImageSchema: Schema = new Schema(
 ImageSchema.statics.getTotalCount = async function (archiveId: Types.ObjectId) {
   const totalImages = await this.model('Image').find({ archive: archiveId })
   try {
-    
     await ArchiveModel.updateOne(
       { _id: archiveId },
       {
