@@ -59,41 +59,29 @@ const ImageSchema: Schema = new Schema(
 ImageSchema.statics.getTotalCount = async function (archiveId: Types.ObjectId) {
   const totalImages = await this.model('Image').find({ archive: archiveId })
   try {
-    await ArchiveModel.findByIdAndUpdate(archiveId, {
-      totalImages: totalImages.length,
-    })
+    
+    await ArchiveModel.updateOne(
+      { _id: archiveId },
+      {
+        totalImages: totalImages.length,
+      }
+    )
   } catch (err) {
     console.error(err)
   }
 }
 
-//runs on image.create()
-//this is the doc
+//runs on ImageModel.create()
+//(this) is the doc
 ImageSchema.post<ImageDocument>('save', async function (this: ImageDocument) {
-  // console.log('SVE HOOK')
-  // console.log(Object.keys(this))
-  // console.log(this.name)
   await (this.constructor as any).getTotalCount(this.archive)
-  const archive = await ArchiveModel.findById(this.archive)
-  await ArchiveModel.updateCatalogImageCount(archive.catalog)
 })
 
-ImageSchema.pre<ImageDocument>(
-  'updateOne',
-  //@ts-ignore
-  { document: true, query: false },
-  async function (this: ImageDocument) {
-    console.log(this.name)
-  }
-)
-
 //runs on
+//imgdoc = ImageModel.find(xxx)
 // imgDoc.remove()
 ImageSchema.post<ImageDocument>('remove', async function (this: ImageDocument) {
-  console.log(`removing hook <----------`)
   await (this.constructor as any).getTotalCount(this.archive)
-  const archive = await ArchiveModel.findById(this.archive)
-  await ArchiveModel.updateCatalogImageCount(archive.catalog)
 })
 
 //This makes it so that the name and archive pair are unique
