@@ -80,7 +80,7 @@ ImageSchema.post<ImageDocument>('save', async function (this: ImageDocument) {
 
 ImageSchema.pre<ImageDocument>(
   'updateOne',
-  //@ts-expect-error
+  //@ts-ignore
   { document: true, query: false },
   async function (this: ImageDocument) {
     console.log(this.name)
