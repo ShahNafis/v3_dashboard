@@ -12,33 +12,38 @@ const catalogScheme: Schema = new Schema(
     },
     name: {
       type: String,
-      required: [true, 'Please provide storm name'],
+      required: [true, 'Please provide catalog name'],
       unique: true,
       maxlength: [128, 'Name can not be longer than 128 characters'],
     },
     path: {
-      type: String,
-      required: [true, 'Please provide storm path'],
-      unique: true,
-      maxlength: [128, 'Name can not be longer than 128 characters'],
-    },
-    compressedPath: {
-      type: String,
-      unique: true,
-      maxlength: [128, 'Name can not be longer than 128 characters'],
+      original: {
+        type: String,
+        required: [true, 'Please provide catalog path'],
+        unique: true,
+        maxlength: [128, 'Path can not be longer than 128 characters'],
+      },
+      compressed: {
+        type: String,
+        unique: true,
+        maxlength: [128, 'Path can not be longer than 128 characters'],
+      },
     },
     catalogInfo: {
       year: {
         type: Number,
         required: false,
+        default: 1970,
       },
       link: {
         type: String,
         required: false,
+        default: '',
       },
       description: {
         type: String,
         required: false,
+        default: '',
       },
     },
     taggable: {

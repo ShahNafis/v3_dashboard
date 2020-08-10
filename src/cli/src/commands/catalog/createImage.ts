@@ -12,7 +12,9 @@ export async function createImage(params: Params) {
 
   let imageEntry = await ImageModel.findOne({
     archive: archiveEntry._id,
-    path: imagePath,
+    path: {
+      original:imagePath
+    },
     name: fileName,
   })
 
@@ -23,7 +25,10 @@ export async function createImage(params: Params) {
       imageEntry = await ImageModel.create({
         archive: archiveEntry._id,
         name: fileName,
-        path: imagePath,
+        path: {
+          original:imagePath,
+          compressed:imagePath
+        },
         numberOfMatches: 2,
         taggable: true,
         dateAdded: Date.now(),

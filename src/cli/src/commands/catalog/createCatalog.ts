@@ -32,20 +32,22 @@ export async function createCatalog(catalogData: Params) {
   //check if catalog exists. If it does dont create it.
   let catalogEntry = await CatalogModel.findOne({
     name: name,
-    path: catalogPath,
-    compressedPath: compressedCatalogPath,
+    path: {
+      original:catalogPath,
+      compressed:compressedCatalogPath
+    }
   })
 
   if (!catalogEntry) {
     try {
-      //throw new Error("Testing catalog error");
-
       catalogEntry = await CatalogModel.create({
         name: name,
-        path: catalogPath,
+        path: {
+          original:catalogPath,
+          compressed:compressedCatalogPath
+        },
         questionSet: questionSet,
         taggable: taggable,
-        compressedPath: compressedCatalogPath,
         catalogInfo: {
           ...catalogInfo,
         },

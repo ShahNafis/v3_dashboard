@@ -14,13 +14,15 @@ interface Params {
 export async function createArchives(params: Params) {
   const { archiveName, catalogPath, catalogEntry, imageFormat } = params
 
-  const archivePath = `${catalogPath}/${archiveName}`
-  const images = getFiles(archivePath, imageFormat)
+  const archivePath = `/${archiveName}`
+  const images = getFiles(`${catalogPath}/${archivePath}`, imageFormat)
 
   let archiveEntry = await ArchiveModel.findOne({
     catalog: catalogEntry._id,
     name: archiveName,
-    path: archivePath,
+    path: {
+      original:archivePath
+    },
   })
 
   if (!archiveEntry) {
@@ -28,9 +30,11 @@ export async function createArchives(params: Params) {
       //throw new Error("TESTING ARCHIVE error");
       archiveEntry = await ArchiveModel.create({
         catalog: catalogEntry._id,
-        compressedPath: archivePath,
         name: archiveName,
-        path: archivePath,
+        path: {
+          original:archivePath,
+          compressed: archivePath,
+        },
         taggable: true,
         dateAdded: Date.now(),
       })
