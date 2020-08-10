@@ -10,8 +10,6 @@
                 "link":"https://en.wikipedia.org/wiki/Tank",
                 "description":"Tanks are tracked fighting vehicles with armor and large caliber guns."
             }, 
-            "createAllArchives":true,
-            "createAllImages":true,
             "imageFormat":[".jpg",".jpeg"],
             "questionSet":"5ee3a8d801091b0dd1d62d3a"
         }      

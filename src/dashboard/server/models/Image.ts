@@ -67,13 +67,30 @@ ImageSchema.statics.getTotalCount = async function (archiveId: Types.ObjectId) {
   }
 }
 
+//runs on image.create()
+//this is the doc
 ImageSchema.post<ImageDocument>('save', async function (this: ImageDocument) {
+  // console.log('SVE HOOK')
+  // console.log(Object.keys(this))
+  // console.log(this.name)
   await (this.constructor as any).getTotalCount(this.archive)
   const archive = await ArchiveModel.findById(this.archive)
   await ArchiveModel.updateCatalogImageCount(archive.catalog)
 })
 
-ImageSchema.pre<ImageDocument>('remove', async function (this: ImageDocument) {
+ImageSchema.pre<ImageDocument>(
+  'updateOne',
+  //@ts-expect-error
+  { document: true, query: false },
+  async function (this: ImageDocument) {
+    console.log(this.name)
+  }
+)
+
+//runs on
+// imgDoc.remove()
+ImageSchema.post<ImageDocument>('remove', async function (this: ImageDocument) {
+  console.log(`removing hook <----------`)
   await (this.constructor as any).getTotalCount(this.archive)
   const archive = await ArchiveModel.findById(this.archive)
   await ArchiveModel.updateCatalogImageCount(archive.catalog)

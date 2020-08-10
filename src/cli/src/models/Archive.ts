@@ -3,7 +3,7 @@
 */
 
 import { Schema, model, Types } from 'mongoose'
-import { ArchiveModelType } from '../../interfaces/models'
+import { ArchiveModelType, ArchiveDocument } from '../../interfaces/models'
 
 const archiveScehma: Schema = new Schema(
   {
@@ -80,5 +80,11 @@ archiveScehma.statics.updateCatalogImageCount = async function (
     console.error(err)
   }
 }
+
+archiveScehma.post<ArchiveDocument>('update', async function (
+  this: ArchiveDocument
+) {
+  console.log(`ARCHIVE UPDATED`)
+})
 
 export const ArchiveModel: ArchiveModelType = model('Archive', archiveScehma)
