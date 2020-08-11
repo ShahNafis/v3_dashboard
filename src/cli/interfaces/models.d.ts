@@ -76,6 +76,7 @@ export interface ImageDocument extends Document {
 
 export interface AssingedImageDocument extends Document {
   imageId: ObjectID
+  archiveId?: ObjectID
   userId: ObjectID
   date: Date
 }

@@ -13,6 +13,7 @@ import { ImageTag } from '../../../../components/Cards/ImageTag'
 import { checkUserRole } from '../../../../components/Utils/Auth/checkRole'
 import { generateUnAuthObj } from '../../../../components/Utils/Auth/unAuthError'
 import { isValidArchive } from '../../../../components/API/post/isValidArchive'
+import { getUserAssignedImage } from '../../../../components/API/post/getUserAssignedImage'
 
 export default function TagImage(props) {
   const { user, success, message, imageDocument } = props
@@ -142,6 +143,14 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
       },
     }
   }
+
+  //Get assigned Image
+  const resGetUserAssignedImage = await getUserAssignedImage({
+    cookie: context?.req?.headers?.cookie,
+    res: context.res,
+    archiveID: archive as string,
+  })
+  console.log(resGetUserAssignedImage)
 
   return {
     props: {
