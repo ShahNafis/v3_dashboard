@@ -22,7 +22,6 @@ interface Props {
 
 const StartTagging = (props: Props): JSX.Element => {
   const { user, selectionData, success, message } = props
-
   return (
     <div className="container">
       <Head>
@@ -75,6 +74,8 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   return {
     props: {
       user,
+      success: true,
+      message: '',
       selectionData: selectionData,
     },
   }

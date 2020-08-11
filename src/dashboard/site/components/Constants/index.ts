@@ -9,6 +9,7 @@ const routes = {
     getUser: apiCall('/api/user/getUser'),
     getResumeTableData: apiCall('/api/catalog/userCatalogs'),
     isUserPartOfCatalog: apiCall('/api/catalog/userPartOfCatalog'),
+    isArchiveValid: apiCall('/api/archive/validArchive'),
   },
 }
 const uiConstants = {

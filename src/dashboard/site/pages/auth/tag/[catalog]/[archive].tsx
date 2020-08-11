@@ -12,6 +12,7 @@ import { ImageTag } from '../../../../components/Cards/ImageTag'
 
 import { checkUserRole } from '../../../../components/Utils/Auth/checkRole'
 import { generateUnAuthObj } from '../../../../components/Utils/Auth/unAuthError'
+import { isValidArchive } from '../../../../components/API/post/isValidArchive'
 
 export default function TagImage(props) {
   const { user, success, message, imageDocument } = props
@@ -47,15 +48,22 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     res: context.res,
   })
 
-  //Check that there is user data
-  // if (Object.keys(user.data).length === 0) {
-  //   return {
-  //     props: {
-  //       success: false,
-  //       message: 'Error getting User data',
-  //     },
-  //   }
-  // }
+  /*
+    STEPS 
+    1. Check user role
+    2. Check if catalog is part of user
+    3. Check for errors
+    4. Check to see if archive is valid,and part of catalog
+    5. Check for errors
+    6. Get assigned Image
+      a. If one is assigned, return
+      b. If not
+        1. Get catalog serve type
+        2. Select image
+        3. Assign
+        4. Return
+    7. Return
+  */
 
   //check if user is a tagger
   const isTagger = checkUserRole({ roles: user.data?.roles, role: 'tagger' })
@@ -71,7 +79,6 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   }
 
   const { catalog = '', archive = '' } = context.query
-  console.log(catalog, archive)
 
   //check if user can tag this catalog
   const resUserPartOfCatalog = await isUserPartOfcatalog({
@@ -99,6 +106,38 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
         user,
         ...generateUnAuthObj({
           message: resUserPartOfCatalog.message,
+        }),
+      },
+    }
+  }
+
+  //check if the archive is valid, and part of catalog
+  const resIsValidArchive = await isValidArchive({
+    archiveID: archive as string,
+    cookie: context?.req?.headers?.cookie,
+    res: context.res,
+    catalogID: catalog as string,
+  })
+
+  //Check if success
+  if (!resIsValidArchive?.success) {
+    return {
+      props: {
+        user,
+        ...generateUnAuthObj({
+          message: resIsValidArchive.message,
+        }),
+      },
+    }
+  }
+
+  //Check if valid
+  if (!resIsValidArchive?.data?.archiveValid) {
+    return {
+      props: {
+        user,
+        ...generateUnAuthObj({
+          message: `Invalid Archive ID of ${archive}`,
         }),
       },
     }

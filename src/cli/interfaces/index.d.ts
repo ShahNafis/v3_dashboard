@@ -69,6 +69,10 @@ declare namespace cilDashboard {
       data: AllDocuments[]
     }
   }
+
+  export interface ResPartOfCatalog extends AdvResultsRes {
+    partOfCatalog: boolean
+  }
 }
 
 declare global {
