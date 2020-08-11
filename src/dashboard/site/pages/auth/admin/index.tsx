@@ -6,7 +6,7 @@ import { GetServerSideProps } from 'next'
 import getSession from '../../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../../components/API/getUserDB'
 import Layout from '../../../components/Layout'
-import { checkUserTags } from '../../../components/Utils/Auth/checkTags'
+import { checkUserRole } from '../../../components/Utils/Auth/checkRole'
 import { generateUnAuthObj } from '../../../components/Utils/Auth/unAuthError'
 import ErrorCard from '../../../components/ErrorCards'
 import { determineNavItems } from '../../../components/Utils/Auth/determineNavItems'
@@ -49,11 +49,12 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     res: context.res,
   })
 
-  const isAdmin = checkUserTags({ roles: user.data?.roles, role: 'admin' })
+  const isAdmin = checkUserRole({ roles: user.data?.roles, role: 'admin' })
 
   if (!isAdmin.success) {
     return {
       props: {
+        user,
         ...generateUnAuthObj({
           message: `User ${user.data.userName} is not allowed to access this page`,
         }),

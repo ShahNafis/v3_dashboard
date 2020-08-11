@@ -1,4 +1,6 @@
+import React from 'react'
 import Head from 'next/head'
+
 import Layout from '../../components/Layout'
 import { GetServerSideProps } from 'next'
 import getSession from '../../components/Utils/Auth/getSession'
@@ -7,12 +9,19 @@ import { getStartTaggingTableData } from '../../components/API/get/startTaggingD
 import { determineNavItems } from '../../components/Utils/Auth/determineNavItems'
 import { SelectArchive } from '../../components/Tables/SelectArchive'
 import { CatalogSelectionData } from '../../../interfaces'
+import { checkUserRole } from '../../components/Utils/Auth/checkRole'
+import { generateUnAuthObj } from '../../components/Utils/Auth/unAuthError'
+import ErrorCard from '../../components/ErrorCards'
 
-const StartTagging = (props): JSX.Element => {
-  const {
-    user,
-    selectionData,
-  }: { user: any; selectionData: CatalogSelectionData[] } = props
+interface Props {
+  user: any
+  selectionData: CatalogSelectionData[]
+  success: boolean
+  message: string
+}
+
+const StartTagging = (props: Props): JSX.Element => {
+  const { user, selectionData, success, message } = props
 
   return (
     <div className="container">
@@ -26,7 +35,13 @@ const StartTagging = (props): JSX.Element => {
         navItems={determineNavItems(user)}
         title={`Welcome ${user.displayName}`}
       >
-        <SelectArchive data={selectionData} />
+        {!success ? (
+          <ErrorCard message={message} title="Error" />
+        ) : (
+          <React.Fragment>
+            <SelectArchive data={selectionData} />
+          </React.Fragment>
+        )}
       </Layout>
     </div>
   )
@@ -38,6 +53,20 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     cookie: context?.req?.headers?.cookie,
     res: context.res,
   })
+
+  //check if user is a tagger
+  const isTagger = checkUserRole({ roles: user.data?.roles, role: 'tagger' })
+  if (!isTagger.success) {
+    return {
+      props: {
+        user,
+        ...generateUnAuthObj({
+          message: `User ${user.data.userName} is not allowed to access this page`,
+        }),
+      },
+    }
+  }
+
   const selectionData = await getStartTaggingTableData({
     cookie: context?.req?.headers?.cookie,
     res: context.res,
@@ -47,55 +76,6 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     props: {
       user,
       selectionData: selectionData,
-      // [
-      //   {
-      //     name: 'Catalog 1',
-      //     _id: 'idCat1',
-      //     catalogInfo: {
-      //       year: 1066,
-      //       link: '#link1',
-      //       description: `
-      //       The Battle of Hastings[a] was fought on 14 October 1066 between the
-      //       Norman-French army of William, the Duke of Normandy, and an
-      //       English army under the Anglo-Saxon King Harold
-      //       Godwinson, beginning the Norman conquest of
-      //       England. It took place approximately 7 miles (11 kilometres) northwest
-      //       of Hastings, close to the present-day town of Battle,
-      //       East Sussex, and was a decisive Norman victory.
-      //       `,
-      //     },
-      //     totalImages: 110,
-      //     archives: [
-      //       {
-      //         name: 'Archive 1',
-      //         totalImages: 10,
-      //         _id: 'idArc1',
-      //       },
-      //       {
-      //         name: 'Archive 2',
-      //         totalImages: 100,
-      //         _id: 'idArc2',
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     name: 'Catalog 2',
-      //     _id: 'idCat2',
-      //     catalogInfo: {
-      //       year: 1776,
-      //       link: '#link2',
-      //       description: 'COLORS LOTS OF COLORS',
-      //     },
-      //     totalImages: 10,
-      //     archives: [
-      //       {
-      //         name: 'Archive 3',
-      //         totalImages: 10,
-      //         _id: 'idArc3',
-      //       },
-      //     ],
-      //   },
-      // ],
     },
   }
 }

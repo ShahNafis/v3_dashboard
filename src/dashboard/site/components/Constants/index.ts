@@ -8,6 +8,7 @@ const routes = {
   postReq: {
     getUser: apiCall('/api/user/getUser'),
     getResumeTableData: apiCall('/api/catalog/userCatalogs'),
+    isUserPartOfCatalog: apiCall('/api/catalog/userPartOfCatalog'),
   },
 }
 const uiConstants = {

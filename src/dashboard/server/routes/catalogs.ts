@@ -1,6 +1,10 @@
 import express from 'express'
 
-import { getAllCatalogs, filterUserCatalogs } from '../controllers/catalogs'
+import {
+  getAllCatalogs,
+  filterUserCatalogs,
+  userPartOfCatalog,
+} from '../controllers/catalogs'
 
 //Perform advanced results which means filtering, pagination, and query parameters
 import { advancedResults } from '../middlewares/advancedResults'
@@ -26,6 +30,15 @@ router
     insertUser,
     advancedResults(CatalogModel, 'archives'),
     filterUserCatalogs
+  )
+
+router
+  .route('/userPartOfCatalog')
+  .post(
+    ensureAuthenticated,
+    insertUser,
+    advancedResults(CatalogModel, 'archives'),
+    userPartOfCatalog
   )
 
 export default router
