@@ -73,6 +73,18 @@ declare namespace cilDashboard {
   export interface ResPartOfCatalog extends AdvResultsRes {
     partOfCatalog: boolean
   }
+
+  export interface ExtenedResponse extends Response {
+    advancedResults?: {
+      success: boolean
+      count: number
+      pagination: {
+        page: number
+        limit: number
+      }
+      data: AllDocuments[]
+    }
+  }
 }
 
 declare global {

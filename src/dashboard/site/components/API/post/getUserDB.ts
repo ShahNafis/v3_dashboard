@@ -4,22 +4,24 @@ import { apiRequest } from '../'
 interface Params {
   cookie: string
   res: any
-  //   catalogID?: string
-  archiveId: string
 }
 
-export async function getUserAssignedImage({ cookie, archiveId }: Params) {
+async function getUserDB({ cookie, res }: Params) {
   const data = await apiRequest({
-    body: {
-      archiveID: archiveId,
-    },
     method: 'POST',
-    route: routes.postReq.getUserAssignedImage,
+    route: routes.postReq.getUser,
     headers: {
       credentials: 'include',
       cookie: cookie ?? null,
     },
   })
 
-  return data
+  if (data.success) {
+    return data.data.user
+  }
+  //For whatever reasons, if fail redirect to landing page
+  res.redirect('/')
+  return undefined
 }
+
+export { getUserDB }

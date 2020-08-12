@@ -5,9 +5,9 @@ import { CatalogModel } from '../models/Catalog'
 
 const userPartOfCatalog = asyncHandler(
   async (req: Request, res: ResPartOfCatalog, next: NextFunction) => {
-    const { catalogID } = req.body
+    const { catalogId } = req.body
 
-    if (!catalogID) {
+    if (!catalogId) {
       return res.status(200).json({
         success: true,
         message: 'No catalogId sent',
@@ -18,11 +18,11 @@ const userPartOfCatalog = asyncHandler(
     }
 
     //See if the catalogId passed is valid
-    const catalog = await CatalogModel.findOne({ _id: catalogID })
+    const catalog = await CatalogModel.findOne({ _id: catalogId })
     if (!catalog) {
       return res.status(200).json({
         success: true,
-        message: `Invalid catalog id: ${catalogID}`,
+        message: `Invalid catalog id: ${catalogId}`,
         data: {
           partOfCatalog: false,
         },
@@ -31,7 +31,7 @@ const userPartOfCatalog = asyncHandler(
 
     //see if user is part of catalog
     const userCatalogs = req?.user?.data?.catalogs
-    const partOfCatalog = userCatalogs.includes(catalogID)
+    const partOfCatalog = userCatalogs.includes(catalogId)
     res.partOfCatalog = partOfCatalog
 
     next()

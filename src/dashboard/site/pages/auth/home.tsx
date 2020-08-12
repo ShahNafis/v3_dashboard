@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Layout from '../../components/Layout'
 import { GetServerSideProps } from 'next'
 import getSession from '../../components/Utils/Auth/getSession'
-import { getUserDB } from '../../components/API/getUserDB'
+import { getUserDB } from '../../components/API/post/getUserDB'
 import ErrorCard from '../../components/ErrorCards'
 import { determineNavItems } from '../../components/Utils/Auth/determineNavItems'
 import { HomeText } from '../../components/StaticText/home'
@@ -47,13 +47,14 @@ export const Home = (props: Props): JSX.Element => {
 }
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
+  //Add user data from db
   const user: any = getSession(context.req)
   user.data =
     (await getUserDB({
       cookie: context?.req?.headers?.cookie,
       res: context.res,
     })) ?? {}
-
+  //check if valid
   if (Object.keys(user.data).length === 0) {
     return {
       props: {
@@ -62,6 +63,7 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
       },
     }
   }
+
   return {
     props: {
       success: true,

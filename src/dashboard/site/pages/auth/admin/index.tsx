@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { GetServerSideProps } from 'next'
 
 import getSession from '../../../components/Utils/Auth/getSession'
-import { getUserDB } from '../../../components/API/getUserDB'
+import { getUserDB } from '../../../components/API/post/getUserDB'
 import Layout from '../../../components/Layout'
 import { checkUserRole } from '../../../components/Utils/Auth/checkRole'
 import { generateUnAuthObj } from '../../../components/Utils/Auth/unAuthError'

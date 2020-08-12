@@ -12,7 +12,7 @@ import { advancedResults } from '../middlewares/advancedResults'
 import { ensureAuthenticated } from '../middlewares/ensureAuth'
 import { CatalogModel } from '../models/Catalog'
 import { insertUser } from '../middlewares/insertUser'
-import { userPartOfCatalog } from '../middlewares/userPartOfCatalog'
+import { membershipCatalogMiddleware } from '../middlewares/membership/catalog'
 
 const router = express.Router()
 
@@ -20,21 +20,26 @@ router
   .route('/')
   .get(
     ensureAuthenticated,
-    advancedResults(CatalogModel, 'archives'),
+    advancedResults(CatalogModel, ['archives']),
     getAllCatalogs
   )
 
 router
   .route('/userCatalogs')
-  .get(
+  .post(
     ensureAuthenticated,
     insertUser,
-    advancedResults(CatalogModel, 'archives'),
+    advancedResults(CatalogModel, ['archives']),
     filterUserCatalogs
   )
 
 router
-  .route('/userPartOfCatalog')
-  .post(ensureAuthenticated, insertUser, userPartOfCatalog, isUserPartOfCatalog)
+  .route('/catalogMembership')
+  .post(
+    ensureAuthenticated,
+    insertUser,
+    membershipCatalogMiddleware,
+    isUserPartOfCatalog
+  )
 
 export default router

@@ -4,6 +4,7 @@ import { Request } from 'express'
 import { AssignedImageModel } from '../models/AssignedImages'
 import { isValidArchive } from '../utils/checks/isValidArchive'
 import { CatalogOfArchivePartOfUser } from '../utils/checks/CatalogOfArchivePartOfUser'
+
 const getAllAssignedImages = asyncHandler(
   async (req: Request, res: AdvResultsRes) => {
     res.status(200).json(res.advancedResults)
@@ -41,16 +42,11 @@ const getUserAssignedImage = asyncHandler(
       userId: user.data._id,
       archiveId: archiveID,
     })
-    console.log(currentlyAssignedImage)
-    // if(!currentlyAssignedImage) {
-    //   res.status(200).json({
-    //     success: true,
-    //     message: `No assigned Images`
-    //   })
-    // }
+
     res.status(200).json({
       success: true,
       message: 'Got Image',
+      data: currentlyAssignedImage,
     })
   }
 )

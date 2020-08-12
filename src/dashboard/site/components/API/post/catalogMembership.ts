@@ -1,25 +1,24 @@
+// import { ResponseType } from '../../../../interfaces'
 import { routes } from '../../Constants'
 import { apiRequest } from '../'
 
 interface Params {
   cookie: string
   res: any
-  //   catalogID?: string
-  archiveId: string
+  catalogId: string
 }
 
-export async function getUserAssignedImage({ cookie, archiveId }: Params) {
+export async function catalogMembership({ cookie, catalogId }: Params) {
   const data = await apiRequest({
     body: {
-      archiveID: archiveId,
+      catalogId: catalogId,
     },
     method: 'POST',
-    route: routes.postReq.getUserAssignedImage,
+    route: routes.postReq.catalogMembership,
     headers: {
       credentials: 'include',
       cookie: cookie ?? null,
     },
   })
-
   return data
 }

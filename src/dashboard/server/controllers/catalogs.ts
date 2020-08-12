@@ -26,13 +26,12 @@ const filterUserCatalogs = asyncHandler(
 
 const isUserPartOfCatalog = asyncHandler(
   async (req: Request, res: ResPartOfCatalog) => {
+    const { catalogId } = req.body
     res.status(200).json({
       success: true,
-      message: res.partOfCatalog
-        ? `User is part of catalog`
-        : 'User is not part of catalog',
+      message: `User has membership to catalog ${catalogId}`,
       data: {
-        partOfCatalog: res.partOfCatalog,
+        membershipCatalog: true,
       },
     })
   }

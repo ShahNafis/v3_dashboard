@@ -4,8 +4,8 @@ import Head from 'next/head'
 import Layout from '../../../../components/Layout'
 import { GetServerSideProps } from 'next'
 import getSession from '../../../../components/Utils/Auth/getSession'
-import { getUserDB } from '../../../../components/API/getUserDB'
-import { isUserPartOfcatalog } from '../../../../components/API/post/userPartOfCatalog'
+import { getUserDB } from '../../../../components/API/post/getUserDB'
+import { catalogMembership } from '../../../../components/API/post/catalogMembership'
 import ErrorCard from '../../../../components/ErrorCards'
 import { determineNavItems } from '../../../../components/Utils/Auth/determineNavItems'
 import { ImageTag } from '../../../../components/Cards/ImageTag'
@@ -15,6 +15,7 @@ import { generateUnAuthObj } from '../../../../components/Utils/Auth/unAuthError
 import { isValidArchive } from '../../../../components/API/post/isValidArchive'
 import { getUserAssignedImage } from '../../../../components/API/post/getUserAssignedImage'
 
+import { performance } from 'perf_hooks'
 export default function TagImage(props) {
   const { user, success, message, imageDocument } = props
 
@@ -43,6 +44,8 @@ export default function TagImage(props) {
 }
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
+  const t1 = performance.now()
+  //Add user data from db
   const user: any = getSession(context.req)
   user.data = await getUserDB({
     cookie: context?.req?.headers?.cookie,
@@ -79,29 +82,18 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     }
   }
 
+  //get dynamic route variables
   const { catalog = '', archive = '' } = context.query
 
   //check if user can tag this catalog
-  const resUserPartOfCatalog = await isUserPartOfcatalog({
+  const resUserPartOfCatalog = await catalogMembership({
     cookie: context?.req?.headers?.cookie,
     res: context.res,
-    catalogID: catalog as string,
+    catalogId: catalog as string,
   })
 
-  //Check for error
+  //Check for error/success
   if (!resUserPartOfCatalog?.success) {
-    return {
-      props: {
-        user,
-        ...generateUnAuthObj({
-          message: resUserPartOfCatalog.message,
-        }),
-      },
-    }
-  }
-
-  //check to see if part of catalog
-  if (!resUserPartOfCatalog?.data?.partOfCatalog) {
     return {
       props: {
         user,
@@ -114,10 +106,10 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
 
   //check if the archive is valid, and part of catalog
   const resIsValidArchive = await isValidArchive({
-    archiveID: archive as string,
+    archiveId: archive as string,
     cookie: context?.req?.headers?.cookie,
     res: context.res,
-    catalogID: catalog as string,
+    catalogId: catalog as string,
   })
 
   //Check if success
@@ -132,7 +124,7 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     }
   }
 
-  //Check if valid
+  //Check if archive is valid
   if (!resIsValidArchive?.data?.archiveValid) {
     return {
       props: {
@@ -148,10 +140,11 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const resGetUserAssignedImage = await getUserAssignedImage({
     cookie: context?.req?.headers?.cookie,
     res: context.res,
-    archiveID: archive as string,
+    archiveId: archive as string,
   })
-  console.log(resGetUserAssignedImage)
 
+  const t2 = performance.now()
+  console.log(`Time ${t2 - t1} ms`)
   return {
     props: {
       success: true,
@@ -164,6 +157,7 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
         compressedImageLink:
           'https://en.wikipedia.org/wiki/Estoc#/media/File:Panzerstecher_PP_noBg.jpg',
       },
+      resGetUserAssignedImage,
     },
   }
 }

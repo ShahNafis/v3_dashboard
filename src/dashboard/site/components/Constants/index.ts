@@ -8,7 +8,7 @@ const routes = {
   postReq: {
     getUser: apiCall('/api/user/getUser'),
     getResumeTableData: apiCall('/api/catalog/userCatalogs'),
-    isUserPartOfCatalog: apiCall('/api/catalog/userPartOfCatalog'),
+    catalogMembership: apiCall('/api/catalog/catalogMembership'),
     isArchiveValid: apiCall('/api/archive/validArchive'),
     getUserAssignedImage: apiCall('/api/assignedImages/userAssignedImage'),
   },

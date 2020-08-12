@@ -12,13 +12,13 @@ const getAllArchives = asyncHandler(
 
 const isArchiveValid = asyncHandler(
   async (req: Request, res: AdvResultsRes) => {
-    const { catalogID, archiveID } = req.body
+    const { catalogId, archiveId } = req.body
 
     //check if archive ID sent
-    if (!archiveID) {
+    if (!archiveId) {
       return res.status(200).json({
         success: true,
-        message: 'No archiveID sent',
+        message: 'No archiveId sent',
         data: {
           partOfCatalog: false,
         },
@@ -31,8 +31,8 @@ const isArchiveValid = asyncHandler(
 
     //see if valid archive, and if archive is part of catalog
     const archive = await ArchiveModel.findOne({
-      _id: archiveID,
-      catalog: catalogID,
+      _id: archiveId,
+      catalog: catalogId,
     })
     results.archiveValid = !!archive
 

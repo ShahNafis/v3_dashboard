@@ -4,8 +4,8 @@ import Head from 'next/head'
 import Layout from '../../components/Layout'
 import { GetServerSideProps } from 'next'
 import getSession from '../../components/Utils/Auth/getSession'
-import { getUserDB } from '../../components/API/getUserDB'
-import { getStartTaggingTableData } from '../../components/API/get/startTaggingData'
+import { getUserDB } from '../../components/API/post/getUserDB'
+import { getStartTaggingTableData } from '../../components/API/post/startTaggingData'
 import { determineNavItems } from '../../components/Utils/Auth/determineNavItems'
 import { SelectArchive } from '../../components/Tables/SelectArchive'
 import { CatalogSelectionData } from '../../../interfaces'
@@ -47,6 +47,7 @@ const StartTagging = (props: Props): JSX.Element => {
 }
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
+  //Add user data from db
   const user: any = getSession(context.req)
   user.data = await getUserDB({
     cookie: context?.req?.headers?.cookie,
@@ -66,6 +67,7 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     }
   }
 
+  //Get the data for the selection table
   const selectionData = await getStartTaggingTableData({
     cookie: context?.req?.headers?.cookie,
     res: context.res,
@@ -76,7 +78,7 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
       user,
       success: true,
       message: '',
-      selectionData: selectionData,
+      selectionData: selectionData.data ?? {},
     },
   }
 }

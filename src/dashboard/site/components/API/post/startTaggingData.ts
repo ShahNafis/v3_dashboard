@@ -1,25 +1,21 @@
+// import { ResponseType } from '../../../../interfaces'
 import { routes } from '../../Constants'
 import { apiRequest } from '../'
 
 interface Params {
   cookie: string
   res: any
-  //   catalogID?: string
-  archiveId: string
 }
 
-export async function getUserAssignedImage({ cookie, archiveId }: Params) {
+export async function getStartTaggingTableData({ cookie }: Params) {
   const data = await apiRequest({
-    body: {
-      archiveID: archiveId,
-    },
     method: 'POST',
-    route: routes.postReq.getUserAssignedImage,
+    route: routes.postReq.getResumeTableData,
     headers: {
       credentials: 'include',
       cookie: cookie ?? null,
     },
   })
-
+  console.log('data', data)
   return data
 }

@@ -1,49 +1,32 @@
-import { ResponseType } from '../../../../interfaces'
+// import { ResponseType } from '../../../../interfaces'
 import { routes } from '../../Constants'
+import { apiRequest } from '../'
 
 interface Params {
   cookie: string
   res: any
-  catalogID?: string
-  archiveID: string
+  catalogId?: string
+  archiveId: string
 }
 
-export async function isValidArchive({ cookie, catalogID, archiveID }: Params) {
-  const bodyObj: { catalogID?: string; archiveID } = {
-    archiveID: archiveID,
+export async function isValidArchive({ cookie, catalogId, archiveId }: Params) {
+  const bodyObj: { catalogId?: string; archiveId } = {
+    archiveId: archiveId,
   }
-  //optionally add catalogID if it is defined
-  if (catalogID) {
-    bodyObj.catalogID = catalogID
+  //optionally add catalogId if it is defined
+  if (catalogId) {
+    bodyObj.catalogId = catalogId
   }
 
-  const resGetData = await fetch(routes.postReq.isArchiveValid, {
+  const data = await apiRequest({
+    body: bodyObj,
     method: 'POST',
+    route: routes.postReq.isArchiveValid,
     headers: {
-      'Content-Type': 'application/json',
-      //These two are needed for server side calls
       credentials: 'include',
       cookie: cookie ?? null,
     },
-    body: JSON.stringify({
-      ...bodyObj,
-    }),
   })
-
-  try {
-    const resData: ResponseType = await resGetData.json()
-    if (resData.success) {
-      return resData
-    } else {
-      return {
-        success: false,
-        message: `${resData.message}` ?? 'Error',
-      }
-    }
-  } catch {
-    return {
-      success: false,
-      message: `${resGetData.status} - ${resGetData.statusText}` ?? 'Error',
-    }
-  }
+  console.log(data)
+  return data
 }
