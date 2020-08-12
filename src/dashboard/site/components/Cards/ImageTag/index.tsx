@@ -10,6 +10,8 @@ import GenericHookForm from '../../Forms/genricHookForm'
 import { Header } from './Header'
 import { ImageContainer } from './Image'
 
+import { ImageDocument } from '../../../../interfaces/models'
+
 function submitTags(tags): ResponseType {
   console.log(tags)
   return {
@@ -27,19 +29,19 @@ export function ImageTag(props: Props) {
   const router = useRouter()
   const { catalog = '', archive = '' } = router.query
 
-  const { imageDocument } = props
+  const { imageDocument }: { imageDocument: ImageDocument } = props
 
   return (
     <Card>
       <Header
         title={`Catalog ${catalog}`}
-        subheader={`Archive ${archive} - ${imageDocument.fileName}`}
+        subheader={`Archive ${archive} - ${imageDocument.name}`}
         style={{ color: theme.palette.primary.light }}
         subheaderStyle={{ color: theme.palette.secondary.main }}
       />
       <ImageContainer
-        compressedLink={imageDocument.imageLink}
-        originalLink={imageDocument.compressedImageLink}
+        compressedLink={imageDocument.path.compressed}
+        originalLink={imageDocument.path.original}
       />
       <CardContent>
         <GenericHookForm

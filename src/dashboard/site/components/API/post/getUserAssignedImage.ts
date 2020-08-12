@@ -11,7 +11,7 @@ interface Params {
 export async function getUserAssignedImage({ cookie, archiveId }: Params) {
   const data = await apiRequest({
     body: {
-      archiveID: archiveId,
+      archiveId: archiveId,
     },
     method: 'POST',
     route: routes.postReq.getUserAssignedImage,

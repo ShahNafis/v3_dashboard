@@ -27,6 +27,6 @@ export async function isValidArchive({ cookie, catalogId, archiveId }: Params) {
       cookie: cookie ?? null,
     },
   })
-  console.log(data)
+
   return data
 }

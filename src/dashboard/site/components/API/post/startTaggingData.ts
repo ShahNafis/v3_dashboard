@@ -16,6 +16,6 @@ export async function getStartTaggingTableData({ cookie }: Params) {
       cookie: cookie ?? null,
     },
   })
-  console.log('data', data)
+
   return data
 }

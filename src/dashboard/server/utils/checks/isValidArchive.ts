@@ -2,7 +2,7 @@ import { ArchiveModel } from '../../models/Archive'
 
 export async function isValidArchive(id: string) {
   try {
-    const archive = await ArchiveModel.findById(id)
+    const archive = await ArchiveModel.findOne({ _id: id })
     if (archive) {
       return true
     } else {

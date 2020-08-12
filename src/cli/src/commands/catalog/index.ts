@@ -48,6 +48,7 @@ const catalog = {
         questionSet,
         catalogInfo,
         taggable,
+        imageServeOrder
       } = catalog
 
       const res = await createCatalog({
@@ -62,6 +63,7 @@ const catalog = {
           link: catalogInfo.link as string,
           year: catalogInfo.year as number,
         },
+        imageServeOrder:imageServeOrder
       })
 
       if (!res.success) {

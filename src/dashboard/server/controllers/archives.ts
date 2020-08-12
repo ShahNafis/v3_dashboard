@@ -25,21 +25,16 @@ const isArchiveValid = asyncHandler(
       })
     }
 
-    const results = {
-      archiveValid: undefined,
-    }
-
     //see if valid archive, and if archive is part of catalog
     const archive = await ArchiveModel.findOne({
       _id: archiveId,
       catalog: catalogId,
     })
-    results.archiveValid = !!archive
 
     res.status(200).json({
       success: true,
       message: `Checked if archive/catalog ID's are valid`,
-      data: results,
+      data: !!archive,
     })
   }
 )

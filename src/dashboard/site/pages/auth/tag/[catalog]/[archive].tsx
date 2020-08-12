@@ -16,13 +16,16 @@ import { isValidArchive } from '../../../../components/API/post/isValidArchive'
 import { getUserAssignedImage } from '../../../../components/API/post/getUserAssignedImage'
 
 import { performance } from 'perf_hooks'
+
+import { ImageDocument } from '../../../../../interfaces/models'
 export default function TagImage(props) {
-  const { user, success, message, imageDocument } = props
+  const { user, success, message } = props
+  const imageDocument: ImageDocument = props.imageDocument
 
   return (
     <React.Fragment>
       <Head>
-        <title>Tag Image: {imageDocument?.fileName}</title>
+        <title>Tag Image: {imageDocument?.name}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -106,10 +109,10 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
 
   //check if the archive is valid, and part of catalog
   const resIsValidArchive = await isValidArchive({
-    archiveId: archive as string,
     cookie: context?.req?.headers?.cookie,
     res: context.res,
     catalogId: catalog as string,
+    archiveId: archive as string,
   })
 
   //Check if success
@@ -125,7 +128,7 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   }
 
   //Check if archive is valid
-  if (!resIsValidArchive?.data?.archiveValid) {
+  if (!resIsValidArchive?.data) {
     return {
       props: {
         user,
@@ -149,15 +152,16 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     props: {
       success: true,
       user,
-      imageDocument: {
-        _id: '_id-test',
-        fileName: 'fileName',
-        imageLink:
-          'https://upload.wikimedia.org/wikipedia/commons/1/10/Zweihaender_im_historischen_Museum_Basel.JPG',
-        compressedImageLink:
-          'https://en.wikipedia.org/wiki/Estoc#/media/File:Panzerstecher_PP_noBg.jpg',
-      },
-      resGetUserAssignedImage,
+      imageDocument: resGetUserAssignedImage.data,
+      // imageDocument: {
+      //   _id: '_id-test',
+      //   fileName: 'fileName',
+      //   imageLink:
+      //     'https://upload.wikimedia.org/wikipedia/commons/1/10/Zweihaender_im_historischen_Museum_Basel.JPG',
+      //   compressedImageLink:
+      //     'https://en.wikipedia.org/wiki/Estoc#/media/File:Panzerstecher_PP_noBg.jpg',
+      // },
+      // resGetUserAssignedImage,
     },
   }
 }

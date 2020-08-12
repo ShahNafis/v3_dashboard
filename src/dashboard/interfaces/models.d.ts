@@ -25,9 +25,7 @@ export interface CatalogDocument extends Document {
   }
   taggable: boolean
   questionSet: ObjectID
-  imageServeOrder?: {
-    type: string
-  }
+  imageServeOrder: ObjectID
   totalImages?: number
 
   updateImageCount(): Promise<void>

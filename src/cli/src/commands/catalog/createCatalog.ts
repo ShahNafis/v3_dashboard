@@ -15,7 +15,8 @@ interface Params {
     link: string
     description: string
   }
-  taggable: boolean
+  taggable: boolean,
+  imageServeOrder: string
 }
 
 export async function createCatalog(catalogData: Params) {
@@ -27,6 +28,7 @@ export async function createCatalog(catalogData: Params) {
     catalogPath,
     questionSet,
     taggable,
+    imageServeOrder
   } = catalogData
 
   //check if catalog exists. If it does dont create it.
@@ -52,6 +54,7 @@ export async function createCatalog(catalogData: Params) {
           ...catalogInfo,
         },
         dateAdded: Date.now(),
+        imageServeOrder: imageServeOrder
       })
     } catch (error) {
       return {

@@ -55,7 +55,7 @@ const catalogScheme: Schema = new Schema(
       required: [true, 'Please provide ID of question set'],
     },
     imageServeOrder: {
-      type: Object,
+      type: Types.ObjectId,
       required: false,
     },
     totalImages: {
