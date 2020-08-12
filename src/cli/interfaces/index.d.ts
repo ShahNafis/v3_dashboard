@@ -1,7 +1,13 @@
 import { Response } from 'express'
 //For some reason even though UserDocument is used, eslint thinks its not.
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { AllDocuments, CatalogDocument, UserDocument } from './models'
+import {
+  AllDocuments,
+  CatalogDocument,
+  UserDocument,
+  ArchiveDocument,
+} from './models'
+import { ObjectID } from 'mongodb'
 
 declare namespace cilDashboard {
   export interface ResponseType {
@@ -11,13 +17,11 @@ declare namespace cilDashboard {
   }
 
   export interface ResumeTaggingData {
-    catalogName: string
-    archives: {
-      archiveName: string
-      total: number
-      tagged: number
-      link: string
-    }[]
+    archiveId: string | ObjectID
+    catalogId: string | ObjectID
+    tagCount: number
+    archive: ArchiveDocument
+    catalog: CatalogDocument
   }
 
   export interface CatalogSelectionData {

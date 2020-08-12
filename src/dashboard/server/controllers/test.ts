@@ -1,7 +1,7 @@
 import { asyncHandler } from '../middlewares/async'
 //import { ErrorResponse } from '../utils/errorResponse'
 import { Request, Response, NextFunction } from 'express'
-import { AssignedImageModel } from '../models/AssignedImages'
+// import { AssignedImageModel } from '../models/AssignedImages'
 // import {ImageModel} from '../models/Image'
 // import {CatalogModel} from '../models/Catalog'
 // import {ArchiveModel} from '../models/Archive'
@@ -41,11 +41,11 @@ const testError = asyncHandler(
 )
 
 const testAssignImage = asyncHandler(async (req: Request, res: Response) => {
-  await AssignedImageModel.create({
-    imageId: '5f32ea2c694bad78203fd1b9',
-    userId: '5f2f65cd363ae5001670164b',
-    date: Date.now(),
-  })
+  // await AssignedImageModel.create({
+  //   imageId: '5f32ea2c694bad78203fd1b9',
+  //   userId: '5f2f65cd363ae5001670164b',
+  //   date: Date.now(),
+  // })
   res.json({ done: true })
 })
 

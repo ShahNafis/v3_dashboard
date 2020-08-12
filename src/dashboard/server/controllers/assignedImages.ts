@@ -1,12 +1,14 @@
 import { asyncHandler } from '../middlewares/async' //to avoid putting try catch everywhere
 import { AdvResultsRes } from '../../interfaces'
-import { Request } from 'express'
+import { Request, NextFunction } from 'express'
 import { AssignedImageModel } from '../models/AssignedImages'
 import { isValidArchive } from '../utils/checks/isValidArchive'
 import { CatalogOfArchivePartOfUser } from '../utils/checks/CatalogOfArchivePartOfUser'
 
 import { selectImageForAssignment } from '../utils/selectImageForAssignment'
 import { ImageModel } from '../models/Image'
+import { TagModel } from '../models/Tag'
+import { AssingedImageDocument } from '../../interfaces/models'
 
 const getAllAssignedImages = asyncHandler(
   async (req: Request, res: AdvResultsRes) => {
@@ -73,4 +75,67 @@ const getUserAssignedImage = asyncHandler(
     })
   }
 )
-export { getAllAssignedImages, getUserAssignedImage }
+
+const insertUserIdQuery = asyncHandler(
+  async (req: Request, res: AdvResultsRes, next: NextFunction) => {
+    req.query = {
+      userId: req.user.data._id,
+    }
+    next()
+  }
+)
+
+const insertTaggedCount = asyncHandler(
+  async (req: Request, res: AdvResultsRes) => {
+    console.log('test')
+    const { data }: { data: any[] } = res.advancedResults
+
+    const newData = []
+    // let memeTest = [
+    //   ...data,...data,...data,...data,
+    //   ...data,...data,...data,...data,
+    //   ...data,...data,...data,...data,
+    //   ...data,...data,...data,...data,
+    //   ...data,...data,...data,...data,
+    //   ...data,...data,...data,...data,
+    // ]
+
+    for (const item of data) {
+      const doc = item as AssingedImageDocument
+
+      const tagCount =
+        (
+          await TagModel.find({
+            userId: req.user.data._id,
+            archiveId: doc.archiveId,
+          })
+        ).length ?? 0
+
+      newData.push({
+        archiveId: doc.archiveId,
+        catalogId: doc.catalogId,
+        tagCount: tagCount,
+        archive: {
+          name: doc.archive.name,
+          totalImages: doc.archive.totalImages,
+        },
+        catalog: {
+          name: doc.catalog.name,
+          totalImages: doc.catalog.totalImages,
+        },
+      })
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Got table data',
+      data: newData,
+    })
+  }
+)
+export {
+  getAllAssignedImages,
+  getUserAssignedImage,
+  insertUserIdQuery,
+  insertTaggedCount,
+}

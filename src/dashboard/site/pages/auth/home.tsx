@@ -10,6 +10,9 @@ import { determineNavItems } from '../../components/Utils/Auth/determineNavItems
 import { HomeText } from '../../components/StaticText/home'
 import { ResumeTagging } from '../../components/Tables/ResumeTagging'
 import { ResumeTaggingData, UserProp } from '../../../interfaces'
+import { getResumeTableData } from '../../components/API/post/getResumeTableData'
+
+import { performance } from 'perf_hooks'
 
 interface Props {
   user: UserProp
@@ -47,6 +50,7 @@ export const Home = (props: Props): JSX.Element => {
 }
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
+  const t1 = performance.now()
   //Add user data from db
   const user: any = getSession(context.req)
   user.data =
@@ -64,40 +68,18 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     }
   }
 
+  //Get resume tagging data
+  const resumeData = await getResumeTableData({
+    cookie: context?.req?.headers?.cookie,
+    res: context.res,
+  })
+  const t2 = performance.now()
+  console.log(`Time ${t2 - t1} ms`)
   return {
     props: {
       success: true,
       user,
-      resumeTableData: [
-        {
-          catalogName: 'Catalog 1',
-          archives: [
-            {
-              archiveName: 'Archive 1',
-              total: 10,
-              tagged: 5,
-              link: '#a1',
-            },
-            {
-              archiveName: 'Archive 2',
-              total: 100,
-              tagged: 3,
-              link: '#a2',
-            },
-          ],
-        },
-        {
-          catalogName: 'Catalog 2',
-          archives: [
-            {
-              archiveName: 'Archive 3',
-              total: 10,
-              tagged: 2,
-              link: '#a3',
-            },
-          ],
-        },
-      ],
+      resumeTableData: resumeData.data,
     },
   }
 }

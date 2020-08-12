@@ -10,7 +10,10 @@ const routes = {
     getResumeTableData: apiCall('/api/catalog/userCatalogs'),
     catalogMembership: apiCall('/api/catalog/catalogMembership'),
     isArchiveValid: apiCall('/api/archive/validArchive'),
-    getUserAssignedImage: apiCall('/api/assignedImages/userAssignedImage'),
+    getUserAssignedImage: apiCall('/api/assignedImages/getAssignedImages'),
+    getAllUserAssignedImages: apiCall(
+      '/api/assignedImages/getAllUserAssignedImages'
+    ),
   },
 }
 const uiConstants = {

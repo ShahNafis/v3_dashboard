@@ -46,30 +46,37 @@ export function ResumeTagging(props: Props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.map((catalogEntry) =>
-                  catalogEntry.archives.map((archiveEntry, arcIndex) => (
-                    <TableRow key={catalogEntry.catalogName + ' ' + arcIndex}>
+                {data.map((dataEntry, index) => {
+                  const {
+                    archive,
+                    archiveId,
+                    catalog,
+                    catalogId,
+                    tagCount,
+                  } = dataEntry
+                  return (
+                    <TableRow key={catalog.name + ' ' + index}>
                       <TableCell component="th" scope="row">
-                        {catalogEntry.catalogName}
+                        {catalog.name}
                       </TableCell>
+                      <TableCell align="center">{archive.name}</TableCell>
                       <TableCell align="center">
-                        {archiveEntry.archiveName}
-                      </TableCell>
-                      <TableCell align="center">
-                        {archiveEntry.tagged}/{archiveEntry.total}
+                        {tagCount}/{archive.totalImages}
                       </TableCell>
                       <TableCell align="center">
                         <Button
                           variant="contained"
                           color="primary"
-                          onClick={() => (location.href = archiveEntry.link)}
+                          onClick={() =>
+                            (location.href = `/auth/tag/${catalogId}/${archiveId}`)
+                          }
                         >
                           Resume
                         </Button>
                       </TableCell>
                     </TableRow>
-                  ))
-                )}
+                  )
+                })}
               </TableBody>
             </Table>
           </TableContainer>

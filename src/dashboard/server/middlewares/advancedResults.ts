@@ -12,7 +12,7 @@ import { DocumentQuery, Model } from 'mongoose'
 
 const advancedResults = (
   model: Model<AllDocuments>,
-  populate?: [string]
+  populate: string[] = []
 ) => async (req: Request, res: AdvResultsRes, next: NextFunction) => {
   let query: DocumentQuery<AllDocuments[], AllDocuments, {}>
 
@@ -60,7 +60,7 @@ const advancedResults = (
   query = query.skip(startIndex).limit(limit)
 
   //If there is a populate field
-  if (populate.length > 0) {
+  if (populate?.length > 0) {
     for (const pop of populate) {
       query = query.populate(pop)
     }

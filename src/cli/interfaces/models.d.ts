@@ -74,13 +74,18 @@ export interface ImageDocument extends Document {
 
 export interface AssingedImageDocument extends Document {
   imageId: ObjectID
+  catalogId?: ObjectID
   archiveId?: ObjectID
   userId: ObjectID
   date: Date
+  archive?: ArchiveDocument
+  catalog?: CatalogDocument
 }
 
 export interface TagDocument extends Document {
   imageId: ObjectID
+  catalogId?: ObjectID
+  archiveId?: ObjectID
   userId: ObjectID
   tags: any
   date: Date
