@@ -32,7 +32,7 @@ import tags from './routes/tags'
 //Security
 import { initAuthentication } from './auth'
 
-const dev = process.env.NEXT_PUBLIC_NODE_ENV !== 'production'
+const dev = process.env.NODE_ENV !== 'production'
 console.log(`dev mode ${dev}`)
 const app = next({
   dev,
@@ -80,7 +80,7 @@ const port = ((process.env.NEXT_PUBLIC_PORT as unknown) as number) ?? 3000
       console.log(
         `> Ready on ${process.env.NEXT_PUBLIC_PROTOCOL}://${
           process.env.NEXT_PUBLIC_DOMAIN_NAME
-        } - env ${process.env.NEXT_PUBLIC_NODE_ENV ?? 'dev'} mode
+        } - env ${process.env.NODE_ENV ?? 'dev'} mode
         `
       )
     })
