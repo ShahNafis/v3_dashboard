@@ -1,7 +1,7 @@
 const date = new Date()
 const timestamp = 
 `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}_${date.getHours()}.${date.getMinutes()}.${date.getSeconds()}`
-const root = '../../../'
+const root = `../../../../pm2Logs/${timestamp}/`
 
 module.exports = {
   apps: [
