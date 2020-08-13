@@ -6,7 +6,7 @@ export const connectDB = async () => {
   let dbURI: string = process?.env?.MONGO_URI_DEV
 
   //If in production mode, use production db
-  if (process.env.NEXT_PUBLIC_NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     dbURI = process?.env?.MONGO_URI_PRODUCTION
   }
 
@@ -20,7 +20,7 @@ export const connectDB = async () => {
   }
   //Inform which DB using
   log({
-    message: `Using ${process.env.NEXT_PUBLIC_NODE_ENV} Database`,
+    message: `Using ${process.env.NODE_ENV} Database`,
     type: 'info',
   })
 

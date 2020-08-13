@@ -10,7 +10,7 @@ function log({ message = '', type = '' }: LogType) {
   if (!message) {
     message = ''
   }
-  if (process.env.NEXT_PUBLIC_NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     switch (type) {
       case 'info':
         console.log(message.cyan)
