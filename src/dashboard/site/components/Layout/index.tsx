@@ -46,6 +46,7 @@ function Layout(props: Props) {
           handleMenuToggle: handleMenuToggle,
         }}
         navItems={navItems ?? navigationItems.default}
+        classes={classes}
       />
 
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -73,6 +74,9 @@ function Layout(props: Props) {
 
 function genUseStyle({ showDrawer }) {
   return makeStyles((theme) => ({
+    appBar: {
+      zIndex: theme.zIndex.drawer + 1,
+    },
     root: {
       display: 'flex',
     },
@@ -89,6 +93,24 @@ function genUseStyle({ showDrawer }) {
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
+    },
+    showDesktop: {
+      display: 'none',
+      [theme.breakpoints.up('sm')]: {
+        display: 'flex',
+      },
+    },
+    showMobile: {
+      display: 'flex',
+      [theme.breakpoints.up('sm')]: {
+        display: 'none',
+      },
+    },
+    title: {
+      flexGrow: 1,
+    },
+    spacedButton: {
+      marginRight: `5px`,
     },
   }))
 }
