@@ -14,11 +14,7 @@ export const Home = (): JSX.Element => (
       <title>Welcome to Coastal Image Labeler</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <Layout
-      drawer={{
-        content: <div>HELLO</div>,
-      }}
-    >
+    <Layout>
       <Box my={4}>
         <Typography variant="body1" component="h1" gutterBottom>
           <Paper elevation={3} variant="outlined" style={{ padding: 10 }}>
