@@ -29,21 +29,23 @@ export function ImageContainer(props: Props) {
   return (
     <React.Fragment>
       <CardActions disableSpacing className={classes.dropdownStyles}>
-        <ViewImage
-          style={{ marginRight: 10 }}
-          onClick={() => {
-            window.open(compressedLink, 'Compressed Image')
-          }}
-        >
-          View compressed image
-        </ViewImage>
-        <ViewImage
-          onClick={() => {
-            window.open(originalLink, 'Full Image')
-          }}
-        >
-          View full image
-        </ViewImage>
+        <div>
+          <ViewImage
+            style={{ marginRight: 10 }}
+            onClick={() => {
+              window.open(compressedLink, 'Compressed Image')
+            }}
+          >
+            View compressed image
+          </ViewImage>
+          <ViewImage
+            onClick={() => {
+              window.open(originalLink, 'Full Image')
+            }}
+          >
+            View full image
+          </ViewImage>
+        </div>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -74,7 +76,8 @@ const useRowStyles = makeStyles({
   },
   expand: {
     transform: 'rotate(0deg)',
-    marginLeft: 'auto',
+    //marginLeft: 'auto',
+    //alignSelf:'flex-end',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
@@ -84,5 +87,6 @@ const useRowStyles = makeStyles({
   },
   dropdownStyles: {
     backgroundColor: 'rgba(255, 255, 255, 0.08)', //
+    justifyContent: 'space-between',
   },
 })

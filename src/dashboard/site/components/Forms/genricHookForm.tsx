@@ -108,7 +108,7 @@ export default function GenericHookForm(props: Props) {
               <SubmitButton
                 type="submit"
                 variant="outlined"
-                color="default"
+                //color="default"
                 disabled={globalDisable}
               >
                 Submit

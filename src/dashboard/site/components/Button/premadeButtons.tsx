@@ -1,92 +1,104 @@
-import ColoredButton from './coloredButton'
-import { theme, customColors } from '../theme'
+// import ColoredButton from './coloredButton'
+import {
+  //theme,
+  customColors,
+} from '../theme'
 
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import * as Colors from '@material-ui/core/colors'
+
+const LogoutTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: Colors.red[400],
+    },
+  },
+})
 function Logout(props) {
   return (
-    <ColoredButton
-      textColor="red"
-      //backgroundColor='white'
-      borderColor="red"
-      hoverBackgroundColor="red"
-      hoverTextColor="white"
-      variant="outlined"
-      {...props}
-    >
-      Logout
-    </ColoredButton>
+    <ThemeProvider theme={LogoutTheme}>
+      <Button variant="contained" color="primary" {...props}>
+        Logout
+      </Button>
+    </ThemeProvider>
   )
 }
 
 function Login(props) {
   return (
-    <ColoredButton
-      textColor={theme.palette.secondary.main}
-      //backgroundColor='white'
-      borderColor={theme.palette.secondary.main}
-      //hoverBackgroundColor="red"
-      //hoverTextColor="white"
-      variant="outlined"
-      {...props}
-    >
+    <Button variant="outlined" color="secondary" {...props}>
       Login
-    </ColoredButton>
+    </Button>
   )
 }
 
+const CyanButtonTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: customColors.cyan,
+    },
+  },
+})
 function CyanButton(props) {
   return (
-    <ColoredButton
-      textColor={customColors.cyan}
-      //backgroundColor='white'
-      borderColor={customColors.cyan}
-      //hoverBackgroundColor="red"
-      //hoverTextColor="white"
-      variant="outlined"
-      {...props}
-    >
-      {props.children}
-    </ColoredButton>
+    <ThemeProvider theme={CyanButtonTheme}>
+      <Button variant="contained" color="primary" {...props}>
+        {props.children}
+      </Button>
+    </ThemeProvider>
   )
 }
 
+const SkipButtonTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: customColors.yellow,
+    },
+  },
+})
 function SkipButton(props) {
   return (
-    <ColoredButton
-      textColor={customColors.red}
-      borderColor={customColors.red}
-      variant="outlined"
-      {...props}
-    >
-      {props.children}
-    </ColoredButton>
+    <ThemeProvider theme={SkipButtonTheme}>
+      <Button variant="contained" color="primary" {...props}>
+        {props.children}
+      </Button>
+    </ThemeProvider>
   )
 }
 
+const SubmitButtonTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: customColors.green,
+    },
+  },
+})
 function SubmitButton(props) {
   return (
-    <ColoredButton
-      textColor={customColors.green}
-      borderColor={customColors.green}
-      variant="outlined"
-      {...props}
-    >
-      {props.children}
-    </ColoredButton>
+    <ThemeProvider theme={SubmitButtonTheme}>
+      <Button variant="contained" color="primary" {...props}>
+        {props.children}
+      </Button>
+    </ThemeProvider>
   )
 }
 
+const ViewImageTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: customColors.orange,
+    },
+  },
+})
 function ViewImage(props) {
   return (
-    <ColoredButton
-      textColor={theme.palette.primary.light}
-      borderColor={theme.palette.primary.main}
-      hoverTextColor={'white'}
-      hoverBackgroundColor={theme.palette.primary.main}
-      variant="outlined"
-      {...props}
-    >
-      {props.children}
-    </ColoredButton>
+    <ThemeProvider theme={ViewImageTheme}>
+      <Button variant="contained" color="primary" {...props}>
+        {props.children}
+      </Button>
+    </ThemeProvider>
   )
 }
+
 export { Logout, Login, CyanButton, SkipButton, SubmitButton, ViewImage }
