@@ -91,6 +91,8 @@ declare namespace cilDashboard {
       data: AllDocuments[]
     }
     partOfCatalog?: boolean
+    archive?: ArchiveDocument
+    catalog?: CatalogDocument
   }
 }
 

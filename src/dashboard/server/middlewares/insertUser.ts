@@ -20,7 +20,7 @@ async function insertUser(req: Request, res: Response, next: NextFunction) {
   // })
   res.status(401).json({
     success: false,
-    message: `No User found`,
+    message: `No User found with id:${id}`,
   })
 }
 

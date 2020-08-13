@@ -1,30 +1,15 @@
-import { Request } from 'express'
+import { Request, NextFunction } from 'express'
 import { asyncHandler } from '../middlewares/async' //to avoid putting try catch everywhere
-// import {CatalogModel} from '../models/Catalog'
-// import {UserDocument,CatalogDocument,ArchiveDocument} from '../../interfaces/models'
 import { ExtenedResponse } from '../../interfaces'
-import { CatalogDocument, AllDocuments } from '../../interfaces/models'
-import { ObjectID } from 'mongodb'
+import { CatalogModel } from '../models/Catalog'
 
-const getAllCatalogs = asyncHandler(
+const returnAdvResults = asyncHandler(
   async (req: Request, res: ExtenedResponse) => {
     res.status(200).json(res.advancedResults)
   }
 )
 
-const filterUserCatalogs = asyncHandler(
-  async (req: Request, res: ExtenedResponse) => {
-    const data = res.advancedResults.data
-    const userCatalogs: [ObjectID] = req?.user?.data?.catalogs
-
-    const newData = filterToUserCatalog(data, userCatalogs)
-
-    res.advancedResults.data = newData
-    res.status(200).json(res.advancedResults)
-  }
-)
-
-const isUserPartOfCatalog = asyncHandler(
+const userCatalogMembership = asyncHandler(
   async (req: Request, res: ExtenedResponse) => {
     const { catalogId } = req.body
     res.status(200).json({
@@ -37,17 +22,28 @@ const isUserPartOfCatalog = asyncHandler(
   }
 )
 
-function filterToUserCatalog(
-  catalogs: AllDocuments[],
-  userCatalogs: [ObjectID]
-) {
-  let res: AllDocuments[] = []
+const catalogExists = asyncHandler(
+  async (req: Request, res: ExtenedResponse, next: NextFunction) => {
+    const { catalogId } = req.body
 
-  res = catalogs.filter((catalog: CatalogDocument) => {
-    return userCatalogs.includes(catalog._id.toString())
-  })
+    if (!catalogId) {
+      return res.status(200).json({
+        success: false,
+        message: 'No catalogId given',
+      })
+    }
 
-  return res
-}
+    const catalog = await CatalogModel.findById(catalogId)
 
-export { getAllCatalogs, filterUserCatalogs, isUserPartOfCatalog }
+    if (!catalog) {
+      return res.status(200).json({
+        success: false,
+        message: `No catalog with catalogId: ${catalogId}`,
+      })
+    }
+
+    res.catalog = catalog
+    next()
+  }
+)
+export { returnAdvResults, userCatalogMembership, catalogExists }

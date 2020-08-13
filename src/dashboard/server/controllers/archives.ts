@@ -1,7 +1,7 @@
 import { ArchiveModel } from '../models/Archive'
 import { asyncHandler } from '../middlewares/async' //to avoid putting try catch everywhere
 import { ExtenedResponse } from '../../interfaces'
-import { Request } from 'express'
+import { Request, NextFunction } from 'express'
 //console.log(typeof ArchiveModel, 'controller/archive.ts')
 
 const getAllArchives = asyncHandler(
@@ -10,32 +10,29 @@ const getAllArchives = asyncHandler(
   }
 )
 
-const isArchiveValid = asyncHandler(
-  async (req: Request, res: ExtenedResponse) => {
-    const { catalogId, archiveId } = req.body
+const archiveExists = asyncHandler(
+  async (req: Request, res: ExtenedResponse, next: NextFunction) => {
+    const { archiveId } = req.body
 
-    //check if archive ID sent
     if (!archiveId) {
       return res.status(200).json({
-        success: true,
-        message: 'No archiveId sent',
-        data: {
-          partOfCatalog: false,
-        },
+        success: false,
+        message: 'No archiveId given',
       })
     }
 
-    //see if valid archive, and if archive is part of catalog
-    const archive = await ArchiveModel.findOne({
-      _id: archiveId,
-      catalog: catalogId,
-    })
+    const archive = await ArchiveModel.findById(archiveId)
 
-    res.status(200).json({
-      success: true,
-      message: `Checked if archive/catalog ID's are valid`,
-      data: !!archive,
-    })
+    if (!archive) {
+      return res.status(200).json({
+        success: false,
+        message: `No archive with archiveId: ${archiveId}`,
+      })
+    }
+
+    res.archive = archive
+    next()
   }
 )
-export { getAllArchives, isArchiveValid }
+
+export { getAllArchives, archiveExists }

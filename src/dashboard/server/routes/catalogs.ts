@@ -1,9 +1,9 @@
 import express from 'express'
 
 import {
-  getAllCatalogs,
-  filterUserCatalogs,
-  isUserPartOfCatalog,
+  returnAdvResults,
+  userCatalogMembership,
+  catalogExists,
 } from '../controllers/catalogs'
 
 //Perform advanced results which means filtering, pagination, and query parameters
@@ -14,15 +14,14 @@ import { CatalogModel } from '../models/Catalog'
 import { insertUser } from '../middlewares/insertUser'
 import { membershipCatalogMiddleware } from '../middlewares/membership/catalog'
 
+import { filterUserCatalogsMiddleware } from '../middlewares/filter/catalog/filterUserCatalogs'
+import { genericReturn } from '../middlewares/genericReturn'
+
 const router = express.Router()
 
 router
   .route('/')
-  .get(
-    ensureAuthenticated,
-    advancedResults(CatalogModel, ['archives']),
-    getAllCatalogs
-  )
+  .post(advancedResults(CatalogModel, ['archives']), returnAdvResults)
 
 router
   .route('/userCatalogs')
@@ -30,7 +29,8 @@ router
     ensureAuthenticated,
     insertUser,
     advancedResults(CatalogModel, ['archives']),
-    filterUserCatalogs
+    filterUserCatalogsMiddleware,
+    returnAdvResults
   )
 
 router
@@ -38,8 +38,18 @@ router
   .post(
     ensureAuthenticated,
     insertUser,
+    catalogExists,
     membershipCatalogMiddleware,
-    isUserPartOfCatalog
+    userCatalogMembership
   )
+
+router.route('/exists').post(
+  catalogExists,
+  genericReturn({
+    keys: ['catalog'],
+    success: true,
+    message: 'Catalog is valid',
+  })
+)
 
 export default router
