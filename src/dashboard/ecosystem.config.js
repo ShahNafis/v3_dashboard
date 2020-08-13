@@ -1,3 +1,8 @@
+const date = new Date()
+const timestamp = 
+`${date.getMonth()}-${date.getDate()}-${date.getFullYear()}_${date.getHours()}.${date.getMinutes()}.${date.getSeconds()}`
+const root = '../../../'
+
 module.exports = {
   apps: [
     {
@@ -6,9 +11,9 @@ module.exports = {
       env: {
         NODE_ENV: 'production',
       },
-      error_file: 'err.log',
-      out_file: 'out.log',
-      log_file: 'combined.log',
+      error_file: `${root}${timestamp}_err.log`,
+      out_file: `${root}${timestamp}_out.log`,
+      log_file: `${root}${timestamp}_combined.log`,
       time: true,
     },
   ],
