@@ -7,13 +7,13 @@
 
 import { Request, NextFunction } from 'express'
 import { AllDocuments } from '../../interfaces/models'
-import { AdvResultsRes } from '../../interfaces'
+import { ExtenedResponse } from '../../interfaces'
 import { DocumentQuery, Model } from 'mongoose'
 
 const advancedResults = (
   model: Model<AllDocuments>,
   populate: string[] = []
-) => async (req: Request, res: AdvResultsRes, next: NextFunction) => {
+) => async (req: Request, res: ExtenedResponse, next: NextFunction) => {
   let query: DocumentQuery<AllDocuments[], AllDocuments, {}>
 
   //Copy req.query
@@ -91,6 +91,7 @@ const advancedResults = (
   //Create the advResults property
   res.advancedResults = {
     success: true,
+    message: 'Advanced query complete',
     count: queryResult.length,
     pagination: pagination,
     data: queryResult,

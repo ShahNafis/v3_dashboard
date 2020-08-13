@@ -1,5 +1,5 @@
 import { asyncHandler } from '../middlewares/async' //to avoid putting try catch everywhere
-import { AdvResultsRes } from '../../interfaces'
+import { ExtenedResponse } from '../../interfaces'
 import { Request, NextFunction } from 'express'
 import { AssignedImageModel } from '../models/AssignedImages'
 import { isValidArchive } from '../utils/checks/isValidArchive'
@@ -11,13 +11,13 @@ import { TagModel } from '../models/Tag'
 import { AssingedImageDocument } from '../../interfaces/models'
 
 const getAllAssignedImages = asyncHandler(
-  async (req: Request, res: AdvResultsRes) => {
+  async (req: Request, res: ExtenedResponse) => {
     res.status(200).json(res.advancedResults)
   }
 )
 
 const getUserAssignedImage = asyncHandler(
-  async (req: Request, res: AdvResultsRes) => {
+  async (req: Request, res: ExtenedResponse) => {
     const { archiveId } = req.body
     const { user } = req
 
@@ -77,7 +77,7 @@ const getUserAssignedImage = asyncHandler(
 )
 
 const insertUserIdQuery = asyncHandler(
-  async (req: Request, res: AdvResultsRes, next: NextFunction) => {
+  async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     req.query = {
       userId: req.user.data._id,
     }
@@ -86,7 +86,7 @@ const insertUserIdQuery = asyncHandler(
 )
 
 const insertTaggedCount = asyncHandler(
-  async (req: Request, res: AdvResultsRes) => {
+  async (req: Request, res: ExtenedResponse) => {
     const { data }: { data: any[] } = res.advancedResults
 
     const newData = []

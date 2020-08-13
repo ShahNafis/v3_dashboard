@@ -62,17 +62,18 @@ declare namespace cilDashboard {
     data?: UserDocument
   }
 
-  export interface AdvResultsRes extends Response {
-    advancedResults: {
-      success: boolean
-      count: number
-      pagination: {
-        page: number
-        limit: number
-      }
-      data: AllDocuments[]
-    }
-  }
+  // export interface AdvResultsRes extends Response {
+  //   advancedResults?: {
+  //     success: boolean
+  //     count: number
+  //     message: string
+  //     pagination: {
+  //       page: number
+  //       limit: number
+  //     }
+  //     data: AllDocuments[]
+  //   }
+  // }
 
   export interface ResPartOfCatalog extends AdvResultsRes {
     partOfCatalog: boolean
@@ -82,12 +83,14 @@ declare namespace cilDashboard {
     advancedResults?: {
       success: boolean
       count: number
+      message: string
       pagination: {
         page: number
         limit: number
       }
       data: AllDocuments[]
     }
+    partOfCatalog?: boolean
   }
 }
 

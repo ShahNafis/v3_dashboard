@@ -1,10 +1,10 @@
 import { asyncHandler } from './async'
-import { ResPartOfCatalog } from '../../interfaces'
+import { ExtenedResponse } from '../../interfaces'
 import { Request, NextFunction } from 'express'
 import { CatalogModel } from '../models/Catalog'
 
 const userPartOfCatalog = asyncHandler(
-  async (req: Request, res: ResPartOfCatalog, next: NextFunction) => {
+  async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const { catalogId } = req.body
 
     if (!catalogId) {
