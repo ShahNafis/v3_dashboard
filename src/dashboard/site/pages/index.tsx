@@ -1,35 +1,27 @@
 import React from 'react'
-import Head from 'next/head'
+import ClippedDrawer from '../components/EXP/Layout'
 
-import Box from '@material-ui/core/Box'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
-
-import Layout from '../components/Layout'
-import { RepoLink, EmailLink } from '../components/ColoredLink'
-
-export const Home = (): JSX.Element => (
+export const Home = (props): JSX.Element => (
   <div className="container">
-    <Head>
-      <title>Welcome to Coastal Image Labeler</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
-    <Layout
-      drawer={{
-        content: <div>HELLO</div>,
-      }}
-    >
-      <Box my={4}>
-        <Typography variant="body1" component="h1" gutterBottom>
-          <Paper elevation={3} variant="outlined" style={{ padding: 10 }}>
-            Welcome to Coastal Image Labeler, please login. You can read about
-            the project <RepoLink />. If you have questions, please contact Evan
-            Goldstein: {<EmailLink />}
-          </Paper>
-        </Typography>
-      </Box>
-    </Layout>
+    <ClippedDrawer>
+      {`
+        Stars: ${props.stars}
+        number: ${props.number}
+        `}
+    </ClippedDrawer>
   </div>
 )
+
+export async function getServerSideProps() {
+  const res = await fetch('https://api.github.com/repos/vercel/next.js')
+  const json = await res.json()
+
+  return {
+    props: {
+      stars: json.stargazers_count,
+      number: Math.random(),
+    }, // will be passed to the page component as props
+  }
+}
 
 export default Home
