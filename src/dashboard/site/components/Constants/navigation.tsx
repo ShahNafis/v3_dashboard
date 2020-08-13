@@ -1,4 +1,5 @@
-import { Logout, Login } from '../Button/premadeButtons'
+// import { Logout, Login } from '../Button/premadeButtons'
+import Button from '@material-ui/core/Button'
 
 interface NavigationItemType {
   name: string
@@ -25,12 +26,12 @@ interface NavigationItemsType {
 export const login = {
   name: 'Login',
   route: '/login',
-  element: <Login href="/login" />,
+  element: <Button href="/login">Login</Button>,
 }
 export const logout = {
   name: 'Logout',
   route: '/logout',
-  element: <Logout href="/logout" />,
+  element: <Button href="/logout">Logout</Button>,
 }
 export const home = {
   name: 'Home',

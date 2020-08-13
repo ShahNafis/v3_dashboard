@@ -9,7 +9,8 @@ import { generateRadioDefaults } from './generate/Radio'
 
 import { ResponseType } from '../../../interfaces'
 import determineQuestionType from './determineQuestionType'
-import { SubmitButton, SkipButton } from '../Button/premadeButtons'
+// import { SubmitButton, SkipButton } from '../Button/premadeButtons'
+import Button from '@material-ui/core/Button'
 
 interface Props {
   questionSetData: {
@@ -93,7 +94,7 @@ export default function GenericHookForm(props: Props) {
             }}
           >
             <div>
-              <SkipButton
+              <Button
                 variant="outlined"
                 onClick={() => {
                   setGlobalDisable(true)
@@ -102,17 +103,17 @@ export default function GenericHookForm(props: Props) {
                 disabled={globalDisable}
               >
                 Skip
-              </SkipButton>
+              </Button>
             </div>
             <div>
-              <SubmitButton
+              <Button
                 type="submit"
                 variant="outlined"
                 color="default"
                 disabled={globalDisable}
               >
                 Submit
-              </SubmitButton>
+              </Button>
             </div>
           </div>
         </FormControl>

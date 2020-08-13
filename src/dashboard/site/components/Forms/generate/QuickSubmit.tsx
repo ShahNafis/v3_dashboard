@@ -2,7 +2,8 @@ import { FormControl, FormLabel, FormGroup } from '@material-ui/core'
 
 import { generateLabel } from './Label'
 import { theme } from '../../theme'
-import { CyanButton } from '../../Button/premadeButtons'
+// import { CyanButton } from '../../Button/premadeButtons'
+import Button from '@material-ui/core/Button'
 
 function generateQuickSubmitButton(buttonQuestions, values) {
   const { label, key, docLink, buttons } = buttonQuestions
@@ -17,7 +18,7 @@ function generateQuickSubmitButton(buttonQuestions, values) {
         {buttons.map((buttonData) => {
           const { label: buttonLabel, tag, key: buttonKey } = buttonData
           return (
-            <CyanButton
+            <Button
               key={buttonKey}
               variant="outlined"
               onClick={() => {
@@ -27,7 +28,7 @@ function generateQuickSubmitButton(buttonQuestions, values) {
               style={{ marginRight: theme.spacing(2) }}
             >
               {buttonLabel}
-            </CyanButton>
+            </Button>
           )
         })}
       </FormGroup>
