@@ -33,6 +33,7 @@ import tags from './routes/tags'
 import { initAuthentication } from './auth'
 
 const dev = process.env.NEXT_PUBLIC_NODE_ENV !== 'production'
+console.log(`dev mode ${dev}`)
 const app = next({
   dev,
   dir: './site',

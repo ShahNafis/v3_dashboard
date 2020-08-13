@@ -87,7 +87,6 @@ const insertUserIdQuery = asyncHandler(
 
 const insertTaggedCount = asyncHandler(
   async (req: Request, res: AdvResultsRes) => {
-    console.log('test')
     const { data }: { data: any[] } = res.advancedResults
 
     const newData = []

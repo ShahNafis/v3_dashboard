@@ -4,8 +4,8 @@ import { Request, Response } from 'express'
 
 const getUser = asyncHandler(async (req: Request, res: Response) => {
   const id: string = req.user.id
-  let user = undefined
-  user = await UserModel.findOne({ userId: id ?? '' })
+  const user = await UserModel.findOne({ userId: id ?? '' })
+
   if (user) {
     res.status(200).json({
       success: true,
