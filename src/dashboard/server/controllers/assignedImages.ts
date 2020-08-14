@@ -117,23 +117,24 @@ const insertTaggedCount = asyncHandler(
       testRes.totalImages = doc.totalImages
       ;(testRes.name = doc.name), (testRes.catalogId = doc._id)
 
-      testRes.tagged = (
-        await TagModel.aggregate([
-          {
-            $match: {
-              userId: req.user.data._id,
-              catalogId: doc._id,
+      testRes.tagged =
+        (
+          await TagModel.aggregate([
+            {
+              $match: {
+                userId: req.user.data._id,
+                catalogId: doc._id,
+              },
             },
-          },
-          {
-            $group: {
-              _id: '$catalogId',
-              numTagsInCatalog: { $sum: 1 },
-              doc: { $push: '$$ROOT' },
+            {
+              $group: {
+                _id: '$catalogId',
+                numTagsInCatalog: { $sum: 1 },
+                doc: { $push: '$$ROOT' },
+              },
             },
-          },
-        ])
-      )[0].numTagsInCatalog
+          ])
+        )[0]?.numTagsInCatalog ?? 0
       testRes.archives = []
 
       for (const archive of catalog.doc) {
