@@ -1,6 +1,10 @@
 import express from 'express'
 
-import { userCatalogMembership, catalogExists } from '../controllers/catalogs'
+import {
+  userCatalogMembership,
+  catalogExists,
+  getCatalogQuestionSet,
+} from '../controllers/catalogs'
 
 //Perform advanced results which means filtering, pagination, and query parameters
 import { advancedResults } from '../middlewares/advancedResults'
@@ -52,6 +56,16 @@ router.route('/exists').post(
     keys: ['catalog'],
     success: true,
     message: 'Catalog is valid',
+  })
+)
+
+router.route('/questionSet').post(
+  catalogExists,
+  getCatalogQuestionSet,
+  genericReturn({
+    keys: ['questionSet'],
+    success: true,
+    message: 'Found QuestionSet',
   })
 )
 

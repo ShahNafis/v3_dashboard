@@ -6,6 +6,7 @@ import {
   CatalogDocument,
   UserDocument,
   ArchiveDocument,
+  QuestionSetDocument,
 } from './models'
 import { ObjectID } from 'mongodb'
 
@@ -102,6 +103,7 @@ declare namespace cilDashboard {
     partOfCatalog?: boolean
     archive?: ArchiveDocument
     catalog?: CatalogDocument
+    questionSet?: QuestionSetDocument
   }
 }
 

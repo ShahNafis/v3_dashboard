@@ -14,12 +14,13 @@ import { checkUserRole } from '../../../../components/Utils/Auth/checkRole'
 import { generateUnAuthObj } from '../../../../components/Utils/Auth/unAuthError'
 import { isValidArchive } from '../../../../components/API/post/isValidArchive'
 import { getUserAssignedImage } from '../../../../components/API/post/getUserAssignedImage'
+import { catalogQuestionSet } from '../../../../components/API/post/getCatalogQuestionSet'
 
 import { performance } from 'perf_hooks'
 
 import { ImageDocument } from '../../../../../interfaces/models'
 export default function TagImage(props) {
-  const { user, success, message } = props
+  const { user, success, message, questionSetDocument } = props
   const imageDocument: ImageDocument = props.imageDocument
 
   return (
@@ -38,7 +39,11 @@ export default function TagImage(props) {
           <ErrorCard message={message} title="Error" />
         ) : (
           <React.Fragment>
-            <ImageTag user={user} imageDocument={imageDocument} />
+            <ImageTag
+              user={user}
+              imageDocument={imageDocument}
+              questionSetDocument={questionSetDocument}
+            />
           </React.Fragment>
         )}
       </Layout>
@@ -139,12 +144,21 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     }
   }
 
-  //Get assigned Image
-  const resGetUserAssignedImage = await getUserAssignedImage({
-    cookie: context?.req?.headers?.cookie,
-    res: context.res,
-    archiveId: archive as string,
-  })
+  //Get assigned Image and catalog question
+  const [resGetUserAssignedImage, resGetCatalogQuestionSet] = await Promise.all(
+    [
+      getUserAssignedImage({
+        cookie: context?.req?.headers?.cookie,
+        res: context.res,
+        archiveId: archive as string,
+      }),
+      catalogQuestionSet({
+        cookie: context?.req?.headers?.cookie,
+        res: context.res,
+        catalogId: catalog as string,
+      }),
+    ]
+  )
 
   const t2 = performance.now()
   console.log(`Time ${t2 - t1} ms`)
@@ -152,16 +166,8 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     props: {
       success: true,
       user,
-      imageDocument: resGetUserAssignedImage.data,
-      // imageDocument: {
-      //   _id: '_id-test',
-      //   fileName: 'fileName',
-      //   imageLink:
-      //     'https://upload.wikimedia.org/wikipedia/commons/1/10/Zweihaender_im_historischen_Museum_Basel.JPG',
-      //   compressedImageLink:
-      //     'https://en.wikipedia.org/wiki/Estoc#/media/File:Panzerstecher_PP_noBg.jpg',
-      // },
-      // resGetUserAssignedImage,
+      imageDocument: resGetUserAssignedImage.data ?? {},
+      questionSetDocument: resGetCatalogQuestionSet.data.questionSet ?? {},
     },
   }
 }

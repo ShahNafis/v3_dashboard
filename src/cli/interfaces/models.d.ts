@@ -93,10 +93,18 @@ export interface ImageServeOrderDocument extends Document {
   type: 'random'
 }
 
+export interface QuestionSetDocument extends Document {
+  name: string
+  description: string
+  questions: [any]
+}
+
 export type AllDocuments =
   | UserDocument
   | CatalogDocument
   | ArchiveDocument
   | ImageDocument
   | AssingedImageDocument
+  | TagDocument
   | ImageServeOrderDocument
+  | QuestionSetDocument

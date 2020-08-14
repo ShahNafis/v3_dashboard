@@ -4,13 +4,16 @@ import { useRouter } from 'next/router'
 import { theme } from '../../theme'
 import CardContent from '@material-ui/core/CardContent'
 
-import { questionSetData } from '../../data/testQuestions'
+// import { questionSetData } from '../../data/testQuestions'
 import { ResponseType } from '../../../../interfaces'
 import GenericHookForm from '../../Forms/genricHookForm'
 import { Header } from './Header'
 import { ImageContainer } from './Image'
 
-import { ImageDocument } from '../../../../interfaces/models'
+import {
+  ImageDocument,
+  QuestionSetDocument,
+} from '../../../../interfaces/models'
 
 function submitTags(tags): ResponseType {
   console.log(tags)
@@ -22,14 +25,15 @@ function submitTags(tags): ResponseType {
 
 interface Props {
   user: any
-  imageDocument: any
+  imageDocument: ImageDocument
+  questionSetDocument: QuestionSetDocument
 }
 
 export function ImageTag(props: Props) {
   const router = useRouter()
   const { catalog = '', archive = '' } = router.query
 
-  const { imageDocument }: { imageDocument: ImageDocument } = props
+  const { imageDocument, questionSetDocument } = props
 
   return (
     <Card>
@@ -45,7 +49,7 @@ export function ImageTag(props: Props) {
       />
       <CardContent>
         <GenericHookForm
-          questionSetData={questionSetData}
+          questionSetData={questionSetDocument}
           formFunctions={{
             skipImage: () => {},
             submitTags: submitTags,

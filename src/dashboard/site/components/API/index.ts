@@ -31,7 +31,8 @@ export async function apiRequest(params: Params) {
     console.error(error)
     return {
       success: false,
-      message: `${response.status} - ${response.statusText}` ?? 'Error',
+      message:
+        `${response.status} - ${response.statusText} - ${route}` ?? 'Error',
     }
   }
 }

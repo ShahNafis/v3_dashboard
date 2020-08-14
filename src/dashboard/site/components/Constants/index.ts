@@ -13,6 +13,7 @@ const routes = {
     getUserAssignedImage: apiCall('/api/assignedImages/getImage'),
     getAllUserAssignedImages: apiCall('/api/assignedImages/getAllCurrent'),
     hasAssignedImages: apiCall('/api/user/hasAssignedImages'),
+    getCatalogQuestionSet: apiCall('/api/catalog/questionSet'),
   },
 }
 const uiConstants = {

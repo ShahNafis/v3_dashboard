@@ -12,7 +12,7 @@ import { ResumeTagging } from '../../components/Tables/ResumeTagging'
 import { ResumeTaggingDataCatalog, UserProp } from '../../../interfaces'
 import { getResumeTableData } from '../../components/API/post/getResumeTableData'
 import { getHasAssignedImages } from '../../components/API/post/userHasAssignedImages'
-import { performance } from 'perf_hooks'
+// import { performance } from 'perf_hooks'
 
 interface Props {
   user: UserProp
@@ -39,10 +39,10 @@ export const Home = (props: Props): JSX.Element => {
 
   useEffect(() => {
     if (resumeData === null) {
-      console.log('CALLING', hasAssignedImages)
       getResumeObject()
     }
   })
+
   return (
     <div className="container">
       <Head>
@@ -75,7 +75,7 @@ export const Home = (props: Props): JSX.Element => {
 }
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
-  const t1 = performance.now()
+  // const t1 = performance.now()
   //Add user data from db
   const user: any = getSession(context.req)
   user.data =
@@ -98,8 +98,8 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     res: context.res,
   })
 
-  const t2 = performance.now()
-  console.log(`Time ${t2 - t1} ms`)
+  // const t2 = performance.now()
+  // console.log(`Time ${t2 - t1} ms`)
   return {
     props: {
       success: true,

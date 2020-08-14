@@ -8,16 +8,13 @@ import { generateRadioDefaults } from './generate/Radio'
 // import { generateQuickSubmitButton } from './generate/QuickSubmit'
 
 import { ResponseType } from '../../../interfaces'
+import { QuestionSetDocument } from '../../../interfaces/models'
 import determineQuestionType from './determineQuestionType'
 // import { SubmitButton, SkipButton } from '../Button/premadeButtons'
 import Button from '@material-ui/core/Button'
 
 interface Props {
-  questionSetData: {
-    questions: any
-    name: string
-    description: string
-  }
+  questionSetData: QuestionSetDocument
   formFunctions: {
     skipImage: () => void
     submitTags: (tags: any) => ResponseType

@@ -20,7 +20,7 @@ interface Props {
 export function ImageContainer(props: Props) {
   const { originalLink, compressedLink } = props
 
-  const [expanded, setExpanded] = useState(true)
+  const [expanded, setExpanded] = useState(false)
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
