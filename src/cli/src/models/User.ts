@@ -35,7 +35,7 @@ const userSchema: Schema = new Schema(
     },
     roles: {
       type: [String],
-      default: ["tagger"],
+      default: ['tagger'],
     },
     userId: {
       required: [true, 'UserId not passed'],
