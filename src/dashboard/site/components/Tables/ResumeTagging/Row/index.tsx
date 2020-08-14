@@ -16,8 +16,10 @@ import { theme } from '../../../theme'
 import { useRowStyles } from '../Styles'
 import { SubTable } from './Subtable'
 
+import { ResumeTaggingDataCatalog } from '../../../../../interfaces'
+
 interface Props {
-  row: any
+  row: ResumeTaggingDataCatalog
 }
 
 export function Row(props: Props) {

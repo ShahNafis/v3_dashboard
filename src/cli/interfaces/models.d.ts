@@ -1,5 +1,6 @@
 import { Document, Model } from 'mongoose'
 import { ObjectID } from 'mongodb'
+import { CatalogInfo } from './index'
 
 export interface UserDocument extends Document {
   username: string
@@ -18,11 +19,7 @@ export interface CatalogDocument extends Document {
     original: string
     compressed?: string
   }
-  catalogInfo?: {
-    year: number
-    link: string
-    description: string
-  }
+  catalogInfo?: CatalogInfo
   taggable: boolean
   questionSet: ObjectID
   imageServeOrder: ObjectID

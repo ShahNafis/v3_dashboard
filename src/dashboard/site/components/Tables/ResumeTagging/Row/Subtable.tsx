@@ -6,10 +6,11 @@ import TableHead from '@material-ui/core/TableHead'
 import Button from '@material-ui/core/Button'
 
 import { useRowStyles } from '../Styles'
-// import { CatalogSelectionData } from '../../../../../interfaces'
+
+import { ResumeTaggingDataCatalog } from '../../../../../interfaces'
 
 interface Props {
-  row: any
+  row: ResumeTaggingDataCatalog
 }
 
 export function SubTable(props: Props) {

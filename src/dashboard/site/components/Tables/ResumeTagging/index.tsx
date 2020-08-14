@@ -7,13 +7,13 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 
-import { CatalogSelectionData } from '../../../../interfaces'
+import { ResumeTaggingDataCatalog } from '../../../../interfaces'
 import { useRowStyles } from './Styles'
 import { Row } from './Row'
 import { SkeletonTable } from './skeleton'
 
 interface Props {
-  data: CatalogSelectionData[]
+  data: ResumeTaggingDataCatalog[]
 }
 
 export function ResumeTagging(props: Props) {
@@ -41,8 +41,8 @@ export function ResumeTagging(props: Props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => (
-            <Row key={row.name} row={row} />
+          {data.map((row: ResumeTaggingDataCatalog, index) => (
+            <Row key={row.name + ' ' + index} row={row} />
           ))}
         </TableBody>
       </Table>

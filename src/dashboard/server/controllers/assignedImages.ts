@@ -91,71 +91,6 @@ const insertUserIdQuery = asyncHandler(
 const insertTaggedCount = asyncHandler(
   async (req: Request, res: ExtenedResponse) => {
     const t1 = performance.now()
-    //const { data }: { data: any[] } = res.advancedResults
-
-    //const newData = []
-    // let memeTest = [
-    //   ...data,...data,...data,...data,
-    //   ...data,...data,...data,...data,
-    //   ...data,...data,...data,...data,
-    //   ...data,...data,...data,...data,
-    //   ...data,...data,...data,...data,
-    //   ...data,...data,...data,...data,
-    // ]
-
-    // for (const item of data) {
-    //   const doc = item as AssingedImageDocument
-
-    //   const tagCount =
-    //     (
-    //       await TagModel.find({
-    //         userId: req.user.data._id,
-    //         archiveId: doc.archiveId,
-    //       })
-    //     ).length ?? 0
-
-    //   newData.push({
-    //     archiveId: doc.archiveId,
-    //     catalogId: doc.catalogId,
-    //     tagCount: tagCount,
-    //     archive: {
-    //       name: doc.archive.name,
-    //       totalImages: doc.archive.totalImages,
-    //     },
-    //     catalog: {
-    //       name: doc.catalog.name,
-    //       totalImages: doc.catalog.totalImages,
-    //     },
-    //   })
-    // }
-
-    //test query
-    // const SumByArchive = await TagModel.aggregate([
-    //   {
-    //     "$match": {
-    //       "userId": req.user.data._id
-    //     }
-    //   },
-    //   {
-    //     $group : {
-    //       _id : "$archiveId",
-    //       tagged: { $sum: 1 }
-    //     }
-    //   }
-    // ])
-    // const SumByCatalog = await TagModel.aggregate([
-    //   {
-    //     "$match": {
-    //       "userId": req.user.data._id
-    //     }
-    //   },
-    //   {
-    //     $group : {
-    //       _id : "$catalogId",
-    //       tagged: { $sum: 1 }
-    //     }
-    //   }
-    // ])
 
     const AssignedGroupByCatalog = await AssignedImageModel.aggregate([
       {
@@ -171,81 +106,10 @@ const insertTaggedCount = asyncHandler(
         },
       },
     ])
-    // const TaggedGroupByCatalog = await TagModel.aggregate([
-    //   {
-    //     "$match": {
-    //       "userId": req.user.data._id
-    //     }
-    //   },
-    //   {
-    //     $group : {
-    //       _id : "$catalogId",
-    //       numTagsInCatalog: { $sum: 1 },
-    //       doc:{$push:"$$ROOT"}
-    //     }
-    //   }
-    // ])
 
-    // console.log(AssignedGroupByCatalog[0])
     const testObj = []
-    const testMeme = [
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-      ...AssignedGroupByCatalog,
-    ]
-    console.log(testMeme.length)
-    for (const catalog of testMeme) {
+
+    for (const catalog of AssignedGroupByCatalog) {
       const testRes: any = {}
       const doc = await CatalogModel.findById(catalog._id)
 

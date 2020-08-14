@@ -9,14 +9,14 @@ import ErrorCard from '../../components/ErrorCards'
 import { determineNavItems } from '../../components/Utils/Auth/determineNavItems'
 import { HomeText, NoAssigned } from '../../components/StaticText/home'
 import { ResumeTagging } from '../../components/Tables/ResumeTagging'
-import { ResumeTaggingData, UserProp } from '../../../interfaces'
+import { ResumeTaggingDataCatalog, UserProp } from '../../../interfaces'
 import { getResumeTableData } from '../../components/API/post/getResumeTableData'
 import { getHasAssignedImages } from '../../components/API/post/userHasAssignedImages'
 import { performance } from 'perf_hooks'
 
 interface Props {
   user: UserProp
-  resumeTableData: ResumeTaggingData[]
+  resumeTableData: ResumeTaggingDataCatalog[]
   success: boolean
   message?: string
   hasAssignedImages: boolean
@@ -24,13 +24,14 @@ interface Props {
 
 export const Home = (props: Props): JSX.Element => {
   const { user, success, message, hasAssignedImages } = props
-  const [resumeData, setResumeData] = useState(null)
+  const [resumeData, setResumeData] = useState<ResumeTaggingDataCatalog[]>(null)
 
   async function getResumeObject() {
     //Get resume table data
     if (hasAssignedImages) {
       const getTableResponse = await getResumeTableData()
       setResumeData(getTableResponse.data)
+      console.log(getTableResponse.data)
     } else {
       setResumeData([])
     }
@@ -91,12 +92,6 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
       },
     }
   }
-
-  //Get resume tagging data
-  // const resumeData = await getResumeTableData({
-  //   cookie: context?.req?.headers?.cookie,
-  //   res: context.res,
-  // })
 
   const hasAssignedImages = await getHasAssignedImages({
     cookie: context?.req?.headers?.cookie,
