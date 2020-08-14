@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Paper } from '@material-ui/core'
+import { Typography, Paper, Box } from '@material-ui/core'
 import { EmailLink, RepoLink, DocLink } from '../ColoredLink'
 
 interface Props {
@@ -27,6 +27,18 @@ export function NoAssigned() {
       <Paper elevation={3} variant="outlined" style={{ padding: 10 }}>
         No archives to resume tagging from.
       </Paper>
+    </Typography>
+  )
+}
+
+export function ReviewBeforeSubmit() {
+  return (
+    <Typography component="div">
+      <Box textAlign="justify" m={1}>
+        These are the tags that have been submitted, please review before moving
+        on. If there are any errors please contact Evan Goldstein at{' '}
+        {<EmailLink />}
+      </Box>
     </Typography>
   )
 }

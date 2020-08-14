@@ -5,26 +5,21 @@ import { theme } from '../../theme'
 import CardContent from '@material-ui/core/CardContent'
 
 // import { questionSetData } from '../../data/testQuestions'
-import { ResponseType } from '../../../../interfaces'
+import { ResponseType, UserProp } from '../../../../interfaces'
 import GenericHookForm from '../../Forms/genricHookForm'
 import { Header } from './Header'
 import { ImageContainer } from './Image'
+
+import { ShowTagData } from '../../Modal/showTagData'
 
 import {
   ImageDocument,
   QuestionSetDocument,
 } from '../../../../interfaces/models'
-
-function submitTags(tags): ResponseType {
-  console.log(tags)
-  return {
-    message: `Tag keys ${Object.keys(tags)}`,
-    success: true,
-  }
-}
+import React from 'react'
 
 interface Props {
-  user: any
+  user: UserProp
   imageDocument: ImageDocument
   questionSetDocument: QuestionSetDocument
 }
@@ -33,7 +28,28 @@ export function ImageTag(props: Props) {
   const router = useRouter()
   const { catalog = '', archive = '' } = router.query
 
-  const { imageDocument, questionSetDocument } = props
+  const { imageDocument, questionSetDocument, user } = props
+
+  const [tag, setTag] = React.useState({})
+  const [openModal, setOpenModal] = React.useState(false)
+
+  function submitTags(tags): ResponseType {
+    const submitData = {
+      userId: user.data._id,
+      imageId: imageDocument._id,
+      tags: tags,
+      date: Date.now(),
+      false: true,
+    }
+
+    setOpenModal(true)
+    setTag(submitData)
+
+    return {
+      message: `Tag keys ${Object.keys(submitData)}`,
+      success: true,
+    }
+  }
 
   return (
     <Card>
@@ -54,8 +70,10 @@ export function ImageTag(props: Props) {
             skipImage: () => {},
             submitTags: submitTags,
           }}
+          setTag={setTag}
         />
       </CardContent>
+      <ShowTagData tag={tag} open={openModal} setOpen={setOpenModal} />
     </Card>
   )
 }

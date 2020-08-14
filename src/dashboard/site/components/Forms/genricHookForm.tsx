@@ -19,6 +19,7 @@ interface Props {
     skipImage: () => void
     submitTags: (tags: any) => ResponseType
   }
+  setTag: React.Dispatch<React.SetStateAction<{}>>
 }
 
 export default function GenericHookForm(props: Props) {
