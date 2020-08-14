@@ -3,12 +3,7 @@ import { log } from './utils/logger'
 
 export const connectDB = async () => {
   //Get the uri to connect from the enviroment variables. Assume by default to use the development db
-  let dbURI: string = process?.env?.MONGO_URI_DEV
-
-  //If in production mode, use production db
-  if (process.env.NODE_ENV === 'production') {
-    dbURI = process?.env?.MONGO_URI_PRODUCTION
-  }
+  const dbURI: string = process?.env?.MONGO_URI
 
   //for whatever reason if the uri is not defined, exit
   if (dbURI === '' || !dbURI) {
@@ -39,8 +34,9 @@ export const connectDB = async () => {
   })
 }
 
+//function to close the db connection
 export const closeConnection = async () => {
-  connection.close()
+  await connection.close()
   log({
     message: 'DB connection closed',
     type: 'ok',

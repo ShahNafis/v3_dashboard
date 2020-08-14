@@ -1,7 +1,9 @@
+//Registers the types
 // eslint-disable-next-line
 import * as Types from '../interfaces'
 
 import dotenv from 'dotenv'
+
 // Load env vars
 dotenv.config({
   path: './test.env',
@@ -19,21 +21,18 @@ import { log } from './utils/logger'
 //Generic function to handle erros
 import { errorHandler } from './middlewares/error'
 
+//register models
+import { RegisterModels } from './models'
+
 //routes
-import test from './routes/test'
-import user from './routes/user'
-import catalog from './routes/catalogs'
-import archive from './routes/archives'
-import assignedImages from './routes/assignedImages'
-import image from './routes/image'
-import imageServeOrder from './routes/imageServeOrder'
-import tags from './routes/tags'
+import { RegisterRoutes } from './routes'
 
 //Security
 import { initAuthentication } from './auth'
 
 const dev = process.env.NODE_ENV !== 'production'
-console.log(`dev mode ${dev}`)
+console.log(`${process.env.NODE_ENV ?? 'dev'} mode`)
+
 const app = next({
   dev,
   dir: './site',
@@ -49,19 +48,17 @@ const port = ((process.env.NEXT_PUBLIC_PORT as unknown) as number) ?? 3000
     //Connect to db first
     await connectDB()
 
+    //Set up security and give functions
     const { restrictAccess } = initAuthentication(server)
+
     // Body parser so that json can be recieved on Api calls
     server.use(express.json())
 
+    //register models
+    RegisterModels()
+
     //Register api routes first
-    server.use('/api/test', test)
-    server.use(`/api/user`, user)
-    server.use(`/api/catalog`, catalog)
-    server.use(`/api/archive`, archive)
-    server.use(`/api/assignedImages`, assignedImages)
-    server.use(`/api/image`, image)
-    server.use(`/api/imageServeOrder`, imageServeOrder)
-    server.use(`/api/tags`, tags)
+    RegisterRoutes(server)
 
     // This handles errors that happen during API calls
     server.use(errorHandler)
@@ -94,12 +91,14 @@ const port = ((process.env.NEXT_PUBLIC_PORT as unknown) as number) ?? 3000
 
       //Exit server on fail
       serverObj.close(() => {
+        //close db
         closeConnection()
         process.exit(1)
       })
     })
   } catch (e) {
     console.error(e)
+    //close db
     closeConnection()
     process.exit(1)
   }
