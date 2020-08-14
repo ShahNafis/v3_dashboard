@@ -8,8 +8,11 @@ import { CatalogOfArchivePartOfUser } from '../utils/checks/CatalogOfArchivePart
 import { selectImageForAssignment } from '../utils/selectImageForAssignment'
 import { ImageModel } from '../models/Image'
 import { TagModel } from '../models/Tag'
-import { AssingedImageDocument } from '../../interfaces/models'
+// import { AssingedImageDocument } from '../../interfaces/models'
+import { CatalogModel } from '../models/Catalog'
+import { ArchiveModel } from '../models/Archive'
 
+import { performance } from 'perf_hooks'
 const getAllAssignedImages = asyncHandler(
   async (req: Request, res: ExtenedResponse) => {
     res.status(200).json(res.advancedResults)
@@ -87,9 +90,10 @@ const insertUserIdQuery = asyncHandler(
 
 const insertTaggedCount = asyncHandler(
   async (req: Request, res: ExtenedResponse) => {
-    const { data }: { data: any[] } = res.advancedResults
+    const t1 = performance.now()
+    //const { data }: { data: any[] } = res.advancedResults
 
-    const newData = []
+    //const newData = []
     // let memeTest = [
     //   ...data,...data,...data,...data,
     //   ...data,...data,...data,...data,
@@ -99,37 +103,205 @@ const insertTaggedCount = asyncHandler(
     //   ...data,...data,...data,...data,
     // ]
 
-    for (const item of data) {
-      const doc = item as AssingedImageDocument
+    // for (const item of data) {
+    //   const doc = item as AssingedImageDocument
 
-      const tagCount =
-        (
+    //   const tagCount =
+    //     (
+    //       await TagModel.find({
+    //         userId: req.user.data._id,
+    //         archiveId: doc.archiveId,
+    //       })
+    //     ).length ?? 0
+
+    //   newData.push({
+    //     archiveId: doc.archiveId,
+    //     catalogId: doc.catalogId,
+    //     tagCount: tagCount,
+    //     archive: {
+    //       name: doc.archive.name,
+    //       totalImages: doc.archive.totalImages,
+    //     },
+    //     catalog: {
+    //       name: doc.catalog.name,
+    //       totalImages: doc.catalog.totalImages,
+    //     },
+    //   })
+    // }
+
+    //test query
+    // const SumByArchive = await TagModel.aggregate([
+    //   {
+    //     "$match": {
+    //       "userId": req.user.data._id
+    //     }
+    //   },
+    //   {
+    //     $group : {
+    //       _id : "$archiveId",
+    //       tagged: { $sum: 1 }
+    //     }
+    //   }
+    // ])
+    // const SumByCatalog = await TagModel.aggregate([
+    //   {
+    //     "$match": {
+    //       "userId": req.user.data._id
+    //     }
+    //   },
+    //   {
+    //     $group : {
+    //       _id : "$catalogId",
+    //       tagged: { $sum: 1 }
+    //     }
+    //   }
+    // ])
+
+    const AssignedGroupByCatalog = await AssignedImageModel.aggregate([
+      {
+        $match: {
+          userId: req.user.data._id,
+        },
+      },
+      {
+        $group: {
+          _id: '$catalogId',
+          numArchivesAssigned: { $sum: 1 },
+          doc: { $push: '$$ROOT' },
+        },
+      },
+    ])
+    // const TaggedGroupByCatalog = await TagModel.aggregate([
+    //   {
+    //     "$match": {
+    //       "userId": req.user.data._id
+    //     }
+    //   },
+    //   {
+    //     $group : {
+    //       _id : "$catalogId",
+    //       numTagsInCatalog: { $sum: 1 },
+    //       doc:{$push:"$$ROOT"}
+    //     }
+    //   }
+    // ])
+
+    // console.log(AssignedGroupByCatalog[0])
+    const testObj = []
+    const testMeme = [
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+      ...AssignedGroupByCatalog,
+    ]
+    console.log(testMeme.length)
+    for (const catalog of testMeme) {
+      const testRes: any = {}
+      const doc = await CatalogModel.findById(catalog._id)
+
+      testRes.catalogInfo = doc.catalogInfo
+      testRes.totalImages = doc.totalImages
+      ;(testRes.name = doc.name), (testRes.catalogId = doc._id)
+
+      testRes.tagged = (
+        await TagModel.aggregate([
+          {
+            $match: {
+              userId: req.user.data._id,
+              catalogId: doc._id,
+            },
+          },
+          {
+            $group: {
+              _id: '$catalogId',
+              numTagsInCatalog: { $sum: 1 },
+              doc: { $push: '$$ROOT' },
+            },
+          },
+        ])
+      )[0].numTagsInCatalog
+      testRes.archives = []
+
+      for (const archive of catalog.doc) {
+        const archiveData: any = {
+          _id: archive.archiveId,
+        }
+
+        archiveData.tagged = (
           await TagModel.find({
             userId: req.user.data._id,
-            archiveId: doc.archiveId,
+            archiveId: archive.archiveId,
           })
-        ).length ?? 0
+        ).length
 
-      newData.push({
-        archiveId: doc.archiveId,
-        catalogId: doc.catalogId,
-        tagCount: tagCount,
-        archive: {
-          name: doc.archive.name,
-          totalImages: doc.archive.totalImages,
-        },
-        catalog: {
-          name: doc.catalog.name,
-          totalImages: doc.catalog.totalImages,
-        },
-      })
+        const archiveDoc = await ArchiveModel.findById(archive.archiveId)
+        archiveData.name = archiveDoc?.name
+        archiveData.totalImages = archiveDoc?.totalImages
+
+        testRes.archives.push(archiveData)
+      }
+
+      //console.log(testRes)
+      testObj.push(testRes)
     }
 
     res.status(200).json({
       success: true,
       message: 'Got table data',
-      data: newData,
+      data: testObj,
     })
+    const t2 = performance.now()
+    console.log(`Server: Time ${t2 - t1} ms`)
   }
 )
 export {

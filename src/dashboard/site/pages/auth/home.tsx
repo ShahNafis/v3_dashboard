@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 
 import Layout from '../../components/Layout'
@@ -7,11 +7,11 @@ import getSession from '../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../components/API/post/getUserDB'
 import ErrorCard from '../../components/ErrorCards'
 import { determineNavItems } from '../../components/Utils/Auth/determineNavItems'
-import { HomeText } from '../../components/StaticText/home'
+import { HomeText, NoAssigned } from '../../components/StaticText/home'
 import { ResumeTagging } from '../../components/Tables/ResumeTagging'
 import { ResumeTaggingData, UserProp } from '../../../interfaces'
 import { getResumeTableData } from '../../components/API/post/getResumeTableData'
-
+import { getHasAssignedImages } from '../../components/API/post/userHasAssignedImages'
 import { performance } from 'perf_hooks'
 
 interface Props {
@@ -19,11 +19,29 @@ interface Props {
   resumeTableData: ResumeTaggingData[]
   success: boolean
   message?: string
+  hasAssignedImages: boolean
 }
 
 export const Home = (props: Props): JSX.Element => {
-  const { user, success, message, resumeTableData } = props
+  const { user, success, message, hasAssignedImages } = props
+  const [resumeData, setResumeData] = useState(null)
 
+  async function getResumeObject() {
+    //Get resume table data
+    if (hasAssignedImages) {
+      const getTableResponse = await getResumeTableData()
+      setResumeData(getTableResponse.data)
+    } else {
+      setResumeData([])
+    }
+  }
+
+  useEffect(() => {
+    if (resumeData === null) {
+      console.log('CALLING', hasAssignedImages)
+      getResumeObject()
+    }
+  })
   return (
     <div className="container">
       <Head>
@@ -41,7 +59,13 @@ export const Home = (props: Props): JSX.Element => {
         ) : (
           <React.Fragment>
             <HomeText displayName={user?.displayName} />
-            <ResumeTagging data={resumeTableData} />
+            {hasAssignedImages ? (
+              <ResumeTagging data={resumeData} />
+            ) : (
+              <React.Fragment>
+                <NoAssigned />
+              </React.Fragment>
+            )}
           </React.Fragment>
         )}
       </Layout>
@@ -69,17 +93,24 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   }
 
   //Get resume tagging data
-  const resumeData = await getResumeTableData({
+  // const resumeData = await getResumeTableData({
+  //   cookie: context?.req?.headers?.cookie,
+  //   res: context.res,
+  // })
+
+  const hasAssignedImages = await getHasAssignedImages({
     cookie: context?.req?.headers?.cookie,
     res: context.res,
   })
+
   const t2 = performance.now()
   console.log(`Time ${t2 - t1} ms`)
   return {
     props: {
       success: true,
       user,
-      resumeTableData: resumeData.data,
+      //resumeTableData: resumeData.data,
+      hasAssignedImages: hasAssignedImages.data,
     },
   }
 }

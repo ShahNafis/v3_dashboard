@@ -9,11 +9,10 @@ const routes = {
     getUser: apiCall('/api/user/getUser'),
     getResumeTableData: apiCall('/api/catalog/userCatalogs'),
     catalogMembership: apiCall('/api/catalog/catalogMembership'),
-    isArchiveValid: apiCall('/api/archive/validArchive'),
-    getUserAssignedImage: apiCall('/api/assignedImages/getAssignedImages'),
-    getAllUserAssignedImages: apiCall(
-      '/api/assignedImages/getAllUserAssignedImages'
-    ),
+    isArchiveValid: apiCall('/api/archive/exists'),
+    getUserAssignedImage: apiCall('/api/assignedImages/getImage'),
+    getAllUserAssignedImages: apiCall('/api/assignedImages/getAllCurrent'),
+    hasAssignedImages: apiCall('/api/user/hasAssignedImages'),
   },
 }
 const uiConstants = {

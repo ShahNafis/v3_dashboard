@@ -20,3 +20,13 @@ export function HomeText(props: Props) {
     </Typography>
   )
 }
+
+export function NoAssigned() {
+  return (
+    <Typography variant="body1" component="h1" gutterBottom>
+      <Paper elevation={3} variant="outlined" style={{ padding: 10 }}>
+        No archives to resume tagging from.
+      </Paper>
+    </Typography>
+  )
+}

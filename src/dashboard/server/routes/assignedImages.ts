@@ -2,7 +2,7 @@ import express from 'express'
 import {
   getAllAssignedImages,
   getUserAssignedImage,
-  insertUserIdQuery,
+  // insertUserIdQuery,
   insertTaggedCount,
 } from '../controllers/assignedImages'
 //Perform advanced results which means filtering, pagination, and query parameters
@@ -15,22 +15,20 @@ const router = express.Router()
 
 router
   .route('/')
-  .get(
+  .post(
     advancedResults(AssignedImageModel, ['archive', 'catalog']),
     getAllAssignedImages
   )
 router
-  .route('/getAssignedImages')
+  .route('/getImage')
   .post(ensureAuthenticated, insertUser, getUserAssignedImage)
 
-router
-  .route('/getAllUserAssignedImages')
-  .post(
-    ensureAuthenticated,
-    insertUser,
-    insertUserIdQuery,
-    advancedResults(AssignedImageModel, ['archive', 'catalog']),
-    insertTaggedCount
-  )
+router.route('/getAllCurrent').post(
+  ensureAuthenticated,
+  insertUser,
+  // insertUserIdQuery,
+  // advancedResults(AssignedImageModel, ['archive', 'catalog']),
+  insertTaggedCount
+)
 
 export default router

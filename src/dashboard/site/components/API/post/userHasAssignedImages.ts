@@ -2,17 +2,17 @@ import { routes } from '../../Constants'
 import { apiRequest } from '../'
 
 interface Params {
-  cookie?: string
-  res?: any
+  cookie: string
+  res: any
 }
 
-export async function getResumeTableData() {
+export async function getHasAssignedImages({ cookie }: Params) {
   const data = await apiRequest({
     method: 'POST',
-    route: routes.postReq.getAllUserAssignedImages,
+    route: routes.postReq.hasAssignedImages,
     headers: {
       credentials: 'include',
-      //cookie: cookie ?? null,
+      cookie: cookie ?? null,
     },
   })
 

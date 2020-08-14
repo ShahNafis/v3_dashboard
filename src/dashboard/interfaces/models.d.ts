@@ -87,9 +87,9 @@ export interface TagDocument extends Document {
   catalogId?: ObjectID
   archiveId?: ObjectID
   userId: ObjectID
-  tags: any
+  tags?: any
   date: Date
-  ignoreFields: string[]
+  ignoreFields?: string[]
 }
 
 export interface ImageServeOrderDocument extends Document {

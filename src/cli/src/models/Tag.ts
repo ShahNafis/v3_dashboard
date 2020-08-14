@@ -21,6 +21,14 @@ const TagSchema: Schema = new Schema(
       required: [true, 'Assign Image Id'],
       ref: 'User',
     },
+    catalogId: {
+      type: Types.ObjectId,
+      ref: 'Catalog',
+    },
+    archiveId: {
+      type: Types.ObjectId,
+      ref: 'Archive',
+    },
     tags: {
       type: Object,
     },
