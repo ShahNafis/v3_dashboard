@@ -1,10 +1,6 @@
 import express from 'express'
 
-import {
-  returnAdvResults,
-  userCatalogMembership,
-  catalogExists,
-} from '../controllers/catalogs'
+import { userCatalogMembership, catalogExists } from '../controllers/catalogs'
 
 //Perform advanced results which means filtering, pagination, and query parameters
 import { advancedResults } from '../middlewares/advancedResults'
@@ -19,19 +15,26 @@ import { genericReturn } from '../middlewares/genericReturn'
 
 const router = express.Router()
 
-router
-  .route('/')
-  .post(advancedResults(CatalogModel, ['archives']), returnAdvResults)
+router.route('/').post(
+  advancedResults(CatalogModel, ['archives']),
+  genericReturn({
+    keys: ['advancedResults'],
+    message: 'Advanced Results',
+    success: true,
+  })
+)
 
-router
-  .route('/userCatalogs')
-  .post(
-    ensureAuthenticated,
-    insertUser,
-    advancedResults(CatalogModel, ['archives']),
-    filterUserCatalogsMiddleware,
-    returnAdvResults
-  )
+router.route('/userCatalogs').post(
+  ensureAuthenticated,
+  insertUser,
+  advancedResults(CatalogModel, ['archives']),
+  filterUserCatalogsMiddleware,
+  genericReturn({
+    keys: ['advancedResults'],
+    message: 'Advanced Results',
+    success: true,
+  })
+)
 
 router
   .route('/catalogMembership')

@@ -1,6 +1,6 @@
 import { asyncHandler } from '../middlewares/async' //to avoid putting try catch everywhere
 import { ExtenedResponse } from '../../interfaces'
-import { Request, NextFunction } from 'express'
+import { Request } from 'express'
 import { AssignedImageModel } from '../models/AssignedImages'
 import { isValidArchive } from '../utils/checks/isValidArchive'
 import { CatalogOfArchivePartOfUser } from '../utils/checks/CatalogOfArchivePartOfUser'
@@ -13,11 +13,11 @@ import { CatalogModel } from '../models/Catalog'
 import { ArchiveModel } from '../models/Archive'
 
 import { performance } from 'perf_hooks'
-const getAllAssignedImages = asyncHandler(
-  async (req: Request, res: ExtenedResponse) => {
-    res.status(200).json(res.advancedResults)
-  }
-)
+// const getAllAssignedImages = asyncHandler(
+//   async (req: Request, res: ExtenedResponse) => {
+//     res.status(200).json(res.advancedResults)
+//   }
+// )
 
 const getUserAssignedImage = asyncHandler(
   async (req: Request, res: ExtenedResponse) => {
@@ -76,15 +76,6 @@ const getUserAssignedImage = asyncHandler(
       message: 'Got Image',
       data: selectedImage,
     })
-  }
-)
-
-const insertUserIdQuery = asyncHandler(
-  async (req: Request, res: ExtenedResponse, next: NextFunction) => {
-    req.query = {
-      userId: req.user.data._id,
-    }
-    next()
   }
 )
 
@@ -169,9 +160,4 @@ const insertTaggedCount = asyncHandler(
     console.log(`Server: Time ${t2 - t1} ms`)
   }
 )
-export {
-  getAllAssignedImages,
-  getUserAssignedImage,
-  insertUserIdQuery,
-  insertTaggedCount,
-}
+export { getUserAssignedImage, insertTaggedCount }

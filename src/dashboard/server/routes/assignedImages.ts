@@ -1,6 +1,5 @@
 import express from 'express'
 import {
-  getAllAssignedImages,
   getUserAssignedImage,
   // insertUserIdQuery,
   insertTaggedCount,
@@ -11,24 +10,24 @@ import { AssignedImageModel } from '../models/AssignedImages'
 
 import { ensureAuthenticated } from '../middlewares/ensureAuth'
 import { insertUser } from '../middlewares/insertUser'
+import { genericReturn } from '../middlewares/genericReturn'
+
 const router = express.Router()
 
-router
-  .route('/')
-  .post(
-    advancedResults(AssignedImageModel, ['archive', 'catalog']),
-    getAllAssignedImages
-  )
+router.route('/').post(
+  advancedResults(AssignedImageModel, ['archive', 'catalog']),
+  genericReturn({
+    keys: ['advancedResults'],
+    message: 'Advanced Results',
+    success: true,
+  })
+)
 router
   .route('/getImage')
   .post(ensureAuthenticated, insertUser, getUserAssignedImage)
 
-router.route('/getAllCurrent').post(
-  ensureAuthenticated,
-  insertUser,
-  // insertUserIdQuery,
-  // advancedResults(AssignedImageModel, ['archive', 'catalog']),
-  insertTaggedCount
-)
+router
+  .route('/getAllCurrent')
+  .post(ensureAuthenticated, insertUser, insertTaggedCount)
 
 export default router

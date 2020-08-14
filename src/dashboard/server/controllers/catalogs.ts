@@ -3,12 +3,6 @@ import { asyncHandler } from '../middlewares/async' //to avoid putting try catch
 import { ExtenedResponse } from '../../interfaces'
 import { CatalogModel } from '../models/Catalog'
 
-const returnAdvResults = asyncHandler(
-  async (req: Request, res: ExtenedResponse) => {
-    res.status(200).json(res.advancedResults)
-  }
-)
-
 const userCatalogMembership = asyncHandler(
   async (req: Request, res: ExtenedResponse) => {
     const { catalogId } = req.body
@@ -46,4 +40,4 @@ const catalogExists = asyncHandler(
     next()
   }
 )
-export { returnAdvResults, userCatalogMembership, catalogExists }
+export { userCatalogMembership, catalogExists }

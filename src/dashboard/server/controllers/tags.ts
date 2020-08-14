@@ -1,11 +1,11 @@
-import { asyncHandler } from '../middlewares/async' //to avoid putting try catch everywhere
-import { ExtenedResponse } from '../../interfaces'
+// import { asyncHandler } from '../middlewares/async' //to avoid putting try catch everywhere
+// import { ExtenedResponse } from '../../interfaces'
 // import { TagModel } from '../models/Tag'
 // import mongoose from 'mongoose';
 
-const getAllTags = asyncHandler(async (req: Request, res: ExtenedResponse) => {
-  res.status(200).json(res.advancedResults)
-})
+// const getAllTags = asyncHandler(async (req: Request, res: ExtenedResponse) => {
+//   res.status(200).json(res.advancedResults)
+// })
 
 // async function test() {
 //   await TagModel.create({
@@ -28,4 +28,4 @@ const getAllTags = asyncHandler(async (req: Request, res: ExtenedResponse) => {
 // console.log('test data')
 // }
 //test()
-export { getAllTags }
+export {}

@@ -4,11 +4,11 @@ import { ExtenedResponse } from '../../interfaces'
 import { Request, NextFunction } from 'express'
 //console.log(typeof ArchiveModel, 'controller/archive.ts')
 
-const getAllArchives = asyncHandler(
-  async (req: Request, res: ExtenedResponse) => {
-    res.status(200).json(res.advancedResults)
-  }
-)
+// const getAllArchives = asyncHandler(
+//   async (req: Request, res: ExtenedResponse) => {
+//     res.status(200).json(res.advancedResults)
+//   }
+// )
 
 const archiveExists = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
@@ -35,4 +35,4 @@ const archiveExists = asyncHandler(
   }
 )
 
-export { getAllArchives, archiveExists }
+export { archiveExists }
