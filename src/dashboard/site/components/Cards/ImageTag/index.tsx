@@ -5,7 +5,7 @@ import { theme } from '../../theme'
 import CardContent from '@material-ui/core/CardContent'
 
 // import { questionSetData } from '../../data/testQuestions'
-import { ResponseType, UserProp } from '../../../../interfaces'
+import { UserProp } from '../../../../interfaces'
 import GenericHookForm from '../../Forms/genricHookForm'
 import { Header } from './Header'
 import { ImageContainer } from './Image'
@@ -17,6 +17,10 @@ import {
   QuestionSetDocument,
 } from '../../../../interfaces/models'
 import React from 'react'
+import Router from 'next/router'
+
+import { SuccessErrorBar } from '../../Snackbar'
+import { submitImageTags } from '../../API/post/submitTags'
 
 interface Props {
   user: UserProp
@@ -25,6 +29,7 @@ interface Props {
 }
 
 export function ImageTag(props: Props) {
+  const snackbarTime = 6000
   const router = useRouter()
   const { catalog = '', archive = '' } = router.query
 
@@ -33,22 +38,51 @@ export function ImageTag(props: Props) {
   const [tag, setTag] = React.useState({})
   const [openModal, setOpenModal] = React.useState(false)
 
-  function submitTags(tags): ResponseType {
+  const [openSnackbar, setSnackbar] = React.useState(false)
+  const [snackbarStatus, setSnackbarStatus] = React.useState(false)
+  const [snackbarMessage, setSnackbarMessage] = React.useState('')
+  const handleClick = () => {
+    setSnackbar(true)
+  }
+
+  // const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+  //   if (reason === 'clickaway') {
+  //     return;
+  //   }
+
+  //   setSnackbar(false);
+  // };
+
+  async function submitTags(tags) {
     const submitData = {
       userId: user.data._id,
-      imageId: imageDocument._id,
+      imageId: imageDocument._id as string,
       tags: tags,
       date: Date.now(),
-      false: true,
     }
 
-    setOpenModal(true)
-    setTag(submitData)
+    const resSubmitTag = await submitImageTags({ body: submitData })
 
-    return {
-      message: `Tag keys ${Object.keys(submitData)}`,
-      success: true,
+    handleClick()
+    setSnackbarMessage(resSubmitTag.message)
+
+    if (resSubmitTag.success) {
+      setSnackbarStatus(true)
+      setTimeout(() => {
+        Router.reload()
+      }, snackbarTime)
+    } else {
+      setSnackbarStatus(false)
     }
+  }
+
+  function skipImage() {
+    //blah blah
+    // const submitData = {
+    //   userId: user.data._id,
+    //   imageId: imageDocument._id
+    // }
+    Router.reload()
   }
 
   return (
@@ -67,13 +101,20 @@ export function ImageTag(props: Props) {
         <GenericHookForm
           questionSetData={questionSetDocument}
           formFunctions={{
-            skipImage: () => {},
+            skipImage: skipImage,
             submitTags: submitTags,
           }}
           setTag={setTag}
         />
       </CardContent>
       <ShowTagData tag={tag} open={openModal} setOpen={setOpenModal} />
+      {openSnackbar && (
+        <SuccessErrorBar
+          duration={snackbarTime}
+          message={snackbarMessage}
+          success={snackbarStatus}
+        />
+      )}
     </Card>
   )
 }

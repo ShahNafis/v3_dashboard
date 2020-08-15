@@ -10,6 +10,7 @@ export interface UserDocument extends Document {
   imagesTagged: Record<string, any>
   roles: [string]
   userId: string
+  _id: string
 }
 
 export interface CatalogDocument extends Document {

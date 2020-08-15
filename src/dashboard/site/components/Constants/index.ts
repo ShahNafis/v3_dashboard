@@ -14,6 +14,7 @@ const routes = {
     getAllUserAssignedImages: apiCall('/api/assignedImages/getAllCurrent'),
     hasAssignedImages: apiCall('/api/user/hasAssignedImages'),
     getCatalogQuestionSet: apiCall('/api/catalog/questionSet'),
+    tagImage: apiCall('/api/tags/tagImage'),
   },
 }
 const uiConstants = {

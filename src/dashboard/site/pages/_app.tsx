@@ -9,13 +9,13 @@ import { theme } from '../components/theme'
 // import 'react-json-pretty/themes/adventure_time.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // React.useEffect(() => {
-  //   // Remove the server-side injected CSS.
-  //   const jssStyles = document.querySelector('#jss-server-side');
-  //   if (jssStyles) {
-  //     jssStyles.parentElement.removeChild(jssStyles);
-  //   }
-  // }, []);
+  React.useEffect(() => {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector('#jss-server-side')
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles)
+    }
+  }, [])
 
   return (
     <React.Fragment>

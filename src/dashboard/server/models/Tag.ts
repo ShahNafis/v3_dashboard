@@ -34,7 +34,7 @@ const TagSchema: Schema = new Schema(
     },
     date: {
       type: Date,
-      required: [true, 'Assign Image Id'],
+      required: [true, 'Assign tag date'],
     },
     ignoreFields: [String],
   },

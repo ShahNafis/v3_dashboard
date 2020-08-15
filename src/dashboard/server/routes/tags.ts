@@ -4,6 +4,10 @@ import { genericReturn } from '../middlewares/genericReturn'
 import { advancedResults } from '../middlewares/advancedResults'
 import { TagModel } from '../models/Tag'
 
+import { ensureAuthenticated } from '../middlewares/ensureAuth'
+import { insertUser } from '../middlewares/insertUser'
+import { tagImage } from '../controllers/tags'
+
 const router = express.Router()
 
 router.route('/').post(
@@ -14,5 +18,7 @@ router.route('/').post(
     success: true,
   })
 )
+
+router.route('/tagImage').post(ensureAuthenticated, insertUser, tagImage)
 
 export default router

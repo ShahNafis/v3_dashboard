@@ -33,13 +33,6 @@ export function ShowTagData(props) {
   const classes = useStyles()
 
   const { tag, open } = props
-  // const handleOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
 
   return (
     <div>
@@ -51,7 +44,6 @@ export function ShowTagData(props) {
         aria-describedby="transition-modal-description"
         className={classes.modal}
         open={open}
-        //onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{

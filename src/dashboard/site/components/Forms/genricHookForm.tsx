@@ -7,7 +7,7 @@ import { generateRadioDefaults } from './generate/Radio'
 // import { generateTextField } from './generate/Textfield'
 // import { generateQuickSubmitButton } from './generate/QuickSubmit'
 
-import { ResponseType } from '../../../interfaces'
+// import { ResponseType } from '../../../interfaces'
 import { QuestionSetDocument } from '../../../interfaces/models'
 import determineQuestionType from './determineQuestionType'
 // import { SubmitButton, SkipButton } from '../Button/premadeButtons'
@@ -17,7 +17,7 @@ interface Props {
   questionSetData: QuestionSetDocument
   formFunctions: {
     skipImage: () => void
-    submitTags: (tags: any) => ResponseType
+    submitTags: (tags: any) => void
   }
   setTag: React.Dispatch<React.SetStateAction<{}>>
 }
@@ -66,8 +66,6 @@ export default function GenericHookForm(props: Props) {
       <Typography color="secondary">
         {questionSetData.name}:{questionSetData.description}
       </Typography>
-
-      {/* {JSON.stringify(watch())} */}
       <Divider />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
