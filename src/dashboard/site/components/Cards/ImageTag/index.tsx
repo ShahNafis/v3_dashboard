@@ -29,7 +29,6 @@ interface Props {
 }
 
 export function ImageTag(props: Props) {
-  const snackbarTime = 6000
   const router = useRouter()
   const { catalog = '', archive = '' } = router.query
 
@@ -39,6 +38,7 @@ export function ImageTag(props: Props) {
   const [openModal, setOpenModal] = React.useState(false)
 
   const [openSnackbar, setSnackbar] = React.useState(false)
+  const [snackbarTime, setSnackbarTime] = React.useState(6000)
   const [snackbarStatus, setSnackbarStatus] = React.useState(false)
   const [snackbarMessage, setSnackbarMessage] = React.useState('')
   const handleClick = () => {
@@ -72,6 +72,7 @@ export function ImageTag(props: Props) {
         Router.reload()
       }, snackbarTime)
     } else {
+      setSnackbarTime(999999)
       setSnackbarStatus(false)
     }
   }
@@ -89,13 +90,13 @@ export function ImageTag(props: Props) {
     <Card>
       <Header
         title={`Catalog ${catalog}`}
-        subheader={`Archive ${archive} - ${imageDocument.name}`}
+        subheader={`Archive ${archive} - ${imageDocument?.name}`}
         style={{ color: theme.palette.primary.light }}
         subheaderStyle={{ color: theme.palette.secondary.main }}
       />
       <ImageContainer
-        compressedLink={imageDocument.path.compressed}
-        originalLink={imageDocument.path.original}
+        compressedLink={imageDocument?.path?.compressed}
+        originalLink={imageDocument?.path?.original}
       />
       <CardContent>
         <GenericHookForm

@@ -13,7 +13,9 @@ const genericReturn = ({ keys, message, success }: Params) =>
     const resObj = {}
 
     for (const key of keys) {
-      resObj[key] = res[key]
+      if (res[key]) {
+        resObj[key] = res[key]
+      }
     }
 
     res.status(200).json({

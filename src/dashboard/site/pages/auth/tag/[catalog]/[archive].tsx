@@ -5,14 +5,14 @@ import Layout from '../../../../components/Layout'
 import { GetServerSideProps } from 'next'
 import getSession from '../../../../components/Utils/Auth/getSession'
 import { getUserDB } from '../../../../components/API/post/getUserDB'
-import { catalogMembership } from '../../../../components/API/post/catalogMembership'
+//import { catalogMembership } from '../../../../components/API/post/catalogMembership'
 import ErrorCard from '../../../../components/ErrorCards'
 import { determineNavItems } from '../../../../components/Utils/Auth/determineNavItems'
 import { ImageTag } from '../../../../components/Cards/ImageTag'
 
 import { checkUserRole } from '../../../../components/Utils/Auth/checkRole'
 import { generateUnAuthObj } from '../../../../components/Utils/Auth/unAuthError'
-import { isValidArchive } from '../../../../components/API/post/isValidArchive'
+//import { isValidArchive } from '../../../../components/API/post/isValidArchive'
 import { getUserAssignedImage } from '../../../../components/API/post/getUserAssignedImage'
 import { catalogQuestionSet } from '../../../../components/API/post/getCatalogQuestionSet'
 
@@ -94,58 +94,8 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   //get dynamic route variables
   const { catalog = '', archive = '' } = context.query
 
-  //check if user can tag this catalog
-  const resUserPartOfCatalog = await catalogMembership({
-    cookie: context?.req?.headers?.cookie,
-    res: context.res,
-    catalogId: catalog as string,
-  })
-
-  //Check for error/success
-  if (!resUserPartOfCatalog?.success) {
-    return {
-      props: {
-        user,
-        ...generateUnAuthObj({
-          message: resUserPartOfCatalog.message,
-        }),
-      },
-    }
-  }
-
-  //check if the archive is valid, and part of catalog
-  const resIsValidArchive = await isValidArchive({
-    cookie: context?.req?.headers?.cookie,
-    res: context.res,
-    catalogId: catalog as string,
-    archiveId: archive as string,
-  })
-
-  //Check if success
-  if (!resIsValidArchive?.success) {
-    return {
-      props: {
-        user,
-        ...generateUnAuthObj({
-          message: resIsValidArchive.message,
-        }),
-      },
-    }
-  }
-
-  //Check if archive is valid
-  if (!resIsValidArchive?.data) {
-    return {
-      props: {
-        user,
-        ...generateUnAuthObj({
-          message: `Invalid Archive ID of ${archive}`,
-        }),
-      },
-    }
-  }
-
   //Get assigned Image and catalog question
+
   const [resGetUserAssignedImage, resGetCatalogQuestionSet] = await Promise.all(
     [
       getUserAssignedImage({
@@ -161,13 +111,34 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     ]
   )
 
+  if (!resGetUserAssignedImage.success) {
+    return {
+      props: {
+        user,
+        ...generateUnAuthObj({
+          message: resGetUserAssignedImage.message,
+        }),
+      },
+    }
+  }
+  if (!resGetCatalogQuestionSet.success) {
+    return {
+      props: {
+        user,
+        ...generateUnAuthObj({
+          message: resGetCatalogQuestionSet.message,
+        }),
+      },
+    }
+  }
+
   const t2 = performance.now()
   console.log(`Time ${t2 - t1} ms`)
   return {
     props: {
       success: true,
       user,
-      imageDocument: resGetUserAssignedImage.data ?? {},
+      imageDocument: resGetUserAssignedImage.data.assignedImage ?? {},
       questionSetDocument: resGetCatalogQuestionSet.data.questionSet ?? {},
     },
   }

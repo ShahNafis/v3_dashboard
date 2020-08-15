@@ -7,6 +7,7 @@ import { TagModel } from '../models/Tag'
 import { ensureAuthenticated } from '../middlewares/ensureAuth'
 import { insertUser } from '../middlewares/insertUser'
 import { tagImage } from '../controllers/tags'
+import { unassignImage } from '../controllers/assignedImages'
 
 const router = express.Router()
 
@@ -19,6 +20,17 @@ router.route('/').post(
   })
 )
 
-router.route('/tagImage').post(ensureAuthenticated, insertUser, tagImage)
+router.route('/tagImage').post(
+  ensureAuthenticated,
+  insertUser,
+  tagImage,
+  unassignImage,
+  genericReturn({
+    keys: [],
+    message: 'Tagged Image',
+    success: true,
+  })
+)
+router.route('/skipImage').post(ensureAuthenticated, insertUser, tagImage)
 
 export default router
