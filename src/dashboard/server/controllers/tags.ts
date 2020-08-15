@@ -2,9 +2,8 @@ import { asyncHandler } from '../middlewares/async' //to avoid putting try catch
 import { ExtenedResponse } from '../../interfaces'
 import { Request } from 'express'
 import { TagModel } from '../models/Tag'
-import { ArchiveModel } from '../models/Archive'
-import { CatalogModel } from '../models/Catalog'
 import { ImageModel } from '../models/Image'
+import { imageInCatalog } from '../utils/checks/imageInCatalog'
 // import { ObjectID } from 'mongodb'
 // import mongoose from 'mongoose';
 
@@ -34,38 +33,18 @@ const tagImage = asyncHandler(async (req: Request, res: ExtenedResponse) => {
 
   //check if the catalog of the archive of the image belongs to user
   const image = await ImageModel.findById(imageId)
-  if (!image) {
+  const imageInCatalogRes = await imageInCatalog(image)
+
+  if (!imageInCatalogRes.success) {
     return res.status(200).json({
       success: false,
-      message: `Image ${imageId} does not exist`,
+      message: imageInCatalogRes.message,
     })
   }
 
-  const archive = await ArchiveModel.findById(image.archive)
-  if (!archive) {
-    return res.status(200).json({
-      success: false,
-      message: `Archive ${image.archive} of image ${imageId} does not exist`,
-    })
-  }
-
-  const catalog = await CatalogModel.findById(archive.catalog)
-  if (!catalog) {
-    return res.status(200).json({
-      success: false,
-      message: `Catalog ${archive.catalog} of Archive ${image.archive} of image ${imageId} does not exist`,
-    })
-  }
-
-  if (!req.user.data.catalogs.includes(catalog._id)) {
-    return res.status(200).json({
-      success: false,
-      message: `User is not allowed to tag catalog ${catalog._id}`,
-    })
-  }
-
-  //check if any matching tags
-  //to do
+  //check if any matching tags: DO BEFORE ADDING TAG
+  const compareResult = await image.compareTags(tags, ['Additional Comments'])
+  const finalizable = compareResult.numMatch === compareResult.numberOfMatches
 
   //create
   const newTag = await TagModel.create({
@@ -73,12 +52,19 @@ const tagImage = asyncHandler(async (req: Request, res: ExtenedResponse) => {
     imageId: imageId,
     userId: req.user.data._id,
     tags: tags,
+    final: finalizable,
   })
+
+  //If finalized, update imageDoc to have this new tag
+  if (finalizable) {
+    await ImageModel.updateOne({ _id: imageId }, { finalTag: newTag._id })
+    console.log('Updated final tag for image', imageId)
+  }
 
   return res.status(200).json({
     success: true,
     message: `Tagged Image ${imageId}`,
-    data: newTag,
+    data: {},
   })
 })
 

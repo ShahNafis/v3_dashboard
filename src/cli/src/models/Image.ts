@@ -5,6 +5,8 @@
 import { Schema, model, Model, Types } from 'mongoose'
 import { ImageDocument } from '../../interfaces/models'
 import { ArchiveModel } from './Archive'
+import { TagModel } from './Tag'
+import { compareTags } from '../utils/compareTags'
 //import { CatalogModel } from './Catalog'
 
 const ImageSchema: Schema = new Schema(
@@ -17,7 +19,7 @@ const ImageSchema: Schema = new Schema(
       type: Date,
     },
     finalTag: {
-      type: Object,
+      type: Types.ObjectId,
     },
     name: {
       type: String,
@@ -62,6 +64,25 @@ const ImageSchema: Schema = new Schema(
     toObject: { virtuals: true },
   }
 )
+
+//instance method, on document
+ImageSchema.methods.compareTags = async function (tag: any, ignoreFields: any) {
+  let numMatch = 1
+  const allTags = await TagModel.find({ imageId: this._id })
+
+  for (const currentTag of allTags) {
+    const isSame = await compareTags(tag, currentTag.tags, ignoreFields)
+
+    if (isSame) {
+      numMatch++
+    }
+  }
+
+  return {
+    numMatch: numMatch,
+    numberOfMatches: this.numberOfMatches,
+  }
+}
 
 //Document middleware
 ImageSchema.post<ImageDocument>('save', async function (this: ImageDocument) {

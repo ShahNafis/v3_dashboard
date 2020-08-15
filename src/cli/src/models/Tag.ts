@@ -37,6 +37,10 @@ const TagSchema: Schema = new Schema(
       required: [true, 'Assign tag date'],
     },
     ignoreFields: [String],
+    final: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     toJSON: { virtuals: true },

@@ -58,7 +58,7 @@ export interface ArchiveModelType extends Model<ArchiveDocument> {
 export interface ImageDocument extends Document {
   archive: ObjectID
   dateAdded?: Date
-  finalTag?: Record<string, any>
+  finalTag?: ObjectID
   name: string
   path: {
     original: string
@@ -68,6 +68,19 @@ export interface ImageDocument extends Document {
   // tags?: [Record<string, any>]
   //numberOfTags?: number
   numberOfMatches: number
+  compareTags(
+    tags: any,
+    ignoreFields: string[]
+  ): { numMatch: number; numberOfMatches: number }
+}
+
+export interface ImageDocumentType extends Model<ImageDocument> {
+  // here we decalre statics
+
+  compareTags?: (
+    tags: any,
+    ignoreFields: string[]
+  ) => { numMatch: number; numberOfMatches: number }
 }
 
 export interface AssingedImageDocument extends Document {
@@ -88,6 +101,7 @@ export interface TagDocument extends Document {
   tags?: any
   date: Date
   ignoreFields?: string[]
+  final?: boolean
 }
 
 export interface ImageServeOrderDocument extends Document {
