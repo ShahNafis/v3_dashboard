@@ -1,10 +1,10 @@
 import express from 'express'
 import { archiveExists } from '../controllers/archives'
-//Perform advanced results which means filtering, pagination, and query parameters
 import { advancedResults } from '../middlewares/advancedResults'
 import { ArchiveModel } from '../models/Archive'
-// import { ensureAuthenticated } from '../middlewares/ensureAuth'
 import { genericReturn } from '../middlewares/genericReturn'
+import { check } from 'express-validator'
+import { bodyValidation } from '../middlewares/bodyValidation'
 
 const router = express.Router()
 
@@ -18,6 +18,7 @@ router.route('/').post(
 )
 
 router.route('/exists').post(
+  ...bodyValidation([check('archiveId').isString()]),
   archiveExists,
   genericReturn({
     keys: ['archive'],

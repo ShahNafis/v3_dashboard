@@ -8,6 +8,8 @@ import { ensureAuthenticated } from '../middlewares/ensureAuth'
 import { insertUser } from '../middlewares/insertUser'
 import { tagImage } from '../controllers/tags'
 import { unassignImage } from '../controllers/assignedImages'
+import { check } from 'express-validator'
+import { bodyValidation } from '../middlewares/bodyValidation'
 
 const router = express.Router()
 
@@ -23,6 +25,11 @@ router.route('/').post(
 router.route('/tagImage').post(
   ensureAuthenticated,
   insertUser,
+  ...bodyValidation([
+    check('userId').isString(),
+    check('imageId').isString(),
+    check('tags').exists(),
+  ]),
   tagImage,
   unassignImage,
   genericReturn({

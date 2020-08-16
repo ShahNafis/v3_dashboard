@@ -1,36 +1,23 @@
-import { ArchiveModel } from '../models/Archive'
+// import { ArchiveModel } from '../models/Archive'
 import { asyncHandler } from '../middlewares/async' //to avoid putting try catch everywhere
 import { ExtenedResponse } from '../../interfaces'
 import { Request, NextFunction } from 'express'
-//console.log(typeof ArchiveModel, 'controller/archive.ts')
-
-// const getAllArchives = asyncHandler(
-//   async (req: Request, res: ExtenedResponse) => {
-//     res.status(200).json(res.advancedResults)
-//   }
-// )
+import { isValidArchive } from '../utils/checks/isValidArchive'
 
 const archiveExists = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const { archiveId } = req.body
 
-    if (!archiveId) {
+    //check archive is valid ID
+    const validArchive = await isValidArchive(archiveId)
+    if (!validArchive.success) {
       return res.status(200).json({
-        success: false,
-        message: 'No archiveId given',
+        success: true,
+        message: `Invalid archive ID ${archiveId}`,
       })
     }
 
-    const archive = await ArchiveModel.findById(archiveId)
-
-    if (!archive) {
-      return res.status(200).json({
-        success: false,
-        message: `No archive with archiveId: ${archiveId}`,
-      })
-    }
-
-    res.archive = archive
+    res.archive = validArchive.data
     next()
   }
 )

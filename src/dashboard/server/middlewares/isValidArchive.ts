@@ -10,7 +10,7 @@ const isValidArchiveMiddleware = asyncHandler(
     //check archive is valid ID
     const validArchive = await isValidArchive(archiveId)
 
-    if (!validArchive) {
+    if (!validArchive.success) {
       return res.status(200).json({
         success: true,
         message: `Invalid archive ID ${archiveId}`,

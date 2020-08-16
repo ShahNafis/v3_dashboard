@@ -2,24 +2,12 @@ import { asyncHandler } from '../middlewares/async' //to avoid putting try catch
 import { ExtenedResponse } from '../../interfaces'
 import { Request, NextFunction } from 'express'
 import { AssignedImageModel } from '../models/AssignedImages'
-// import { isValidArchive } from '../utils/checks/isValidArchive'
-// import { CatalogOfArchivePartOfUser } from '../utils/checks/CatalogOfArchivePartOfUser'
-
 import { selectImageForAssignment } from '../utils/selectImageForAssignment'
 import { ImageModel } from '../models/Image'
 import { TagModel } from '../models/Tag'
-// import { AssingedImageDocument } from '../../interfaces/models'
 import { CatalogModel } from '../models/Catalog'
 import { ArchiveModel } from '../models/Archive'
-
 import { performance } from 'perf_hooks'
-//import { ImageDocument } from '../../interfaces/models'
-// import { UserModel } from '../models/User'
-// const getAllAssignedImages = asyncHandler(
-//   async (req: Request, res: ExtenedResponse) => {
-//     res.status(200).json(res.advancedResults)
-//   }
-// )
 
 const getCurrentlyAssignedImage = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
@@ -32,7 +20,6 @@ const getCurrentlyAssignedImage = asyncHandler(
       archiveId: archiveId,
     })
 
-    //console.log(currentlyAssignedImage ? 'Found assigned' : 'Need to assign')
     //If there is a image assigned
     if (currentlyAssignedImage) {
       const image = await ImageModel.findById(currentlyAssignedImage.imageId)
@@ -183,6 +170,7 @@ const insertTaggedCount = asyncHandler(
     console.log(`Server: Time ${t2 - t1} ms`)
   }
 )
+
 export {
   getCurrentlyAssignedImage,
   insertTaggedCount,

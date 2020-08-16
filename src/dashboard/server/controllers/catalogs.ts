@@ -4,29 +4,9 @@ import { ExtenedResponse } from '../../interfaces'
 import { CatalogModel } from '../models/Catalog'
 import { QuestionSetModel } from '../models/QuestionSet'
 
-const userCatalogMembership = asyncHandler(
-  async (req: Request, res: ExtenedResponse) => {
-    const { catalogId } = req.body
-    res.status(200).json({
-      success: true,
-      message: `User has membership to catalog ${catalogId}`,
-      data: {
-        membershipCatalog: true,
-      },
-    })
-  }
-)
-
 const catalogExists = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const { catalogId } = req.body
-
-    if (!catalogId) {
-      return res.status(200).json({
-        success: false,
-        message: 'No catalogId given',
-      })
-    }
 
     const catalog = await CatalogModel.findById(catalogId)
 
@@ -60,4 +40,4 @@ const getCatalogQuestionSet = asyncHandler(
   }
 )
 
-export { userCatalogMembership, catalogExists, getCatalogQuestionSet }
+export { catalogExists, getCatalogQuestionSet }

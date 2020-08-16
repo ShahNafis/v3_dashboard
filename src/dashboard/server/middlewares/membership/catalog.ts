@@ -1,9 +1,10 @@
 import { asyncHandler } from '../async'
 // import { ResPartOfCatalog } from '../../../interfaces'
-import { Request, Response, NextFunction } from 'express'
+import { Request, NextFunction } from 'express'
 import { ObjectId } from 'mongodb'
 import { ArchiveModel } from '../../models/Archive'
 import { ImageModel } from '../../models/Image'
+import { ExtenedResponse } from '../../../interfaces'
 
 async function membershipCatalog(userCatalog: [ObjectId], catalogId: string) {
   let result = false
@@ -18,7 +19,7 @@ async function membershipCatalog(userCatalog: [ObjectId], catalogId: string) {
 }
 
 const membershipCatalogMiddleware = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const { user } = req
     let { catalogId } = req.body
     const { archiveId, imageId } = req.body
@@ -38,6 +39,7 @@ const membershipCatalogMiddleware = asyncHandler(
     )
 
     if (result) {
+      res.membershipCatalog = true
       next()
     } else {
       res.status(401).json({

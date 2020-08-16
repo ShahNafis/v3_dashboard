@@ -4,20 +4,10 @@ import { Request, NextFunction } from 'express'
 import { TagModel } from '../models/Tag'
 import { ImageModel } from '../models/Image'
 import { imageInCatalog } from '../utils/checks/imageInCatalog'
-// import { ObjectID } from 'mongodb'
-// import mongoose from 'mongoose';
 
 const tagImage = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const { userId, imageId, tags } = req.body
-
-    //check to see if tags is sent
-    if (!(Object.keys(tags).length > 0)) {
-      return res.status(200).json({
-        success: false,
-        message: `No tags sent`,
-      })
-    }
 
     //check if user has already tagged this image
     const previousTag = await TagModel.find({
@@ -61,11 +51,6 @@ const tagImage = asyncHandler(
       console.log('Updated final tag for image', imageId)
     }
 
-    // return res.status(200).json({
-    //   success: true,
-    //   message: `Tagged Image ${imageId}`,
-    //   data: {},
-    // })
     next()
   }
 )

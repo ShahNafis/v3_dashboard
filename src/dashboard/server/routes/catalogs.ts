@@ -1,10 +1,6 @@
 import express from 'express'
 
-import {
-  userCatalogMembership,
-  catalogExists,
-  getCatalogQuestionSet,
-} from '../controllers/catalogs'
+import { catalogExists, getCatalogQuestionSet } from '../controllers/catalogs'
 
 //Perform advanced results which means filtering, pagination, and query parameters
 import { advancedResults } from '../middlewares/advancedResults'
@@ -16,6 +12,8 @@ import { membershipCatalogMiddleware } from '../middlewares/membership/catalog'
 
 import { filterUserCatalogsMiddleware } from '../middlewares/filter/catalog/filterUserCatalogs'
 import { genericReturn } from '../middlewares/genericReturn'
+import { check } from 'express-validator'
+import { bodyValidation } from '../middlewares/bodyValidation'
 
 const router = express.Router()
 
@@ -40,17 +38,21 @@ router.route('/userCatalogs').post(
   })
 )
 
-router
-  .route('/catalogMembership')
-  .post(
-    ensureAuthenticated,
-    insertUser,
-    catalogExists,
-    membershipCatalogMiddleware,
-    userCatalogMembership
-  )
+router.route('/catalogMembership').post(
+  ensureAuthenticated,
+  insertUser,
+  ...bodyValidation([check('catalogId').isString()]),
+  catalogExists,
+  membershipCatalogMiddleware,
+  genericReturn({
+    keys: ['membershipCatalog'],
+    message: 'User has membership to catalog',
+    success: true,
+  })
+)
 
 router.route('/exists').post(
+  ...bodyValidation([check('archiveId').isString()]),
   catalogExists,
   genericReturn({
     keys: ['catalog'],
@@ -60,6 +62,7 @@ router.route('/exists').post(
 )
 
 router.route('/questionSet').post(
+  ...bodyValidation([check('catalogId').isString()]),
   catalogExists,
   getCatalogQuestionSet,
   genericReturn({

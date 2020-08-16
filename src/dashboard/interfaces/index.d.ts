@@ -106,6 +106,7 @@ declare namespace cilDashboard {
     catalog?: CatalogDocument
     questionSet?: QuestionSetDocument
     assignedImage?: ImageDocument
+    membershipCatalog?: boolean
   }
 }
 

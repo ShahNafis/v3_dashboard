@@ -4,11 +4,18 @@ export async function isValidArchive(id: string) {
   try {
     const archive = await ArchiveModel.findOne({ _id: id })
     if (archive) {
-      return true
+      return {
+        success: true,
+        data: archive,
+      }
     } else {
-      return false
+      return {
+        success: false,
+      }
     }
   } catch {
-    return false
+    return {
+      success: false,
+    }
   }
 }
