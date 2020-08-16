@@ -1,5 +1,5 @@
 import httpMocks from 'node-mocks-http'
-import { testGet } from '../server/controllers/test'
+import { testExpVal } from '../server/controllers/test'
 import { getUser } from '../server/controllers/user'
 import { connectDB, closeConnection } from '../server/db'
 // eslint-disable-next-line
@@ -25,9 +25,9 @@ test('Test Middleware #1', async () => {
   })
   const res = httpMocks.createResponse()
 
-  await testGet(req, res)
+  await testExpVal(req, res)
   const data = await res._getJSONData()
-  expect(data.data.cards.length).toBe(7)
+  expect(data.success).toBe(true)
 })
 
 test('Test Middleware #2', async () => {
