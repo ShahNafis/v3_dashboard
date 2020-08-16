@@ -73,19 +73,6 @@ declare namespace cilDashboard {
     data?: UserDocument
   }
 
-  // export interface AdvResultsRes extends Response {
-  //   advancedResults?: {
-  //     success: boolean
-  //     count: number
-  //     message: string
-  //     pagination: {
-  //       page: number
-  //       limit: number
-  //     }
-  //     data: AllDocuments[]
-  //   }
-  // }
-
   export interface ResPartOfCatalog extends AdvResultsRes {
     partOfCatalog: boolean
   }
@@ -107,6 +94,11 @@ declare namespace cilDashboard {
     questionSet?: QuestionSetDocument
     assignedImage?: ImageDocument
     membershipCatalog?: boolean
+  }
+
+  export interface TestResponse extends Response<any> {
+    archive?: ArchiveDocument
+    catalog?: CatalogDocument
   }
 }
 
