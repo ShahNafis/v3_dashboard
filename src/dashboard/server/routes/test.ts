@@ -1,9 +1,20 @@
 import express from 'express'
-import { testGet, testError, testAssignImage } from '../controllers/test'
+import { testExpVal } from '../controllers/test'
+import { check } from 'express-validator'
+import { bodyValidation } from '../middlewares/bodyValidation'
 const router = express.Router()
 
-router.route('/').get(testGet)
-router.route('/error').get(testError)
-router.route('/testAssignImage').get(testAssignImage)
+router
+  .route('/testBodyValidation')
+  .post(
+    [
+      check('archiveId').isString(),
+      check('userId').isString(),
+      check('count').isNumeric(),
+      check('a.b').isNumeric(),
+    ],
+    bodyValidation,
+    testExpVal
+  )
 
 export default router
