@@ -33,7 +33,7 @@ const hasAssignedImages = asyncHandler(async (req: Request, res: Response) => {
     message: `User ${
       assignedImages.length > 0 ? 'has assigned' : 'no assigned'
     } images`,
-    data: assignedImages.length > 0,
+    data: assignedImages.length > 0 ? assignedImages : [],
   })
 })
 

@@ -8,7 +8,7 @@ export interface UserDocument extends Document {
   catalogs: [ObjectID]
   dateAdded: Date
   imagesTagged: Record<string, any>
-  roles: [string]
+  roles: string[]
   userId: string
   _id: string
 }

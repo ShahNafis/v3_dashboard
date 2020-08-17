@@ -2,10 +2,14 @@ import { ArchiveModel } from '../../models/Archive'
 import { CatalogModel } from '../../models/Catalog'
 // import { ImageModel } from '../../models/Image'
 import { ImageDocument } from '../../../interfaces/models'
+import { ObjectID } from 'mongodb'
 
-export async function imageInCatalog(image: ImageDocument) {
+export async function imageInCatalog(
+  image: ImageDocument,
+  userCatalogs: ObjectID[]
+) {
   const imageId = image._id
-  console.log('imageInCatalog')
+
   if (!image) {
     return {
       success: false,
@@ -30,6 +34,6 @@ export async function imageInCatalog(image: ImageDocument) {
   }
 
   return {
-    success: true,
+    success: userCatalogs.includes(catalog._id.toString()),
   }
 }

@@ -9,7 +9,7 @@ const catalogExists = asyncHandler(
     const { catalogId } = req.body
 
     const catalog = await CatalogModel.findById(catalogId)
-
+    console.log('catalog', !catalog)
     if (!catalog) {
       return res.status(200).json({
         success: false,

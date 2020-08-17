@@ -12,8 +12,8 @@ const archiveExists = asyncHandler(
     const validArchive = await isValidArchive(archiveId)
     if (!validArchive.success) {
       return res.status(200).json({
-        success: true,
-        message: `Invalid archive ID ${archiveId}`,
+        success: false,
+        message: validArchive.message, //`Invalid archive ID ${archiveId}`,
       })
     }
 

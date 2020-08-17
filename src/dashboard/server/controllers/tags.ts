@@ -23,7 +23,10 @@ const tagImage = asyncHandler(
 
     //check if the catalog of the archive of the image belongs to user
     const image = await ImageModel.findById(imageId)
-    const imageInCatalogRes = await imageInCatalog(image)
+    const imageInCatalogRes = await imageInCatalog(
+      image,
+      req.user.data.catalogs
+    )
 
     if (!imageInCatalogRes.success) {
       return res.status(200).json({
@@ -45,9 +48,14 @@ const tagImage = asyncHandler(
       final: finalizable,
     })
 
+    res.newTag = newTag
+
     //If finalized, update imageDoc to have this new tag
     if (finalizable) {
-      await ImageModel.updateOne({ _id: imageId }, { finalTag: newTag._id })
+      await ImageModel.updateOne(
+        { _id: imageId },
+        { finalTag: newTag._id, taggable: true }
+      )
       console.log('Updated final tag for image', imageId)
     }
 

@@ -8,6 +8,7 @@ import {
   ArchiveDocument,
   QuestionSetDocument,
   ImageDocument,
+  TagDocument,
 } from './models'
 import { ObjectID } from 'mongodb'
 
@@ -94,12 +95,13 @@ declare namespace cilDashboard {
     questionSet?: QuestionSetDocument
     assignedImage?: ImageDocument
     membershipCatalog?: boolean
+    newTag?: TagDocument
   }
 
-  export interface TestResponse extends Response<any> {
-    archive?: ArchiveDocument
-    catalog?: CatalogDocument
-  }
+  // export interface TestResponse extends MockResponse<any> {
+  //   archive?: ArchiveDocument
+  //   catalog?: CatalogDocument
+  // }
 }
 
 declare global {
@@ -111,7 +113,7 @@ declare global {
       provider: string
       picture: string
       nickname: string
-      _json: {
+      _json?: {
         sub: string
         given_name: string
         family_name: string
@@ -126,6 +128,32 @@ declare global {
       /* eslint-disable @typescript-eslint/no-unused-vars */
       data?: UserDocument
     }
+  }
+}
+
+declare module 'node-mocks-http' {
+  export type MockResponse<T extends Response> = T & {
+    _isEndCalled: () => boolean
+    _getHeaders: () => Headers
+    _getData: () => any
+    _getJSONData: () => cilDashboard.ResponseType
+    _getBuffer: () => Buffer
+    _getLocals: () => any
+    _getStatusCode: () => number
+    _getStatusMessage: () => string
+    _isJSON: () => boolean
+    _isUTF8: () => boolean
+    _isDataLengthValid: () => boolean
+    _getRedirectUrl: () => string
+    _getRenderData: () => any
+    _getRenderView: () => string
+
+    cookies: { [name: string]: ResponseCookie }
+
+    archive?: ArchiveDocument
+    catalog?: CatalogDocument
+    newTag?: TagDocument
+    assignedImage?: ImageDocument
   }
 }
 

@@ -46,7 +46,7 @@ const assignImage = asyncHandler(
       user: user,
       archiveId: archiveId,
     })
-
+    console.log('selectedImage', selectedImage.data.name)
     if (selectedImage.success) {
       res.assignedImage = selectedImage.data
       next()
@@ -89,6 +89,7 @@ const unassignImage = asyncHandler(
   }
 )
 
+//not unit tested
 const insertTaggedCount = asyncHandler(
   async (req: Request, res: ExtenedResponse) => {
     const t1 = performance.now()

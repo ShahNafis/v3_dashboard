@@ -23,13 +23,14 @@ async function selectImageForAssignment({
   const archive = await ArchiveModel.findById(archiveId)
   const catalog = await CatalogModel.findById(archive.catalog)
   const imageServeOrder = await ImageServeOrderModel.findById(
-    catalog.imageServeOrder
+    catalog.imageServeOrder.toString()
   )
 
   //Get all images tagged by the user
   const imagesTaggedByUser = await TagModel.find({
     userId: user.data._id,
   })
+
   const taggedImageIdOnly = imagesTaggedByUser.map((imageTag) =>
     imageTag.imageId.toString()
   )

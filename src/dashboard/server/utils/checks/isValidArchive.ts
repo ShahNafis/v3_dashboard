@@ -11,11 +11,13 @@ export async function isValidArchive(id: string) {
     } else {
       return {
         success: false,
+        message: `No archive exists with id ${id}`,
       }
     }
-  } catch {
+  } catch (error) {
     return {
       success: false,
+      message: error.message,
     }
   }
 }
