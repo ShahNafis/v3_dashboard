@@ -4,6 +4,7 @@ import { ExtenedResponse } from '../../interfaces'
 import { CatalogModel } from '../models/Catalog'
 import { QuestionSetModel } from '../models/QuestionSet'
 
+//✔️
 const catalogExists = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const { catalogId } = req.body

@@ -78,7 +78,7 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
       user,
       success: true,
       message: '',
-      selectionData: selectionData.data ?? {},
+      selectionData: selectionData.data.advancedResults.data ?? {},
     },
   }
 }

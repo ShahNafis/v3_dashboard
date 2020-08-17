@@ -44,7 +44,7 @@ test('Test archiveExists Controller: No Archive with given Id', async () => {
   expect(res.archive).toBe(undefined)
   expect(resData.success).toBe(false)
   expect(resData.message).toBe(
-    'No archive exists with id 5f336c1de9aea42d24bf0f21'
+    'No archive exists with query = {"_id":"5f336c1de9aea42d24bf0f21"}'
   )
 })
 

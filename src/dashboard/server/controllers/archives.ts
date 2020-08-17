@@ -4,20 +4,22 @@ import { ExtenedResponse } from '../../interfaces'
 import { Request, NextFunction } from 'express'
 import { isValidArchive } from '../utils/checks/isValidArchive'
 
+//✔️
 const archiveExists = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const { archiveId } = req.body
 
     //check archive is valid ID
-    const validArchive = await isValidArchive(archiveId)
+    const validArchive = await isValidArchive({ _id: archiveId })
+    console.log('validArchive', validArchive.message, archiveId)
     if (!validArchive.success) {
       return res.status(200).json({
         success: false,
-        message: validArchive.message, //`Invalid archive ID ${archiveId}`,
+        message: validArchive.message,
       })
     }
 
-    res.archive = validArchive.data
+    res.archive = validArchive.data[0]
     next()
   }
 )

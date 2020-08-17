@@ -6,6 +6,7 @@ import { ImageModel } from '../models/Image'
 
 const router = express.Router()
 
+//✔️
 router.route('/').post(
   advancedResults(ImageModel),
   genericReturn({

@@ -10,7 +10,7 @@ interface Params {
 export async function getStartTaggingTableData({ cookie }: Params) {
   const data = await apiRequest({
     method: 'POST',
-    route: routes.postReq.getResumeTableData,
+    route: routes.postReq.getUserCatalogs,
     headers: {
       credentials: 'include',
       cookie: cookie ?? null,

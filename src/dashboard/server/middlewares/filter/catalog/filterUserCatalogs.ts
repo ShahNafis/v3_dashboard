@@ -1,18 +1,18 @@
 import { CatalogDocument, AllDocuments } from '../../../../interfaces/models'
 import { ExtenedResponse } from '../../../../interfaces'
-import { Request } from 'express'
+import { Request, NextFunction } from 'express'
 import { ObjectID } from 'mongodb'
 import { asyncHandler } from '../../async'
 
 const filterUserCatalogsMiddleware = asyncHandler(
-  async (req: Request, res: ExtenedResponse) => {
+  async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const userCatalogs: [ObjectID] = req?.user?.data?.catalogs
 
     res.advancedResults.data = filterToUserCatalog(
       res.advancedResults.data,
       userCatalogs
     )
-    res.status(200).json(res.advancedResults)
+    next()
   }
 )
 

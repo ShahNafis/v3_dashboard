@@ -1,5 +1,9 @@
 import { asyncHandler } from '../middlewares/async' //to avoid putting try catch everywhere
-import { ExtenedResponse } from '../../interfaces'
+import {
+  ExtenedResponse,
+  AssignedImageTagAggregate,
+  AssignedImageTagAggregateArchive,
+} from '../../interfaces'
 import { Request, NextFunction } from 'express'
 import { AssignedImageModel } from '../models/AssignedImages'
 import { selectImageForAssignment } from '../utils/selectImageForAssignment'
@@ -8,7 +12,9 @@ import { TagModel } from '../models/Tag'
 import { CatalogModel } from '../models/Catalog'
 import { ArchiveModel } from '../models/Archive'
 import { performance } from 'perf_hooks'
+import { tagModelAggregate } from '../utils/tagModelAggregate'
 
+//✔️
 const getCurrentlyAssignedImage = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const { archiveId } = req.body
@@ -36,6 +42,7 @@ const getCurrentlyAssignedImage = asyncHandler(
   }
 )
 
+//✔️
 const assignImage = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     //console.log('Assigning New Image')
@@ -59,6 +66,7 @@ const assignImage = asyncHandler(
   }
 )
 
+//✔️
 const unassignImage = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     console.log('unassigning an Image')
@@ -89,11 +97,11 @@ const unassignImage = asyncHandler(
   }
 )
 
-//not unit tested
 const insertTaggedCount = asyncHandler(
-  async (req: Request, res: ExtenedResponse) => {
+  async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const t1 = performance.now()
 
+    //aggregate
     const AssignedGroupByCatalog = await AssignedImageModel.aggregate([
       {
         $match: {
@@ -109,41 +117,36 @@ const insertTaggedCount = asyncHandler(
       },
     ])
 
-    const testObj = []
+    const dataObj: AssignedImageTagAggregate[] = []
 
-    for (const catalog of AssignedGroupByCatalog) {
-      const testRes: any = {}
-      const doc = await CatalogModel.findById(catalog._id)
+    //For each catalog tagged by the user
+    for (const assignedCatalog of AssignedGroupByCatalog) {
+      const catalog: AssignedImageTagAggregate = {}
+      const doc = await CatalogModel.findById(assignedCatalog._id)
 
-      testRes.catalogInfo = doc.catalogInfo
-      testRes.totalImages = doc.totalImages
-      ;(testRes.name = doc.name), (testRes.catalogId = doc._id)
+      catalog.catalogInfo = doc.catalogInfo
+      catalog.totalImages = doc.totalImages
+      catalog.name = doc.name
+      catalog.catalogId = doc._id
 
-      testRes.tagged =
+      //get how many images tagged of this catalog
+      catalog.tagged =
         (
-          await TagModel.aggregate([
-            {
-              $match: {
-                userId: req.user.data._id,
-                catalogId: doc._id,
-              },
-            },
-            {
-              $group: {
-                _id: '$catalogId',
-                numTagsInCatalog: { $sum: 1 },
-                doc: { $push: '$$ROOT' },
-              },
-            },
-          ])
+          await tagModelAggregate({
+            userId: req.user.data._id,
+            catalogId: doc._id,
+          })
         )[0]?.numTagsInCatalog ?? 0
-      testRes.archives = []
 
-      for (const archive of catalog.doc) {
-        const archiveData: any = {
+      catalog.archives = []
+
+      //for each archive,find how many images tagged per archive
+      for (const archive of assignedCatalog.doc) {
+        const archiveData: AssignedImageTagAggregateArchive = {
           _id: archive.archiveId,
         }
 
+        //count tagged
         archiveData.tagged = (
           await TagModel.find({
             userId: req.user.data._id,
@@ -151,24 +154,21 @@ const insertTaggedCount = asyncHandler(
           })
         ).length
 
+        //insert archive info
         const archiveDoc = await ArchiveModel.findById(archive.archiveId)
         archiveData.name = archiveDoc?.name
         archiveData.totalImages = archiveDoc?.totalImages
 
-        testRes.archives.push(archiveData)
+        catalog.archives.push(archiveData)
       }
 
-      //console.log(testRes)
-      testObj.push(testRes)
+      dataObj.push(catalog)
     }
 
-    res.status(200).json({
-      success: true,
-      message: 'Got table data',
-      data: testObj,
-    })
+    res.taggedCount = dataObj ?? []
     const t2 = performance.now()
     console.log(`Server: Time ${t2 - t1} ms`)
+    next()
   }
 )
 

@@ -17,6 +17,7 @@ import { bodyValidation } from '../middlewares/bodyValidation'
 
 const router = express.Router()
 
+//✔️
 router.route('/').post(
   advancedResults(CatalogModel, ['archives']),
   genericReturn({
@@ -38,6 +39,7 @@ router.route('/userCatalogs').post(
   })
 )
 
+//✔️
 router.route('/catalogMembership').post(
   ensureAuthenticated,
   insertUser,
@@ -51,6 +53,7 @@ router.route('/catalogMembership').post(
   })
 )
 
+//✔️
 router.route('/exists').post(
   ...bodyValidation([check('archiveId').isString()]),
   catalogExists,
@@ -61,6 +64,7 @@ router.route('/exists').post(
   })
 )
 
+//✔️
 router.route('/questionSet').post(
   ...bodyValidation([check('catalogId').isString()]),
   catalogExists,

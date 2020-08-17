@@ -13,6 +13,7 @@ import { bodyValidation } from '../middlewares/bodyValidation'
 
 const router = express.Router()
 
+//✔️
 router.route('/').post(
   advancedResults(TagModel),
   genericReturn({
@@ -22,6 +23,7 @@ router.route('/').post(
   })
 )
 
+//✔️
 router.route('/tagImage').post(
   ensureAuthenticated,
   insertUser,

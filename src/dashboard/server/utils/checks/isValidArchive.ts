@@ -1,9 +1,23 @@
 import { ArchiveModel } from '../../models/Archive'
 
-export async function isValidArchive(id: string) {
+interface Param {
+  _id?: string
+  totalImages?: number
+  name?: string
+  catalog?: string
+  taggable?: boolean
+  dateAddded?: number | Date
+  path?: {
+    compressed: string
+    original: string
+  }
+}
+
+//✔️
+export async function isValidArchive(query: Param) {
   try {
-    const archive = await ArchiveModel.findOne({ _id: id })
-    if (archive) {
+    const archive = await ArchiveModel.find(query)
+    if (archive.length > 0) {
       return {
         success: true,
         data: archive,
@@ -11,7 +25,7 @@ export async function isValidArchive(id: string) {
     } else {
       return {
         success: false,
-        message: `No archive exists with id ${id}`,
+        message: `No archive exists with query = ${JSON.stringify(query)}`,
       }
     }
   } catch (error) {

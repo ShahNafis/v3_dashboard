@@ -96,12 +96,23 @@ declare namespace cilDashboard {
     assignedImage?: ImageDocument
     membershipCatalog?: boolean
     newTag?: TagDocument
+    taggedCount?: assignedImageTagAggregate[]
   }
 
-  // export interface TestResponse extends MockResponse<any> {
-  //   archive?: ArchiveDocument
-  //   catalog?: CatalogDocument
-  // }
+  export interface AssignedImageTagAggregateArchive {
+    tagged?: number
+    name?: string
+    totalImages?: number
+    _id?: string
+  }
+  export interface AssignedImageTagAggregate {
+    catalogInfo?: cilDashboard.CatalogInfo
+    totalImages?: number
+    name?: string
+    catalogId?: any
+    archives?: assignedImageTagAggregateArchive[]
+    tagged?: any[]
+  }
 }
 
 declare global {

@@ -8,6 +8,7 @@ import { bodyValidation } from '../middlewares/bodyValidation'
 
 const router = express.Router()
 
+//✔️
 router.route('/').post(
   advancedResults(ArchiveModel),
   genericReturn({
@@ -17,6 +18,7 @@ router.route('/').post(
   })
 )
 
+//✔️
 router.route('/exists').post(
   ...bodyValidation([check('archiveId').isString()]),
   archiveExists,

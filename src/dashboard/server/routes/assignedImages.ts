@@ -9,13 +9,14 @@ import { AssignedImageModel } from '../models/AssignedImages'
 import { ensureAuthenticated } from '../middlewares/ensureAuth'
 import { insertUser } from '../middlewares/insertUser'
 import { genericReturn } from '../middlewares/genericReturn'
-import { isValidArchiveMiddleware } from '../middlewares/isValidArchive'
 import { membershipCatalogMiddleware } from '../middlewares/membership/catalog'
 import { check } from 'express-validator'
 import { bodyValidation } from '../middlewares/bodyValidation'
+import { archiveExists } from '../controllers/archives'
 
 const router = express.Router()
 
+//✔️
 router.route('/').post(
   advancedResults(AssignedImageModel, ['archive', 'catalog']),
   genericReturn({
@@ -24,11 +25,12 @@ router.route('/').post(
     success: true,
   })
 )
+
 router.route('/getImage').post(
   ensureAuthenticated,
   insertUser,
   ...bodyValidation([check('archiveId').isString()]),
-  isValidArchiveMiddleware,
+  archiveExists,
   membershipCatalogMiddleware,
   getCurrentlyAssignedImage,
   assignImage,
@@ -38,8 +40,17 @@ router.route('/getImage').post(
     success: true,
   })
 )
-router
-  .route('/getAllCurrent')
-  .post(ensureAuthenticated, insertUser, insertTaggedCount)
+
+//✔️
+router.route('/getAllCurrent').post(
+  ensureAuthenticated,
+  insertUser,
+  insertTaggedCount,
+  genericReturn({
+    keys: ['taggedCount'],
+    message: 'Got tagged table data',
+    success: true,
+  })
+)
 
 export default router

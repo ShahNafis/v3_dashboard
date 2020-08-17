@@ -5,6 +5,7 @@ import { TagModel } from '../models/Tag'
 import { ImageModel } from '../models/Image'
 import { imageInCatalog } from '../utils/checks/imageInCatalog'
 
+//✔️
 const tagImage = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const { userId, imageId, tags } = req.body
