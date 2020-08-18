@@ -26,6 +26,7 @@ router.route('/').post(
   })
 )
 
+//✔️
 router.route('/getImage').post(
   ensureAuthenticated,
   insertUser,

@@ -1,5 +1,6 @@
 import _ from 'lodash'
 
+//✔️
 export async function compareTags(tag1, tag2, ignoreFields) {
   //copy tags
   const t1 = _.cloneDeep(tag1)

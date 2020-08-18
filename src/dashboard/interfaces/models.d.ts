@@ -22,7 +22,7 @@ export interface CatalogDocument extends Document {
   }
   catalogInfo?: CatalogInfo
   taggable: boolean
-  questionSet: ObjectID
+  questionSet: ObjectID | string
   imageServeOrder: ObjectID
   totalImages?: number
 

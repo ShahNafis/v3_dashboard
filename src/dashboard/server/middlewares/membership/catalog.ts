@@ -6,6 +6,7 @@ import { ArchiveModel } from '../../models/Archive'
 import { ImageModel } from '../../models/Image'
 import { ExtenedResponse } from '../../../interfaces'
 
+//✔️
 //checks if a given catalogId exists in a given user catalog
 async function membershipCatalog(userCatalog: [ObjectId], catalogId: string) {
   let result = false
@@ -19,6 +20,7 @@ async function membershipCatalog(userCatalog: [ObjectId], catalogId: string) {
   return result
 }
 
+//✔️
 const membershipCatalogMiddleware = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const { user } = req

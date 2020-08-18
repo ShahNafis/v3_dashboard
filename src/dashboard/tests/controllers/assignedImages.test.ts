@@ -16,6 +16,7 @@ import {
   getCurrentlyAssignedImage,
   assignImage,
   unassignImage,
+  insertTaggedCount,
 } from '../../server/controllers/assignedImages'
 import { AssignedImageModel } from '../../server/models/AssignedImages'
 beforeAll(async () => {
@@ -152,4 +153,34 @@ test('Test assignImage and unassignImage', async () => {
   })
 
   expect(nextFncCalled).toBe(true)
+})
+
+test('Test getCurrentlyAssignedImage: Already assigned image', async () => {
+  //create mocks
+  const req = httpMocks.createRequest()
+  const userData = await UserModel.findById('5f2f65cd363ae5001670164b')
+  req.user = {
+    displayName: 'Shah Nafis Rafique',
+    id: 'google-oauth2|116302372331153157667',
+    nickname: '',
+    picture: '',
+    provider: '',
+    user_id: '',
+    data: userData,
+  }
+  const res = httpMocks.createResponse()
+
+  //execute
+  await insertTaggedCount(req, res, () => {
+    return
+  })
+
+  //assert
+  expect(res.taggedCount.length).toBe(1)
+  expect(res.taggedCount[0].totalImages).toBe(27)
+  expect(res.taggedCount[0].name).toBe('Tanks')
+  expect(res.taggedCount[0].catalogId.toString()).toBe(
+    '5f336c1de9aea42d24bf0f21'
+  )
+  expect(res.taggedCount[0].archives.length).toBe(1)
 })

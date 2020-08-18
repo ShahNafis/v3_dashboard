@@ -4,18 +4,21 @@ import { Request, NextFunction } from 'express'
 import { ObjectID } from 'mongodb'
 import { asyncHandler } from '../../async'
 
+//✔️
 const filterUserCatalogsMiddleware = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const userCatalogs: [ObjectID] = req?.user?.data?.catalogs
 
     res.advancedResults.data = filterToUserCatalog(
-      res.advancedResults.data,
+      res?.advancedResults?.data ?? [],
       userCatalogs
     )
+
     next()
   }
 )
 
+//✔️
 function filterToUserCatalog(
   catalogs: AllDocuments[],
   userCatalogs: [ObjectID]

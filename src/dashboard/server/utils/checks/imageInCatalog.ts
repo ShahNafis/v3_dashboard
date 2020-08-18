@@ -4,9 +4,10 @@ import { CatalogModel } from '../../models/Catalog'
 import { ImageDocument } from '../../../interfaces/models'
 import { ObjectID } from 'mongodb'
 
+//✔️
 export async function imageInCatalog(
   image: ImageDocument,
-  userCatalogs: ObjectID[]
+  userCatalogs: ObjectID[] | string[]
 ) {
   const imageId = image._id
 
@@ -33,7 +34,15 @@ export async function imageInCatalog(
     }
   }
 
-  return {
-    success: userCatalogs.includes(catalog._id.toString()),
+  if (userCatalogs.includes(catalog._id.toString())) {
+    return {
+      success: true,
+      message: `Image ${image._id} exists in a catalog user can tag`,
+    }
+  } else {
+    return {
+      success: false,
+      message: `Image ${image._id} does not exists in a catalog user can tag`,
+    }
   }
 }

@@ -96,7 +96,7 @@ declare namespace cilDashboard {
     assignedImage?: ImageDocument
     membershipCatalog?: boolean
     newTag?: TagDocument
-    taggedCount?: assignedImageTagAggregate[]
+    taggedCount?: AssignedImageTagAggregate[]
   }
 
   export interface AssignedImageTagAggregateArchive {
@@ -110,7 +110,7 @@ declare namespace cilDashboard {
     totalImages?: number
     name?: string
     catalogId?: any
-    archives?: assignedImageTagAggregateArchive[]
+    archives?: AssignedImageTagAggregateArchive[]
     tagged?: any[]
   }
 }
@@ -161,10 +161,23 @@ declare module 'node-mocks-http' {
 
     cookies: { [name: string]: ResponseCookie }
 
-    archive?: ArchiveDocument
-    catalog?: CatalogDocument
-    newTag?: TagDocument
-    assignedImage?: ImageDocument
+    archive?: cilDashboard.ArchiveDocument
+    catalog?: cilDashboard.CatalogDocument
+    newTag?: cilDashboard.TagDocument
+    assignedImage?: cilDashboard.ImageDocument
+    questionSet?: cilDashboard.QuestionSetDocument
+    membershipCatalog?: boolean
+    taggedCount?: cilDashboard.AssignedImageTagAggregate[]
+    advancedResults?: {
+      success: boolean
+      count: number
+      message: string
+      pagination: {
+        page: number
+        limit: number
+      }
+      data: AllDocuments[]
+    }
   }
 }
 

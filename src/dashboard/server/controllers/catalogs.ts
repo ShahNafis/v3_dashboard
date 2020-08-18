@@ -10,7 +10,7 @@ const catalogExists = asyncHandler(
     const { catalogId } = req.body
 
     const catalog = await CatalogModel.findById(catalogId)
-    console.log('catalog', !catalog)
+
     if (!catalog) {
       return res.status(200).json({
         success: false,
@@ -23,9 +23,13 @@ const catalogExists = asyncHandler(
   }
 )
 
+//✔️
 const getCatalogQuestionSet = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
-    const { questionSet: questionSetId, _id } = res.catalog
+    const {
+      questionSet: questionSetId,
+      _id,
+    }: { questionSet: any; _id: any } = res.catalog
 
     const questionSet = await QuestionSetModel.findById(questionSetId)
 
