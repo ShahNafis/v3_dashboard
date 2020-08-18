@@ -1,4 +1,5 @@
 import { TagModel } from '../models/Tag'
+import { log } from './logger'
 
 interface Params {
   userId?: string
@@ -8,6 +9,11 @@ interface Params {
 }
 
 async function tagModelAggregate(query: Params) {
+  log({
+    message: `Tag model aggregating for ${JSON.stringify(query)}`,
+    type: 'info',
+  })
+
   const data = await TagModel.aggregate([
     {
       $match: query,

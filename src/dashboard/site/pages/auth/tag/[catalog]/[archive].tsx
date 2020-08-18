@@ -16,7 +16,7 @@ import { generateUnAuthObj } from '../../../../components/Utils/Auth/unAuthError
 import { getUserAssignedImage } from '../../../../components/API/post/getUserAssignedImage'
 import { catalogQuestionSet } from '../../../../components/API/post/getCatalogQuestionSet'
 
-import { performance } from 'perf_hooks'
+//import { performance } from 'perf_hooks'
 
 import { ImageDocument } from '../../../../../interfaces/models'
 
@@ -53,7 +53,7 @@ export default function TagImage(props) {
 }
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
-  const t1 = performance.now()
+  //const t1 = performance.now()
   //Add user data from db
   const user: any = getSession(context.req)
   user.data = await getUserDB({
@@ -132,8 +132,8 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     }
   }
 
-  const t2 = performance.now()
-  console.log(`Time ${t2 - t1} ms`)
+  // const t2 = performance.now()
+  // console.log(`Time ${t2 - t1} ms`)
   return {
     props: {
       success: true,

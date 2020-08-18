@@ -13,9 +13,9 @@ export const errorHandler = (
 ) => {
   //Copy error object
   let error = { ...err }
-  console.log()
+  console.log(`------ ERROR ------`)
   console.log(err)
-  console.log()
+  console.log(`------ END ERROR ------`)
   // Log to console
   log({ message: err?.stack, type: 'error' })
 

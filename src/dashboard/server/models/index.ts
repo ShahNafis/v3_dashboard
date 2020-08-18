@@ -6,7 +6,7 @@ import { ImageServeOrderModel } from './ImageServeOrder'
 import { TagModel } from './Tag'
 import { UserModel } from './User'
 import { QuestionSetModel } from './QuestionSet'
-
+import { log } from '../utils/logger'
 export function RegisterModels() {
   const models = [
     ArchiveModel,
@@ -18,5 +18,11 @@ export function RegisterModels() {
     UserModel,
     QuestionSetModel,
   ]
-  models.map((model) => console.log(`Model ${model.modelName} registered`))
+  const names = []
+  models.map((model) => names.push(model.modelName))
+  //console.log(`Model ${model.modelName} registered`)
+  log({
+    message: `Models: ${names.toString()} registered`,
+    type: 'ok',
+  })
 }

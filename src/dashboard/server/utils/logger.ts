@@ -2,7 +2,7 @@ import colors from 'colors'
 colors
 
 interface LogType {
-  message?: string
+  message?: string | any
   type?: '' | 'info' | 'ok' | 'error'
 }
 
@@ -10,7 +10,11 @@ function log({ message = '', type = '' }: LogType) {
   if (!message) {
     message = ''
   }
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NEXT_PUBLIC_LOGGING === 'false') {
+    return
+  }
+
+  if (process.env.NODE_ENV === 'development') {
     switch (type) {
       case 'info':
         console.log(message.cyan)

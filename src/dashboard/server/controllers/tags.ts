@@ -4,11 +4,19 @@ import { Request, NextFunction } from 'express'
 import { TagModel } from '../models/Tag'
 import { ImageModel } from '../models/Image'
 import { imageInCatalog } from '../utils/checks/imageInCatalog'
-
+import { log } from '../utils/logger'
 //✔️
 const tagImage = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const { userId, imageId, tags } = req.body
+
+    log({
+      message: `Tagging image ${imageId} by user ${userId}`,
+      type: 'info',
+    })
+    log({
+      message: tags,
+    })
 
     //check if user has already tagged this image
     const previousTag = await TagModel.find({
@@ -53,11 +61,14 @@ const tagImage = asyncHandler(
 
     //If finalized, update imageDoc to have this new tag
     if (finalizable) {
+      log({
+        message: `Image ${imageId} is finalizable`,
+        type: 'info',
+      })
       await ImageModel.updateOne(
         { _id: imageId },
         { finalTag: newTag._id, taggable: true }
       )
-      console.log('Updated final tag for image', imageId)
     }
 
     next()

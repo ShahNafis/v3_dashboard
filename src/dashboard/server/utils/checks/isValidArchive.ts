@@ -1,4 +1,5 @@
 import { ArchiveModel } from '../../models/Archive'
+import { log } from '../logger'
 
 interface Param {
   _id?: string
@@ -13,10 +14,19 @@ interface Param {
   }
 }
 
-//✔️
 export async function isValidArchive(query: Param) {
+  log({
+    message: `Checking if valid archive: ${JSON.stringify(query)}`,
+    type: 'info',
+  })
   try {
     const archive = await ArchiveModel.find(query)
+
+    log({
+      message: `Found valid archives: ${archive.length}`,
+      type: 'ok',
+    })
+
     if (archive.length > 0) {
       return {
         success: true,

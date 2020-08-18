@@ -31,7 +31,6 @@ import { RegisterRoutes } from './routes'
 import { initAuthentication } from './auth'
 
 const dev = process.env.NODE_ENV !== 'production'
-console.log(`${process.env.NODE_ENV ?? 'dev'} mode`)
 
 const app = next({
   dev,
@@ -74,12 +73,13 @@ const port = ((process.env.NEXT_PUBLIC_PORT as unknown) as number) ?? 3000
     //start the server
     const serverObj = server.listen(port, (err?: any) => {
       if (err) throw err
-      console.log(
-        `> Ready on ${process.env.NEXT_PUBLIC_PROTOCOL}://${
+      log({
+        message: `> Ready on ${process.env.NEXT_PUBLIC_PROTOCOL}://${
           process.env.NEXT_PUBLIC_DOMAIN_NAME
-        } - env ${process.env.NODE_ENV ?? 'dev'} mode
-        `
-      )
+        } - env: ${process.env.NODE_ENV ?? 'dev'} mode
+        `,
+        type: 'info',
+      })
     })
 
     //Handle unhandled promise rejections

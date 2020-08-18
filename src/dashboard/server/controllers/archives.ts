@@ -3,6 +3,7 @@ import { asyncHandler } from '../middlewares/async' //to avoid putting try catch
 import { ExtenedResponse } from '../../interfaces'
 import { Request, NextFunction } from 'express'
 import { isValidArchive } from '../utils/checks/isValidArchive'
+import { log } from '../utils/logger'
 
 //✔️
 const archiveExists = asyncHandler(
@@ -11,7 +12,11 @@ const archiveExists = asyncHandler(
 
     //check archive is valid ID
     const validArchive = await isValidArchive({ _id: archiveId })
-    console.log('validArchive', validArchive.message, archiveId)
+    log({
+      message: `Validating archive ${archiveId}`,
+      type: 'info',
+    })
+
     if (!validArchive.success) {
       return res.status(200).json({
         success: false,

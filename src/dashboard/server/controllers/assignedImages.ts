@@ -11,14 +11,20 @@ import { ImageModel } from '../models/Image'
 import { TagModel } from '../models/Tag'
 import { CatalogModel } from '../models/Catalog'
 import { ArchiveModel } from '../models/Archive'
-import { performance } from 'perf_hooks'
+// import { performance } from 'perf_hooks'
 import { tagModelAggregate } from '../utils/tagModelAggregate'
+import { log } from '../utils/logger'
 
 //✔️
 const getCurrentlyAssignedImage = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
     const { archiveId } = req.body
     const { user } = req
+
+    log({
+      message: `Getting current assigned image for user ${user?.data?._id} of archive ${archiveId}`,
+      type: 'info',
+    })
 
     //Check if there is already an assigned image
     const currentlyAssignedImage = await AssignedImageModel.findOne({
@@ -29,6 +35,11 @@ const getCurrentlyAssignedImage = asyncHandler(
     //If there is a image assigned
     if (currentlyAssignedImage) {
       const image = await ImageModel.findById(currentlyAssignedImage.imageId)
+      log({
+        message: `Currently assigned image is ${image._id}`,
+        type: 'info',
+      })
+
       return res.status(200).json({
         success: true,
         message: 'Got Image',
@@ -49,11 +60,21 @@ const assignImage = asyncHandler(
     const { archiveId } = req.body
     const { user } = req
 
+    log({
+      message: `Assigning image for user ${user?.data?._id} for archive ${archiveId}`,
+      type: 'info',
+    })
+
     const selectedImage = await selectImageForAssignment({
       user: user,
       archiveId: archiveId,
     })
-    console.log('selectedImage', selectedImage.data.name)
+
+    log({
+      message: `Selected image ${selectedImage.success}`,
+      type: 'info',
+    })
+
     if (selectedImage.success) {
       res.assignedImage = selectedImage.data
       next()
@@ -73,12 +94,10 @@ const unassignImage = asyncHandler(
     const { imageId } = req.body
     const { user } = req
 
-    console.log(
-      'remove image with image = ',
-      imageId,
-      ' user = ',
-      user.data._id
-    )
+    log({
+      message: `Unassigning image ${imageId} for user ${user?.data?._id}`,
+      type: 'info',
+    })
 
     const currentAssignedImage = await AssignedImageModel.findOne({
       imageId: imageId,
@@ -86,6 +105,10 @@ const unassignImage = asyncHandler(
     })
 
     if (currentAssignedImage) {
+      log({
+        message: `Removing image ${currentAssignedImage._id}`,
+        type: 'info',
+      })
       await currentAssignedImage.remove()
       return next()
     }
@@ -100,7 +123,7 @@ const unassignImage = asyncHandler(
 //✔️
 const insertTaggedCount = asyncHandler(
   async (req: Request, res: ExtenedResponse, next: NextFunction) => {
-    const t1 = performance.now()
+    //const t1 = performance.now()
 
     //aggregate
     const AssignedGroupByCatalog = await AssignedImageModel.aggregate([
@@ -117,6 +140,13 @@ const insertTaggedCount = asyncHandler(
         },
       },
     ])
+    log({
+      message: `Aggregate Assigned Image mode`,
+      type: 'info',
+    })
+    log({
+      message: AssignedGroupByCatalog,
+    })
 
     const dataObj: AssignedImageTagAggregate[] = []
 
@@ -167,8 +197,8 @@ const insertTaggedCount = asyncHandler(
     }
 
     res.taggedCount = dataObj ?? []
-    const t2 = performance.now()
-    console.log(`Server: Time ${t2 - t1} ms`)
+    // const t2 = performance.now()
+    // console.log(`Server: Time ${t2 - t1} ms`)
     next()
   }
 )
