@@ -28,6 +28,7 @@ jobs:
           npm ci
           fi
           npm run build
+
   install:
     strategy:
       matrix:
@@ -51,12 +52,16 @@ jobs:
       - name: Test Hello Word
         run: |
           echo "HELLO WORLD2"
+          
+  create-env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test File Writing
+        run: |
           (
             echo Here is my first line
             echo Here is my second line
             echo Here is my third line
           )>"./myNewTextFile.txt"
           cat .//myNewTextFile.txt
-  create-env:
-
      
