@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Git checkout
+    - name: Create ENV file
+    - uses: actions/checkout@v2
     - run: |
         cd src/dashboard/site
         (
