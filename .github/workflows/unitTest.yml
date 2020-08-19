@@ -33,6 +33,8 @@ jobs:
         cd src/dashboard
         npm install
 
-    - run: npm test
+    - run: |
+        cd src/dashboard
+        npm test
       env:
         CI: true
