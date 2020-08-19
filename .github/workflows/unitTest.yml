@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  test:
+  write-env:
     runs-on: ubuntu-latest
 
     steps:
@@ -46,8 +46,6 @@ jobs:
         cd src/dashboard
         npm install
 
-    # - run: |
-    #     cd src/dashboard
-    #     npm test
-    #   env:
-    #     CI: true
+    - run: |
+        cd src/dashboard
+        npm test
