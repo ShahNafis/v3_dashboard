@@ -7,17 +7,14 @@ on:
     branches: [master]
 
 jobs:
-  write-env:
+  test:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Write ENV values
-      - run: |
-          cd src/dashboard/site
-          (
-          echo NEXT_PUBLIC_LOGGING = true
-          echo MONGO_URI = ${{ secrets.MONGO_URI }}
-          )>".env.test.local"
-          cat .env.test.local
+    - name: Git checkout
+      uses: actions/checkout@v2
+    - run: |
+        echo test hello world
   build:
     runs-on: ubuntu-latest
     strategy:
