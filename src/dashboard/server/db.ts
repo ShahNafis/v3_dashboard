@@ -18,7 +18,7 @@ export const connectDB = async () => {
     message: `Using ${process.env.NODE_ENV} Database`,
     type: 'info',
   })
-
+  console.log('>>>>', dbURI, '<<<')
   //Connect
   const conn: Mongoose = await connect(dbURI as string, {
     useNewUrlParser: true,

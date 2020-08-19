@@ -46,8 +46,7 @@ jobs:
         cd src/dashboard
         npm install
 
-    # - run: |
-    #     cd src/dashboard
-    #     npm test
-    #   env:
-    #     CI: true
+    - name: Run Unit Test
+    - run: |
+        cd src/dashboard
+        npm test
