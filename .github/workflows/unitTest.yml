@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Write ENV values
-      - runs: |
+      - run: |
           cd src/dashboard/site
           (
           echo NEXT_PUBLIC_LOGGING = true
