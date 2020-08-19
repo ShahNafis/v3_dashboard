@@ -7,6 +7,17 @@ on:
     branches: [master]
 
 jobs:
+  write-env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Write ENV values
+      - runs: |
+        cd src/dashboard/site
+        (
+        echo NEXT_PUBLIC_LOGGING = true
+        echo MONGO_URI = ${{ secrets.MONGO_URI }}
+        )>".env.test.local"
+        cat .env.test.local
   build:
     runs-on: ubuntu-latest
     strategy:
