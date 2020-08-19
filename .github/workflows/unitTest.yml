@@ -47,5 +47,9 @@ jobs:
         npm install
 
     - run: |
+        cd src/dashboard/site
+        cat .env.test.local
+        
+    - run: |
         cd src/dashboard
         npm test
